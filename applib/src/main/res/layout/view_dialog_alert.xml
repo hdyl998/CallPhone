@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?><!-- 确认对话框 -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/radius_dialog"
+    android:orientation="vertical"
+    android:padding="2dp">
+
+    <TextView
+        android:id="@+id/tv_dialogtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/n22px"
+        android:gravity="center_horizontal"
+        android:textColor="@color/_333333"
+        android:textSize="@dimen/n36px"
+        android:visibility="gone" />
+
+    <FrameLayout
+        android:id="@+id/ll_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:minHeight="@dimen/n120px"
+        android:visibility="gone">
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/tv_dialogcontent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:lineSpacingExtra="@dimen/n5px"
+        android:minHeight="@dimen/n120px"
+        android:paddingLeft="@dimen/n60px"
+        android:paddingTop="@dimen/n22px"
+        android:paddingRight="@dimen/n60px"
+        android:textColor="@color/_666666"
+        android:textSize="@dimen/n30px"
+        android:visibility="gone" />
+
+    <android.support.v4.widget.Space
+        android:id="@+id/space"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/n27px" />
+
+
+    <include layout="@layout/include_ok_cancel" />
+
+</LinearLayout>

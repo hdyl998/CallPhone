@@ -1,0 +1,41 @@
+<resources>
+    <string name="app_name">applib</string>
+    <string name="app_default">-</string>
+    <string name="app_test">网络请求框架层出不穷,像google的volley，xutils等等。听说Okhttp性能很高，最近写新项目，决定用Okhttp来尝试一下（原谅我是小白，第一次使用，以前还是用volley），以此来记录一下自己的心得。</string>
+    <!-- empty -->
+
+    <string name="empty_message_match">暂无赛制信息</string>
+    <string name="empty_message">暂无数据</string>
+    <string name="loading_message">加载中...</string>
+    <string name="error_message">加载失败</string>
+    <string name="error_message2">请点击页面更新</string>
+    <string name="empty_button">Try again</string>
+    <string name="loading_button">Cancel</string>
+    <string name="error_button">点击重试</string>
+    <string name="cancel">取消</string>
+
+    <!-- 下拉刷新和上拉加载更多的文本 -->
+    <string name="release_to_refresh">松开立即刷新</string>
+    <string name="pull_to_refresh">下拉刷新</string>
+    <string name="refreshing">正在刷新数据中...</string>
+    <string name="picture_load_image_failed">点击屏幕，重新加载</string>
+    <string name="picture_image_loading">正在加载…</string>
+    <string name="pull_to_refresh_header_hint_normal">@string/pushmsg_center_pull_down_text</string>
+    <string name="pull_to_refresh_header_hint_normal2">上拉可以刷新</string>
+    <string name="pull_to_refresh_header_hint_ready">@string/release_to_refresh</string>
+    <string name="pull_to_refresh_header_hint_loading">@string/refreshing</string>
+    <string name="pull_to_refresh_header_last_time">@string/pushmsg_center_pull_down_update_time</string>
+    <string name="pull_to_refresh_footer_hint_ready">松开载入更多</string>
+    <string name="pull_to_refresh_no_more_data">@string/pushmsg_center_no_more_msg</string>
+    <string name="pull_to_refresh_network_error">网络不给力，请检查网络</string>
+    <string name="pushmsg_center_no_more_msg">暂无更多</string>
+    <string name="pushmsg_center_pull_up_text">松开加载更多</string>
+    <string name="pushmsg_center_pull_down_text">下拉刷新</string>
+    <string name="pushmsg_center_pull_release_text">松开获取更多</string>
+    <string name="pushmsg_center_pull_down_update_time">最后更新时间 : </string>
+    <string name="pushmsg_center_load_more_ongoing_text">正在加载更多数据……</string>
+    <string name="xsearch_loading">正在加载中…</string>
+
+    <!-- 打开系统组件失败-->
+    <string name="tips_fail_intent">暂不支持该功能</string>
+</resources>

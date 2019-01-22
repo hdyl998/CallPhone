@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 对话框风格 -->
+    <style name="dialogThemeBase" parent="@style/Theme.AppCompat.Light.Dialog">
+        <!-- 半透明 -->
+        <item name="android:windowIsTranslucent">false</item>
+        <!-- 没有标题栏 -->
+        <item name="android:windowNoTitle">true</item>
+        <!-- 背景 -->
+        <item name="android:background">@null</item>
+        <!-- 背景模糊 -->
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+
+        <item name="android:textViewStyle">@style/DefaultTextViewStyle</item>
+
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+
+    <style name="activityDialog" parent="dialogThemeBase">
+        <!--禁止点击屏幕之外-->
+        <item name="android:windowCloseOnTouchOutside">false</item>
+    </style>
+
+    <!--不模糊背景-->
+    <style name="lucencyDialog" parent="@style/dialogThemeBase">
+        <!--是否模糊-->
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
+</resources>

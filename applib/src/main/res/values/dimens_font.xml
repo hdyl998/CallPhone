@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+<!--文字采用10-70基本足够,采用偶数,去掉一半-->
+
+    <!--<dimen name="s10px">5dp</dimen>-->
+    <!--<dimen name="s12px">6dp</dimen>-->
+    <!--<dimen name="s14px">7dp</dimen>-->
+    <!--<dimen name="s16px">8dp</dimen>-->
+    <!--<dimen name="s18px">9dp</dimen>-->
+    <!--<dimen name="s20px">10dp</dimen>-->
+    <!--<dimen name="s22px">11dp</dimen>-->
+    <!--<dimen name="s24px">12dp</dimen>-->
+    <!--<dimen name="s26px">13dp</dimen>-->
+    <!--<dimen name="s28px">14dp</dimen>-->
+    <!--<dimen name="s30px">15dp</dimen>-->
+    <!--<dimen name="s32px">16dp</dimen>-->
+    <!--<dimen name="s34px">17dp</dimen>-->
+    <!--<dimen name="s36px">18dp</dimen>-->
+    <!--<dimen name="s38px">19dp</dimen>-->
+    <!--<dimen name="s40px">20dp</dimen>-->
+    <!--<dimen name="s42px">21dp</dimen>-->
+    <!--<dimen name="s44px">22dp</dimen>-->
+    <!--<dimen name="s46px">23dp</dimen>-->
+    <!--<dimen name="s48px">24dp</dimen>-->
+    <!--<dimen name="s50px">25dp</dimen>-->
+    <!--<dimen name="s52px">26dp</dimen>-->
+    <!--<dimen name="s54px">27dp</dimen>-->
+    <!--<dimen name="s56px">28dp</dimen>-->
+    <!--<dimen name="s58px">29dp</dimen>-->
+    <!--<dimen name="s60px">30dp</dimen>-->
+    <!--<dimen name="s62px">31dp</dimen>-->
+    <!--<dimen name="s64px">32dp</dimen>-->
+    <!--<dimen name="s66px">33dp</dimen>-->
+    <!--<dimen name="s68px">34dp</dimen>-->
+    <!--<dimen name="s70px">35dp</dimen>-->
+
+
+
+
+
+
+
+    <dimen name="s10px">@dimen/n10px</dimen>
+    <dimen name="s12px">@dimen/n12px</dimen>
+    <dimen name="s14px">@dimen/n14px</dimen>
+    <dimen name="s16px">@dimen/n16px</dimen>
+    <dimen name="s18px">@dimen/n18px</dimen>
+    <dimen name="s20px">@dimen/n20px</dimen>
+    <dimen name="s22px">@dimen/n22px</dimen>
+    <dimen name="s24px">@dimen/n24px</dimen>
+    <dimen name="s26px">@dimen/n26px</dimen>
+    <dimen name="s28px">@dimen/n28px</dimen>
+    <dimen name="s30px">@dimen/n30px</dimen>
+    <dimen name="s32px">@dimen/n32px</dimen>
+    <dimen name="s34px">@dimen/n34px</dimen>
+    <dimen name="s36px">@dimen/n36px</dimen>
+    <dimen name="s38px">@dimen/n38px</dimen>
+    <dimen name="s40px">@dimen/n40px</dimen>
+    <dimen name="s42px">@dimen/n42px</dimen>
+    <dimen name="s44px">@dimen/n44px</dimen>
+    <dimen name="s46px">@dimen/n46px</dimen>
+    <dimen name="s48px">@dimen/n48px</dimen>
+    <dimen name="s50px">@dimen/n50px</dimen>
+    <dimen name="s52px">@dimen/n52px</dimen>
+    <dimen name="s54px">@dimen/n54px</dimen>
+    <dimen name="s56px">@dimen/n56px</dimen>
+    <dimen name="s58px">@dimen/n58px</dimen>
+    <dimen name="s60px">@dimen/n60px</dimen>
+    <dimen name="s62px">@dimen/n62px</dimen>
+    <dimen name="s64px">@dimen/n64px</dimen>
+    <dimen name="s66px">@dimen/n66px</dimen>
+    <dimen name="s68px">@dimen/n68px</dimen>
+    <dimen name="s70px">@dimen/n70px</dimen>
+    <dimen name="s72px">@dimen/n72px</dimen>
+    <dimen name="s74px">@dimen/n74px</dimen>
+    <dimen name="s76px">@dimen/n76px</dimen>
+    <dimen name="s78px">@dimen/n78px</dimen>
+    <dimen name="s80px">@dimen/n80px</dimen>
+    <dimen name="s82px">@dimen/n82px</dimen>
+</resources>

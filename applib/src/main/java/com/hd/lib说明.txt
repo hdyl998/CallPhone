@@ -1,0 +1,21 @@
+ Tools每个项目的私有类
+
+Utils 库里的工具类
+DateUtils   日期转换工具
+EditTextUtil 编辑框工具
+FileUtils 文件操作
+NumberUtil 转换数字
+StringUtils 字符串正则处理
+TextViewUtils textView一些工具
+ViewUtils View的一些解析工具
+RxJavaUtils 耗时任务处理
+GoUtils 跳转
+DensityUtils 单位转换
+KeyboardUtils 键盘
+SoundPlayerHelper 短声音
+VibratorHelper 震动
+
+DeviceInfoUtils设备信息
+ITextStyle 文本样式
+
+AppDeviceInfo  设备基本信息实体类

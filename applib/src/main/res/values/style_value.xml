@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- button press style -->
+    <style name="btnPressStyle">
+        <item name="android:background">@drawable/list_item_selectedbg</item>
+        <item name="android:clickable">true</item>
+    </style>
+    <!-- 间隔0dp -->
+    <style name="line0">
+        <item name="android:dividerHeight">0dp</item>
+        <item name="android:divider">@color/transparent</item>
+    </style>
+
+
+    <!-- 白色主题 默认无需设置,即是这些属性 -->
+    <style name="lightTitleBar">
+        <item name="tbLeftImage">@mipmap/ic_back_black</item>
+        <item name="tbLeftTextColor">@color/colorWhiteStyleTextColor</item>
+        <item name="tbRightTextColor">@color/colorWhiteStyleTextColor</item>
+        <item name="tbTitleColor">@color/colorWhiteStyleTextColor</item>
+        <item name="tbBackground">@color/white</item>
+        <item name="tbBottomLine">true</item>
+        <item name="tbDarkStatusBar">false</item>
+    </style>
+
+
+    <!-- 黑色主题 -->
+    <style name="darkTitleBar">
+        <item name="tbLeftImage">@mipmap/ic_back_white</item>
+        <item name="tbLeftTextColor">@color/white</item>
+        <item name="tbRightTextColor">@color/white</item>
+        <item name="tbTitleColor">@color/white</item>
+        <item name="tbBottomLine">false</item>
+        <item name="tbDarkStatusBar">true</item>
+        <item name="tbBackground">@drawable/default_dark_bg</item>
+    </style>
+
+    <!-- 黑色主题透明背景 -->
+    <style name="darkTitleBarNoBg">
+        <item name="tbLeftImage">@mipmap/ic_back_white</item>
+        <item name="tbLeftTextColor">@color/white</item>
+        <item name="tbRightTextColor">@color/white</item>
+        <item name="tbTitleColor">@color/white</item>
+        <item name="tbBottomLine">false</item>
+        <item name="tbDarkStatusBar">false</item>
+        <item name="tbBackground">@color/transparent</item>
+    </style>
+</resources>

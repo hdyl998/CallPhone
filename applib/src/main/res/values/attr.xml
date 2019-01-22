@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="MyTipsListView">
+        <attr name="isShowNormal" format="boolean" />
+        <!--     是否显示NORMAL-->
+    </declare-styleable>
+    <declare-styleable name="IndicatorView">
+        <attr name="indicator_icon" format="reference" />
+        <attr name="indicator_margin" format="dimension" />
+        <attr name="indicator_smooth" format="boolean" />
+    </declare-styleable>
+
+    <!-- titleBar自定义属性 -->
+    <declare-styleable name="TitleBar">
+        <!-- 标题 -->
+        <attr name="tbTitle" format="string|reference" />
+        <!-- 标题文字颜色 -->
+        <attr name="tbTitleColor" format="color|reference" />
+        <!-- 标题文字颜色 -->
+        <attr name="tbTitleSize" format="dimension" />
+        <!-- 背景图片 -->
+        <attr name="tbBackground" format="color|reference" />
+        <!-- 右边图片资源 -->
+        <attr name="tbRightImage" format="reference" />
+        <!-- 右边文字 -->
+        <attr name="tbRightText" format="string|reference" />
+        <attr name="tbRightTextColor" format="color|reference" />
+        <!--右边第二个按钮的图片-->
+        <attr name="tbRightSecondImage" format="reference" />
+
+        <!--  左边的图片-->
+        <attr name="tbLeftImage" format="reference" />
+        <!--  左边的文本-->
+        <attr name="tbLeftText" format="string|reference" />
+        <attr name="tbLeftTextColor" format="color|reference" />
+
+
+        <attr name="tbLeftVisiable" format="boolean" />
+
+        <attr name="tbRightVisiable" format="boolean" />
+        <!--底部线条-->
+        <attr name="tbBottomLine" format="boolean" />
+
+        <!--是否是黑色状态栏-->
+        <attr name="tbDarkStatusBar" format="boolean" />
+
+    </declare-styleable>
+
+    <!--titleBar的样式-->
+    <attr name="titleBarStyle" format="reference"/>
+    <!-- 背景颜色 -->
+    <attr name="appBgColor" format="color" />
+    <!-- 边角幅度 -->
+    <attr name="appRadius" format="dimension" />
+
+    <!-- 是否有边框 -->
+    <attr name="appBorderWidth" format="dimension" />
+    <!-- 边框线条的粗细 -->
+    <attr name="appBorderColor" format="color" />
+
+    <!--  圆角矩形TextView-->
+    <declare-styleable name="ShapeCornerBgView">
+        <!-- 是否有边框 -->
+        <attr name="appBorder" format="boolean" />
+        <!-- 边框线条的粗细 -->
+        <attr name="appBorderWidth" />
+        <!-- 边框线条的颜色 -->
+        <attr name="appBorderColor" />
+        <!-- 背景的颜色 -->
+        <attr name="appBgColor" />
+        <!-- 圆角度数 -->
+        <attr name="appRadius" />
+        <!-- 是否有圆角，默认，真 -->
+        <attr name="appTopLeftCorner" format="boolean" />
+        <!-- 是否有圆角，默认，真 -->
+        <attr name="appBottomLeftCorner" format="boolean" />
+        <!-- 是否有圆角，默认，真 -->
+        <attr name="appTopRightCorner" format="boolean" />
+        <!-- 是否有圆角，默认，真 -->
+        <attr name="appBottomRightCorner" format="boolean" />
+        <!--默认是不禁用的-->
+        <!-- 禁用时的背景颜色 -->
+        <attr name="appEnableFalseBgColor" format="color" />
+        <!-- 禁用时的文字颜色 -->
+        <attr name="appEnableFalseTextColor" format="color" />
+        <!-- 没选中时边框颜色 -->
+        <attr name="appEnableFalseBorderColor" format="color" />
+        <!-- 没选中时是否有边框 -->
+        <attr name="appEnableFalseBorder" format="boolean" />
+
+        <!--默认是选中的-->
+        <!-- 没选中时背景颜色 -->
+        <attr name="appUnCheckedBgColor" format="color" />
+        <!-- 没选中时文字颜色 -->
+        <attr name="appUnCheckedTextColor" format="color" />
+        <!-- 没选中时边框颜色 -->
+        <attr name="appUnCheckedBorderColor" format="color" />
+        <!-- 没选中时是否有边框 -->
+        <attr name="appUnCheckedBorder" format="boolean" />
+        <!-- 是否选中 -->
+        <attr name="appChecked" format="boolean" />
+
+        <!--按下去时的背景颜色-->
+        <attr name="appPressedBgColor" format="color" />
+        <!--按下去时的文本颜色-->
+        <attr name="appPressedTextColor" format="color" />
+        <!--是否按下去功能可用-->
+        <attr name="appPressedStyle" format="boolean" />
+    </declare-styleable>
+
+    <!-- 圆角矩形可以选择的选择器 -->
+    <declare-styleable name="ShapeCornerSelectView">
+        <attr name="appsBorder" format="boolean" />
+        <!-- 是否有边框，默认有 -->
+        <attr name="appsDivider" format="boolean" />
+        <!-- 是否有分割线，默认无 -->
+        <attr name="appsDividerColor" format="boolean" />
+        <!-- 分割线颜色 -->
+        <attr name="appsBorderWidth" format="dimension" />
+        <!-- 边框线条的粗细 -->
+        <attr name="appsBorderColor" format="color" />
+        <!-- 边框线条的颜色 -->
+        <attr name="appsBgColor" format="color" />
+        <!-- 背景的颜色 （默认） -->
+        <attr name="appsBgColorSelect" format="color" />
+        <!-- 背景的颜色（选中） -->
+        <attr name="appsRadius" format="dimension" />
+        <!-- 圆角度数 -->
+        <attr name="appsTextColorSelect" format="color" />
+        <!-- 文本颜色（选中） -->
+        <attr name="appsTextSizeSelect" format="dimension" />
+        <!-- 文本字的大小（选中） -->
+        <attr name="appsTextColor" format="color" />
+        <!-- 文本颜色（默认） -->
+        <attr name="appsTextSize" format="dimension" />
+        <!-- 文本颜色（默认） -->
+    </declare-styleable>
+
+    <!-- 圆角矩形可以选择的选择器 -->
+    <declare-styleable name="ShapeBgLinearLayout">
+        <attr name="appBgColor" />
+        <attr name="appRadius" />
+        <!-- 是否有边框 -->
+        <attr name="appBorderWidth" />
+        <!-- 边框线条的粗细 -->
+        <attr name="appBorderColor" />
+    </declare-styleable>
+
+    <!-- 圆角矩形可以选择的选择器 -->
+    <declare-styleable name="ShapeBgRelativeLayout">
+        <attr name="appBgColor" />
+        <attr name="appRadius" />
+        <!-- 是否有边框 -->
+        <attr name="appBorderWidth" />
+        <!-- 边框线条的粗细 -->
+        <attr name="appBorderColor" />
+    </declare-styleable>
+    <declare-styleable name="PulltoRefreshAAMListView">
+        <!--添加顶部一条线-->
+        <attr name="addHeaderLine" format="boolean" />
+    </declare-styleable>
+
+
+    <!-- 滚动指示器的属性 -->
+    <declare-styleable name="PagerSlidingTabStrip">
+
+        <!-- 指示器颜色 -->
+        <attr name="pstsIndicatorColor" format="color" />
+        <!-- 下划线颜色 -->
+        <attr name="pstsUnderlineColor" format="color" />
+        <!-- 竖线分隔线颜色 -->
+        <attr name="pstsDividerColor" format="color" />
+        <!-- 指示的文字的颜色 -->
+        <attr name="pstsIndicatorTextColor" format="color" />
+        <!-- 指示器的高度 -->
+        <attr name="pstsIndicatorHeight" format="dimension" />
+        <!-- 下线的高度 -->
+        <attr name="pstsUnderlineHeight" format="dimension" />
+        <!-- 竖线的padding -->
+        <attr name="pstsDividerPadding" format="dimension" />
+        <attr name="pstsTabPaddingLeftRight" format="dimension" />
+        <attr name="pstsScrollOffset" format="dimension" />
+
+        <attr name="pstsScrollCenter" format="boolean" />
+
+        <!-- 指示器长度 -->
+        <attr name="pstsIndicatorLenth" format="dimension" />
+
+        <!--是否是圆角的的指示器-->
+        <attr name="pstsIndicatorRound" format="boolean" />
+        <!--指示器长度-->
+        <attr name="pstsIndicatorWidth" format="dimension" />
+
+        <!-- tab背景 -->
+        <attr name="pstsTabBackground" format="reference" />
+
+
+        <!-- 是否满屏 -->
+        <attr name="pstsShouldExpand" format="boolean" />
+        <!-- 字符大写 -->
+        <attr name="pstsTextAllCaps" format="boolean" />
+
+        <!-- textSize -->
+        <attr name="pstsTextSize" format="dimension" />
+        <!-- textColor -->
+        <attr name="pstsTextColor" format="color" />
+
+        <!--移动时为radioGroup样式-->
+        <attr name="pstsRadioGroupStyle" format="boolean" />
+        <!--移动时为radioGroup样式的高度-->
+        <attr name="pstsRadioGroupStyleHeight" format="dimension" />
+
+        <!--是否是顶部一条线-->
+        <attr name="pstsTopLine" format="boolean" />
+
+        <!--指示器文字是粗体-->
+        <attr name="pstsIndicatorTextBold" format="boolean" />
+
+        <attr name="pstsIndicatorTextSize" format="dimension" />
+        <!--底部指示器图片-->
+        <attr name="pstsIndicatorDrawable" format="reference" />
+    </declare-styleable>
+</resources>

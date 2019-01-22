@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <item name="tagFirst" type="id" />
+    <item name="tagSecond" type="id" />
+
+    <item name="tagDefault" type="id" />
+    <item name="listView" type="id" />
+    <item name="titleBar" type="id" />
+    <item name="scrollView" type="id" />
+    <item name="llStatusBar" type="id" />
+
+
+
+</resources>

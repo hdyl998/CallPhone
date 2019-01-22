@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?><!-- 确认对话框 -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/radius_dialog"
+    android:orientation="vertical"
+    android:padding="2dp">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/n22px"
+        android:gravity="center_horizontal"
+        android:textColor="@color/_333333"
+        android:textSize="@dimen/n36px" />
+
+    <com.hd.view.edit.EditTextWithDel
+        android:id="@+id/edt_input_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/n40px"
+        android:layout_marginLeft="@dimen/n40px"
+        android:layout_marginRight="@dimen/n30px"
+        android:layout_marginTop="@dimen/n30px"
+        android:background="@drawable/input_bg"
+        android:maxLines="4"
+        android:minHeight="@dimen/n70px"
+        android:paddingBottom="@dimen/n3px"
+        android:paddingLeft="@dimen/n10px"
+        android:paddingRight="@dimen/n10px"
+        android:paddingTop="@dimen/n3px"
+        android:textColor="@color/_333333"
+        android:textColorHint="@color/_AAAAAA"
+        android:textSize="@dimen/n32px" />
+
+
+    <include layout="@layout/include_ok_cancel" />
+</LinearLayout>

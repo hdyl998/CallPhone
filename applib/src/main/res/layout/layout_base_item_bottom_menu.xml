@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/line1"
+        layout="@layout/view_line_1_deep" />
+
+    <TextView
+        android:id="@+id/textView"
+        style="@style/btnPressStyle"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/n105px"
+        android:gravity="center"
+        android:text="@string/cancel"
+        android:orientation="vertical"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/s30px" />
+
+
+</LinearLayout>

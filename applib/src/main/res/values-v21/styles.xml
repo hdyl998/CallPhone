@@ -1,0 +1,12 @@
+<resources>
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textViewStyle">@style/DefaultTextViewStyle</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <!-- 底部虚拟键的背景颜色-->
+        <item name="android:navigationBarColor">@color/navigationBarColor</item>
+
+    </style>
+</resources>

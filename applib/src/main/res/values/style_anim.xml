@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 对话框进出动画  左入右出效果-->
+    <style name="dialogAnimLeftInRightOut" parent="android:Animation">
+        <!--      向左入-->
+        <item name="android:windowEnterAnimation">@anim/translate_fadein</item>
+        <!--        向右出-->
+        <item name="android:windowExitAnimation">@anim/translate_fadeout</item>
+    </style>
+
+    <!-- 对话框进出动画  右入左出效果-->
+    <style name="dialogAnimRightInLeftOut" parent="android:Animation">
+        <!--      向右入-->
+        <item name="android:windowEnterAnimation">@anim/translate_right_fadein</item>
+        <!--        向左出-->
+        <item name="android:windowExitAnimation">@anim/translate_left_fadeout</item>
+    </style>
+
+
+    <!-- 对话框进出动画 强调放大进入，缩小退出  （抢红包样式）-->
+    <style name="dialogAnimBigIn" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/small_2_big</item>
+        <item name="android:windowExitAnimation">@anim/big_2_small</item>
+    </style>
+
+    <!-- 底部弹出，然后从底部下去 -->
+    <style name="dialogAnimBottominBottomout" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/umeng_socialize_slide_in_from_bottom</item>
+        <item name="android:windowExitAnimation">@anim/umeng_socialize_slide_out_from_bottom</item>
+    </style>
+    <!-- 淡进，淡出 -->
+    <style name="dialogAnimFadeinFadeout" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/umeng_socialize_fade_in</item>
+        <item name="android:windowExitAnimation">@anim/umeng_socialize_fade_out</item>
+    </style>
+
+</resources>

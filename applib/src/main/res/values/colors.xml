@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="statusBarColorLight">#AFAFAF</color>
+    <!--    蓝色title的statusBar颜色001633 AFAFAF-->
+    <color name="statusBarColorDark">#001633</color>
+    <!--默认背景颜色-->
+    <color name="defaultBgColor">#F4F4F4</color>
+
+    <color name="_DD4A4A">#DD4A4A</color>
+
+    <!--白色主题下字体颜色-->
+    <color name="colorWhiteStyleTextColor">#ff333333</color>
+    <color name="transparent">#00000000</color>
+    <color name="_18BC4E">#18BC4E</color>
+    <color name="_AAAAAA">#AAAAAA</color>
+    <!--    1px线条颜色-->
+    <color name="lineColor">#E4E4E4</color>
+    <color name="_D71B1B">#D71B1B</color>
+    <!--1px线条颜色-->
+    <color name="divider1pxColor">@color/lineColor</color>
+    <!--10px,或者更多高的线条颜色-->
+    <color name="dividerBigColor">@color/defaultBgColor</color>
+    <color name="_464646">#464646</color>
+    <color name="_333333">#333333</color>
+    <color name="_999999">#999999</color>
+    <color name="_666666">#666666</color>
+    <color name="_293968">#293968</color>
+
+    <color name="pressColor">#55D9D9D9</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="colorPrimary">@color/statusBarColorDark</color>
+    <color name="colorPrimaryDark">@color/colorPrimary</color>
+    <color name="colorAccent">@color/_DD4A4A</color>
+    <color name="navigationBarColor">@color/colorPrimary</color>
+
+    <color name="colorSecondTitle">#99FFFFFF</color>
+
+    <color name="_80000000">#80000000</color>
+    <color name="defaultTextColor">@color/black</color>
+    <color name="defaultHintTextColor">@color/_80000000</color>
+
+    <color name="_EAEAEA">#EAEAEA</color>
+    <color name="_D6D8DB">#D6D8DB</color>
+    <color name="_E2E2E2">#E2E2E2</color>
+
+</resources>
