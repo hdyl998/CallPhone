@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Binder;
+import android.os.Handler;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.support.annotation.Nullable;
@@ -69,6 +70,20 @@ public class LoopService extends Service {
     int nums = 0;
     PowerManager pm;
 
+    Handler handler = new Handler();
+
+    private void record() {
+        if (!pm.isScreenOn() && !Network.isConnected(LoopService.this)) {
+            PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "mywakelogtag");
+            wl.acquire();
+            wl.release();
+
+            addLog("唤醒屏幕");
+        } else {
+            addLog("唤醒屏幕 屏亮=" + pm.isScreenOn() + " net is Connected" + Network.isConnected(LoopService.this));
+        }
+    }
+
     private void createLooper() {
 
         if (handerLoopHelper != null) {
@@ -111,12 +126,14 @@ public class LoopService extends Service {
                     binder.tvSocketInfo.setText(note);
                 }
                 addLog(note);
+                if (!note.contains("成功")) {
+                    record();
+                }
             }
 
             @Override
             public void onLocalMessageConnect() throws Exception {
                 socket.sendMyInfo(localPhoneNum);
-
             }
         });
         socket.startSocket();
@@ -129,16 +146,12 @@ public class LoopService extends Service {
                 if (socket.isConnectSuccess()) {
                     socket.sendSocketMessage("hearting", nums + "");
                 } else {
-                    if (!pm.isScreenOn() && !Network.isConnected(LoopService.this)) {
-                        PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "mywakelogtag");
-                        wl.acquire();
-                        wl.release();
-
-                        addLog("唤醒屏幕");
-                    }
-                    else {
-                        addLog("唤醒屏幕 屏亮="+pm.isScreenOn()+" net is Connected"+Network.isConnected(LoopService.this));
-                    }
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            record();
+                        }
+                    });
                 }
             }
         });
