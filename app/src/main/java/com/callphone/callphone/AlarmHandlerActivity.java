@@ -50,7 +50,7 @@ public class AlarmHandlerActivity extends Activity {
         PowerManager pm = (PowerManager) this.getSystemService(Context.POWER_SERVICE);
         if (!pm.isScreenOn()) {
             textView.setText(String.format("拨打电话：" + phone));
-            PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "bright");
+            PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "mywakelogtag");
             wl.acquire();
             wl.release();
         }

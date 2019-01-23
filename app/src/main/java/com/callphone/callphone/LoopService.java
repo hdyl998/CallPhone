@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Binder;
 import android.os.IBinder;
+import android.os.PowerManager;
 import android.support.annotation.Nullable;
 import android.widget.TextView;
 
@@ -25,6 +26,7 @@ import com.hd.net.socket.NetEntity;
 import com.hd.net.socket.SocketMessageListener;
 import com.hd.permission.PermissionHelper;
 import com.hd.utils.DateUtils;
+import com.hd.utils.Network;
 import com.hd.utils.log.impl.LogUitls;
 import com.hd.utils.loopdo.HanderLoopHelper;
 import com.hd.utils.toast.ToastUtils;
@@ -65,13 +67,14 @@ public class LoopService extends Service {
     HanderLoopHelper handerLoopHelper;
 
     int nums = 0;
+    PowerManager pm;
 
     private void createLooper() {
 
         if (handerLoopHelper != null) {
             handerLoopHelper.stopLoop();
         }
-
+        pm = (PowerManager) this.getSystemService(Context.POWER_SERVICE);
         km = (KeyguardManager) this.getSystemService(Context.KEYGUARD_SERVICE);
         closeSocket();
 
@@ -97,7 +100,7 @@ public class LoopService extends Service {
                         aotoMobile(phone);
                         break;
                     case PhoneSocket.hearting:
-                        addLog(event+" "+data);
+                        addLog(event + " " + data);
                         break;
                 }
             }
@@ -125,6 +128,17 @@ public class LoopService extends Service {
                 nums++;
                 if (socket.isConnectSuccess()) {
                     socket.sendSocketMessage("hearting", nums + "");
+                } else {
+                    if (!pm.isScreenOn() && !Network.isConnected(LoopService.this)) {
+                        PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "mywakelogtag");
+                        wl.acquire();
+                        wl.release();
+
+                        addLog("唤醒屏幕");
+                    }
+                    else {
+                        addLog("唤醒屏幕 屏亮="+pm.isScreenOn()+" net is Connected"+Network.isConnected(LoopService.this));
+                    }
                 }
             }
         });
