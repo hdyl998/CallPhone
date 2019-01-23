@@ -3,16 +3,20 @@ package com.callphone.callphone;
 import android.annotation.SuppressLint;
 import android.app.KeyguardManager;
 import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NotificationCompat;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -73,7 +77,8 @@ public class LoopService extends Service {
     Handler handler = new Handler();
 
     private void record() {
-        if (!pm.isScreenOn() && !Network.isConnected(LoopService.this)) {
+        //!Network.isConnected(LoopService.this)
+        if (!pm.isScreenOn()) {
             PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "mywakelogtag");
             wl.acquire();
             wl.release();
@@ -83,6 +88,75 @@ public class LoopService extends Service {
             addLog("唤醒屏幕 屏亮=" + pm.isScreenOn() + " net is Connected" + Network.isConnected(LoopService.this));
         }
     }
+    //唤醒屏幕并解锁
+    public void wakeUpAndUnlock(Context context) {
+        KeyguardManager km = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
+        KeyguardManager.KeyguardLock kl = km.newKeyguardLock("unLock");
+        //解锁
+        kl.disableKeyguard();
+        //获取电源管理器对象
+        PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+        //获取PowerManager.WakeLock对象,后面的参数|表示同时传入两个值,最后的是LogCat里用的Tag
+        PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.SCREEN_DIM_WAKE_LOCK, "bright");
+        //点亮屏幕
+        wl.acquire();
+        //释放
+        wl.release();
+    }
+    /**
+     * author: wu
+     * date: on 2018/11/14.
+     * describe: 静态常量类
+     */
+
+    public static class Constant {
+        public static Integer TYPE1 = 1;
+        public static Integer TYPE2 = 2;
+        public static Integer TYPE3 = 3;
+    }
+
+    //设置通知栏消息样式
+    private void setNotification(int type) {
+        //点击通知栏消息跳转页
+        Intent intent = new Intent(this, MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+        //创建通知消息管理类
+        Notification notification;
+        NotificationManager  manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this)//创建通知消息实例
+                .setContentTitle("我是标题")
+                .setContentText("我是内容")
+                .setWhen(System.currentTimeMillis())//通知栏显示时间
+                .setSmallIcon(R.mipmap.ic_launcher)//通知栏小图标
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher))//通知栏下拉是图标
+                .setContentIntent(pendingIntent)//关联点击通知栏跳转页面
+                .setPriority(NotificationCompat.PRIORITY_MAX)//设置通知消息优先级
+                .setAutoCancel(true)//设置点击通知栏消息后，通知消息自动消失
+//                .setSound(Uri.fromFile(new File("/system/MP3/music.mp3"))) //通知栏消息提示音
+                .setVibrate(new long[]{0, 1000, 1000, 1000}) //通知栏消息震动
+                .setLights(Color.GREEN, 1000, 2000) //通知栏消息闪灯(亮一秒间隔两秒再亮)
+                .setDefaults(NotificationCompat.DEFAULT_ALL); //通知栏提示音、震动、闪灯等都设置为默认
+
+        if (type == 1) {
+            //短文本
+            notification = builder.build();
+            //Constant.TYPE1为通知栏消息标识符，每个id都是不同的
+            manager.notify(Constant.TYPE1, notification);
+        } else if (type == 2) {
+            //长文本
+            notification = builder.setStyle(new NotificationCompat.BigTextStyle().
+                    bigText("我是长文字内容:　今年双十一结束后，一如既往又出现了一波冲动剁手党被理智唤醒的退货潮。不过，一位来自福建厦门的网友在这其中贡献了堪称历史里程碑式的高光时刻。别人退衣服退鞋子，而他要退的是一只蓝孔雀、一只宠物小香猪、还有一斤娃娃鱼……"))
+                    .build();
+            manager.notify(Constant.TYPE2, notification);
+        } else {
+            //带图片
+            notification = builder.setStyle(new NotificationCompat.BigPictureStyle().
+                    bigPicture(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher)))
+                    .build();
+            manager.notify(Constant.TYPE3, notification);
+        }
+    }
+
 
     private void createLooper() {
 
@@ -128,6 +202,8 @@ public class LoopService extends Service {
                 addLog(note);
                 if (!note.contains("成功")) {
                     record();
+                    setNotification(1);
+                    wakeUpAndUnlock(LoopService.this);
                 }
             }
 
@@ -150,9 +226,22 @@ public class LoopService extends Service {
                         @Override
                         public void run() {
                             record();
+                            setNotification(1);
+                            wakeUpAndUnlock(LoopService.this);
                         }
                     });
                 }
+
+                if(nums%20==0){
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            setNotification(1);
+                            wakeUpAndUnlock(LoopService.this);
+                        }
+                    });
+                }
+
             }
         });
         handerLoopHelper.startLoop();
@@ -338,12 +427,7 @@ public class LoopService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         LogUitls.print(TAG, "onBind" + binder);
-        String phone = intent.getStringExtra("phone");
-        localPhoneNum = phone;
-        LogUitls.print(TAG, "onStartCommand" + localPhoneNum);
-        createLooper();
-        ToastUtils.show("开始looper");
-        fun();
+
         return binder;
     }
 
@@ -386,6 +470,14 @@ public class LoopService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         LogUitls.print(TAG, "onStartCommand");
+
+        String phone = intent.getStringExtra("phone");
+        localPhoneNum = phone;
+        LogUitls.print(TAG, "onStartCommand" + localPhoneNum);
+        createLooper();
+        ToastUtils.show("开始looper");
+        fun();
+
         return START_NOT_STICKY;
     }
 

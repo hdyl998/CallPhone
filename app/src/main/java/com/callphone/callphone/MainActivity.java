@@ -9,6 +9,7 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.Service;
 import android.content.ComponentName;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
@@ -17,6 +18,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -87,7 +89,7 @@ public class MainActivity extends IBaseActivity {
 
     @Override
     public int[] setClickIDs() {
-        return new int[]{R.id.btnSave,R.id.btnSet};
+        return new int[]{R.id.btnSave, R.id.btnSet};
     }
 
     @Override
@@ -108,7 +110,7 @@ public class MainActivity extends IBaseActivity {
             ToastUtils.show("电话号码格式不正确");
 
         } else {
-            SpUtils.putString("cache","phone",localPhoneNum);
+            SpUtils.putString("cache", "phone", localPhoneNum);
             if (hasPermission) {
                 createService();
 
@@ -120,47 +122,48 @@ public class MainActivity extends IBaseActivity {
 
     LoopService mService;
 
-    ServiceConnection conn = null;
-
-    public ServiceConnection getConn() {
-        if (conn == null) {
-            conn = new ServiceConnection() {
-                /**
-                 * 与服务器端交互的接口方法 绑定服务的时候被回调，在这个方法获取绑定Service传递过来的IBinder对象， * 通过这个IBinder对象，实现宿主和Service的交互。
-                 */
-                @Override
-                public void onServiceConnected(ComponentName name, IBinder service) {
-                    LogUitls.print(TAG, "绑定成功调用：onServiceConnected");
-// 获取Binder
-                    LoopService.LocalBinder binder = (LoopService.LocalBinder) service;
-
-                    binder.setAdapter(adapter);
-                    binder.setLogAdapter(logAdapter);
-                    binder.setTvSocketInfo(tvSocketInfo);
-
-// 获取服务对象
-                    mService = binder.getService();
-                }
-
-                /**
-                 * 当取消绑定的时候被回调。但正常情况下是不被调用的，它的调用时机是当Service服务被意外销毁时， * 例如内存的资源不足时这个方法才被自动调用。
-                 */
-                @Override
-                public void onServiceDisconnected(ComponentName name) {
-                    mService = null;
-                }
-            };
-
-        }
-
-        return conn;
-    }
+//    ServiceConnection conn = null;
+//
+//    public ServiceConnection getConn() {
+//        if (conn == null) {
+//            conn = new ServiceConnection() {
+//                /**
+//                 * 与服务器端交互的接口方法 绑定服务的时候被回调，在这个方法获取绑定Service传递过来的IBinder对象， * 通过这个IBinder对象，实现宿主和Service的交互。
+//                 */
+//                @Override
+//                public void onServiceConnected(ComponentName name, IBinder service) {
+//                    LogUitls.print(TAG, "绑定成功调用：onServiceConnected");
+//// 获取Binder
+//                    LoopService.LocalBinder binder = (LoopService.LocalBinder) service;
+//
+//                    binder.setAdapter(adapter);
+//                    binder.setLogAdapter(logAdapter);
+//                    binder.setTvSocketInfo(tvSocketInfo);
+//
+//// 获取服务对象
+//                    mService = binder.getService();
+//                }
+//
+//                /**
+//                 * 当取消绑定的时候被回调。但正常情况下是不被调用的，它的调用时机是当Service服务被意外销毁时， * 例如内存的资源不足时这个方法才被自动调用。
+//                 */
+//                @Override
+//                public void onServiceDisconnected(ComponentName name) {
+//                    mService = null;
+//                }
+//            };
+//
+//        }
+//
+//        return conn;
+//    }
 
 
     private void createService() {
         Intent intent = new Intent(this, LoopService.class);
         intent.putExtra("phone", localPhoneNum);
-        bindService(intent, getConn(), Service.BIND_AUTO_CREATE);
+//        bindService(intent, getConn(), Service.BIND_AUTO_CREATE);
+        startService(intent);
 
     }
 
@@ -168,9 +171,9 @@ public class MainActivity extends IBaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
-        if (conn != null)
-            unbindService(conn);
+//
+//        if (conn != null)
+//            unbindService(conn);
     }
 
     @Override
@@ -178,21 +181,37 @@ public class MainActivity extends IBaseActivity {
         return R.layout.activity_main;
     }
 
+    public void WifiNeverDormancy(Context mContext) {
+        ContentResolver resolver = mContext.getContentResolver();
+
+        int value = Settings.System.getInt(resolver, Settings.System.WIFI_SLEEP_POLICY, Settings.System.WIFI_SLEEP_POLICY_DEFAULT);
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
+
+//        SharedPreferences.Editor editor = prefs.edit();
+//        editor.putInt(mContext.getString(android.R.string.wifi_sleep_policy_default), value);
+//        editor.commit();
+
+        if (Settings.System.WIFI_SLEEP_POLICY_NEVER != value) {
+            Settings.System.putInt(resolver, Settings.System.WIFI_SLEEP_POLICY, Settings.System.WIFI_SLEEP_POLICY_NEVER);
+
+        }
+        ToastUtils.show("wifi value:" + value);
+    }
+
     @Override
     protected void initView() {
+
+        WifiNeverDormancy(this);
         MyBufferKnifeUtils.inject(this);
         tvPermissionInfo = findViewById(R.id.tvPermissionInfo);
         editText = findViewById(R.id.editText);
 
 
-        localPhoneNum=  SpUtils.getString("cache","phone");
+        localPhoneNum = SpUtils.getString("cache", "phone");
 
         editSelf.setText(localPhoneNum);
 
         btnRequestPermission = findViewByID(R.id.button2);
-
-
-
 
 
         listView = findViewByID(R.id.listView);
@@ -229,7 +248,7 @@ public class MainActivity extends IBaseActivity {
         listView.setAdapter(adapter);
         onClickPermission(null);
 
-        if(!TextUtils.isEmpty(localPhoneNum)){
+        if (!TextUtils.isEmpty(localPhoneNum)) {
             checkStart();
         }
     }
@@ -317,11 +336,10 @@ public class MainActivity extends IBaseActivity {
     static boolean isDouble;
 
 
-
     public void onclickType(View view) {
-        LoopService.isRequest=!LoopService.isRequest;
-        TextView textView= (TextView) view;
-        textView.setText( LoopService.isRequest?"网页请求":"socket请求");
+        LoopService.isRequest = !LoopService.isRequest;
+        TextView textView = (TextView) view;
+        textView.setText(LoopService.isRequest ? "网页请求" : "socket请求");
     }
 
 
