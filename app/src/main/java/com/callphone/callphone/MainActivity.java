@@ -17,6 +17,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.IBinder;
+import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
@@ -104,6 +105,7 @@ public class MainActivity extends IBaseActivity {
         }
     }
 
+
     private void checkStart() {
         localPhoneNum = editSelf.getText().toString().trim();
         if (localPhoneNum.length() != 11) {
@@ -122,48 +124,48 @@ public class MainActivity extends IBaseActivity {
 
     LoopService mService;
 
-//    ServiceConnection conn = null;
-//
-//    public ServiceConnection getConn() {
-//        if (conn == null) {
-//            conn = new ServiceConnection() {
-//                /**
-//                 * 与服务器端交互的接口方法 绑定服务的时候被回调，在这个方法获取绑定Service传递过来的IBinder对象， * 通过这个IBinder对象，实现宿主和Service的交互。
-//                 */
-//                @Override
-//                public void onServiceConnected(ComponentName name, IBinder service) {
-//                    LogUitls.print(TAG, "绑定成功调用：onServiceConnected");
-//// 获取Binder
-//                    LoopService.LocalBinder binder = (LoopService.LocalBinder) service;
-//
-//                    binder.setAdapter(adapter);
-//                    binder.setLogAdapter(logAdapter);
-//                    binder.setTvSocketInfo(tvSocketInfo);
-//
-//// 获取服务对象
-//                    mService = binder.getService();
-//                }
-//
-//                /**
-//                 * 当取消绑定的时候被回调。但正常情况下是不被调用的，它的调用时机是当Service服务被意外销毁时， * 例如内存的资源不足时这个方法才被自动调用。
-//                 */
-//                @Override
-//                public void onServiceDisconnected(ComponentName name) {
-//                    mService = null;
-//                }
-//            };
-//
-//        }
-//
-//        return conn;
-//    }
+    ServiceConnection conn = null;
+
+    public ServiceConnection getConn() {
+        if (conn == null) {
+            conn = new ServiceConnection() {
+                /**
+                 * 与服务器端交互的接口方法 绑定服务的时候被回调，在这个方法获取绑定Service传递过来的IBinder对象， * 通过这个IBinder对象，实现宿主和Service的交互。
+                 */
+                @Override
+                public void onServiceConnected(ComponentName name, IBinder service) {
+                    LogUitls.print(TAG, "绑定成功调用：onServiceConnected");
+// 获取Binder
+                    LoopService.LocalBinder binder = (LoopService.LocalBinder) service;
+
+                    binder.setAdapter(adapter);
+                    binder.setLogAdapter(logAdapter);
+                    binder.setTvSocketInfo(tvSocketInfo);
+
+// 获取服务对象
+                    mService = binder.getService();
+                }
+
+                /**
+                 * 当取消绑定的时候被回调。但正常情况下是不被调用的，它的调用时机是当Service服务被意外销毁时， * 例如内存的资源不足时这个方法才被自动调用。
+                 */
+                @Override
+                public void onServiceDisconnected(ComponentName name) {
+                    mService = null;
+                }
+            };
+
+        }
+
+        return conn;
+    }
 
 
     private void createService() {
         Intent intent = new Intent(this, LoopService.class);
         intent.putExtra("phone", localPhoneNum);
-//        bindService(intent, getConn(), Service.BIND_AUTO_CREATE);
-        startService(intent);
+        bindService(intent, getConn(), Service.BIND_AUTO_CREATE);
+//        startService(intent);
 
     }
 
@@ -171,9 +173,10 @@ public class MainActivity extends IBaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-//
-//        if (conn != null)
-//            unbindService(conn);
+        if (mWakeLock != null) {
+            mWakeLock.release();
+        }
+        unbindService(getConn());
     }
 
     @Override
@@ -251,7 +254,28 @@ public class MainActivity extends IBaseActivity {
         if (!TextUtils.isEmpty(localPhoneNum)) {
             checkStart();
         }
+
+        PowerManager powerManager = (PowerManager) getSystemService(POWER_SERVICE);
+        if (powerManager != null) {
+            //PARTIAL_WAKE_LOCK :保持CPU 运转，屏幕和键盘灯有可能是关闭的。
+            // SCREEN_DIM_WAKE_LOCK ：保持CPU 运转，允许保持屏幕显示但有可能是灰的，允许关闭键盘灯
+            // SCREEN_BRIGHT_WAKE_LOCK ：保持CPU 运转，允许保持屏幕高亮显示，允许关闭键盘灯
+            //FULL_WAKE_LOCK ：保持CPU 运转，保持屏幕高亮显示，键盘灯也保持亮度
+            ToastUtils.show("请求屏幕常亮");
+            mWakeLock = powerManager.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "WakeLock");
+        }
     }
+
+    PowerManager.WakeLock mWakeLock;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mWakeLock != null) {
+            mWakeLock.acquire();
+        }
+    }
+
 
     public void onClickCall(View view) {
 //        String phoneNum = editText.getText().toString().trim().replace(" ", "");

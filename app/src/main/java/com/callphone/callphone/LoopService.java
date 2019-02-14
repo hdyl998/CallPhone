@@ -90,6 +90,8 @@ public class LoopService extends Service {
     }
     //唤醒屏幕并解锁
     public void wakeUpAndUnlock(Context context) {
+
+        ToastUtils.show("请求点亮屏幕");
         KeyguardManager km = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
         KeyguardManager.KeyguardLock kl = km.newKeyguardLock("unLock");
         //解锁
@@ -97,11 +99,11 @@ public class LoopService extends Service {
         //获取电源管理器对象
         PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
         //获取PowerManager.WakeLock对象,后面的参数|表示同时传入两个值,最后的是LogCat里用的Tag
-        PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.SCREEN_DIM_WAKE_LOCK, "bright");
+        PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "bright");
         //点亮屏幕
         wl.acquire();
-        //释放
-        wl.release();
+//        //释放
+//        wl.release();
     }
     /**
      * author: wu
@@ -427,7 +429,12 @@ public class LoopService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         LogUitls.print(TAG, "onBind" + binder);
-
+        String phone = intent.getStringExtra("phone");
+        localPhoneNum = phone;
+        LogUitls.print(TAG, "onStartCommand" + localPhoneNum);
+        createLooper();
+        ToastUtils.show("开始looper");
+        fun();
         return binder;
     }
 
@@ -471,12 +478,12 @@ public class LoopService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         LogUitls.print(TAG, "onStartCommand");
 
-        String phone = intent.getStringExtra("phone");
-        localPhoneNum = phone;
-        LogUitls.print(TAG, "onStartCommand" + localPhoneNum);
-        createLooper();
-        ToastUtils.show("开始looper");
-        fun();
+//        String phone = intent.getStringExtra("phone");
+//        localPhoneNum = phone;
+//        LogUitls.print(TAG, "onStartCommand" + localPhoneNum);
+//        createLooper();
+//        ToastUtils.show("开始looper");
+//        fun();
 
         return START_NOT_STICKY;
     }
