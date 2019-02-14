@@ -38,7 +38,6 @@ public class MyReceiver extends BroadcastReceiver {
             if (!pm.isScreenOn()) {
                 PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "bright");
                 wl.acquire();
-                wl.release();
             }
             callPhone(context, intent.getStringExtra("phone"));
 //            Intent alarmIntent = new Intent(context, AlarmHandlerActivity.class);

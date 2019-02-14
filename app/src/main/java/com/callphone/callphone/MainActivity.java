@@ -86,6 +86,7 @@ public class MainActivity extends IBaseActivity {
 
     @MyBindView(R.id.tvSocketInfo)
     TextView tvSocketInfo;
+    private ScreenListener l;
 
 
     @Override
@@ -176,6 +177,8 @@ public class MainActivity extends IBaseActivity {
         if (mWakeLock != null) {
             mWakeLock.release();
         }
+        l.unregisterListener();
+
         unbindService(getConn());
     }
 
@@ -264,6 +267,39 @@ public class MainActivity extends IBaseActivity {
             ToastUtils.show("请求屏幕常亮");
             mWakeLock = powerManager.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "WakeLock");
         }
+
+
+        l = new ScreenListener(this);
+        l.begin(new ScreenListener.ScreenStateListener() {
+
+            @Override
+            public void onUserPresent() {
+                Log.e("onUserPresent", "onUserPresent");
+
+            }
+
+            @Override
+            public void onScreenOn() {
+                Log.e("onScreenOn", "onScreenOn");
+            }
+
+            @Override
+            public void onScreenOff() {
+
+                listView.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (mWakeLock != null) {
+                            mWakeLock.acquire();
+                        }
+                        startActivity(new Intent(mContext,AlarmHandlerActivity.class));
+                        Log.e("onScreenOff", "onScreenOff");
+                    }
+                },500);
+
+
+            }
+        });
     }
 
     PowerManager.WakeLock mWakeLock;
