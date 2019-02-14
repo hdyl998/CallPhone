@@ -50,9 +50,8 @@ public class AlarmHandlerActivity extends Activity {
         PowerManager pm = (PowerManager) this.getSystemService(Context.POWER_SERVICE);
         if (!pm.isScreenOn()) {
             textView.setText(String.format("拨打电话：" + phone));
-            PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "mywakelogtag");
+            PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "mywakelogtag");
             wl.acquire();
-            wl.release();
         }
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -95,9 +94,8 @@ public class AlarmHandlerActivity extends Activity {
             LogUitls.print(TAG, phone + "PHONE");
 
             textView.setText(String.format("拨打电话：" + phone));
-            PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "bright");
+            PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "bright");
             wl.acquire();
-            wl.release();
         }
         new Handler().postDelayed(new Runnable() {
             @Override

@@ -36,7 +36,7 @@ public class MyReceiver extends BroadcastReceiver {
         if (km.inKeyguardRestrictedInputMode()) {
             PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
             if (!pm.isScreenOn()) {
-                PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "bright");
+                PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "bright");
                 wl.acquire();
                 wl.release();
             }
