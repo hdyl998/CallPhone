@@ -1,4 +1,4 @@
-package com.callphone.callphone;
+package com.callphone.client;
 
 import android.annotation.SuppressLint;
 import android.app.KeyguardManager;

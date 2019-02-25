@@ -1,4 +1,4 @@
-package com.callphone.callphone;
+package com.callphone.client;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

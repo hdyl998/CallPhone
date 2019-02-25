@@ -1,4 +1,4 @@
-package com.callphone.callphone;
+package com.callphone.client;
 
 import com.hd.appconfig.IAppConfigFactory;
 import com.hd.base.HdApp;

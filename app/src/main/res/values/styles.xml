@@ -8,4 +8,12 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="btnMenu">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/comMenuHeightText</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingLeft">@dimen/n30px</item>
+        <item name="android:textColor">@color/_333333</item>
+        <item name="android:textSize">@dimen/s32px</item>
+    </style>
 </resources>

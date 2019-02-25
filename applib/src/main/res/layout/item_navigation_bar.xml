@@ -24,7 +24,7 @@
         android:paddingTop="@dimen/n3px"
         android:singleLine="true"
         android:text="@string/app_name"
-        android:textColor="@color/white"
+        android:textColor="@color/navigationBarColor"
         android:textSize="@dimen/s20px" />
 
     <ImageView

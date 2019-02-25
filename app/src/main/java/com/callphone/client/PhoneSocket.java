@@ -1,4 +1,4 @@
-package com.callphone.callphone;
+package com.callphone.client;
 
 import com.hd.net.socket.ISocketBase;
 import com.hd.net.socket.MapBuilder;

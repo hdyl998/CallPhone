@@ -1,22 +1,18 @@
-package com.callphone.callphone;
+package com.callphone.client;
 
 import android.annotation.SuppressLint;
 import android.app.KeyguardManager;
 import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.support.annotation.Nullable;
-import android.support.v4.app.NotificationCompat;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -26,7 +22,6 @@ import com.hd.base.adapterbase.SuperAdapter;
 import com.hd.base.maininterface.IComCallBacks;
 import com.hd.net.NetBuilder;
 import com.hd.net.NetCallbackImpl;
-import com.hd.net.socket.MapBuilder;
 import com.hd.net.socket.NetEntity;
 import com.hd.net.socket.SocketMessageListener;
 import com.hd.permission.PermissionHelper;
