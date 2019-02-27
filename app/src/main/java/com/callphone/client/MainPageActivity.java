@@ -62,9 +62,9 @@ public class MainPageActivity extends IBaseActivity {
         navigationBarView.setClickAnimation(false);
         List<NavigationBarItem> listsMenus = new ArrayList<>(2);
         listsMenus.add(new NavigationBarItem("拨号", KEY_PAGE_SCORE,
-                R.mipmap.tab_match_check, R.mipmap.tab_match, new HomeFragment()));
+                R.mipmap.icon_home_order_sel, R.mipmap.icon_home_order, new HomeFragment()));
         listsMenus.add(new NavigationBarItem("我的", KEY_PAGE_MINE,
-                R.mipmap.tab_mine_check, R.mipmap.tab_mine, new MineFragment()));
+                R.mipmap.icon_home_mine_sel, R.mipmap.icon_home_mine, new MineFragment()));
 
         navigationBarView.setDataItems(listsMenus);
 
