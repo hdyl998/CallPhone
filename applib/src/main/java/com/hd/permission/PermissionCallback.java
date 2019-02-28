@@ -66,7 +66,7 @@ public abstract class PermissionCallback {
      * @param permissions
      * @return
      */
-    private static String listPermissions2String(List<String> permissions) {
+    protected static String listPermissions2String(List<String> permissions) {
         List<String> permissionNames = new ArrayList<>(permissions.size());
         for (String permission : permissions) {
             //去重
