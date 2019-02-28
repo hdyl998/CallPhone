@@ -1,6 +1,9 @@
 package com.hd.view.roundrect;
 
+import android.graphics.Color;
+import android.graphics.LinearGradient;
 import android.graphics.RectF;
+import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RoundRectShape;
@@ -21,9 +24,13 @@ public class RoundRectTool {
      * @param mRadius 圆角幅度
      * @param color 颜色
      */
-    public static Drawable getRoundRectBgDrawable(int mRadius, int color) {
+    public static Drawable getRoundRectBgDrawable(int mRadius, int color, int colorEnd,int containerWidth) {
         ShapeDrawable shapeDrawable = new ShapeDrawable(new RoundRectShape(new float[]{mRadius, mRadius, mRadius, mRadius, mRadius, mRadius, mRadius, mRadius}, null, null));
         shapeDrawable.getPaint().setColor(color);
+        if (colorEnd != Color.TRANSPARENT) {
+            LinearGradient shader = new LinearGradient(0, 0, containerWidth, 0, new int[]{color, colorEnd}, null, Shader.TileMode.CLAMP);
+            shapeDrawable.getPaint().setShader(shader);
+        }
         return shapeDrawable;
     }
 
@@ -43,11 +50,17 @@ public class RoundRectTool {
      * @param mRadius 圆角幅度
      * @param color 颜色
      */
-    public static Drawable getRoundRectBorderDrawable(int mRadius, int color, int borderWidth) {
+    public static Drawable getRoundRectBorderDrawable(int mRadius, int color, int borderWidth, int colorEnd,int containerWidth) {
         RectF rectF = new RectF(borderWidth, borderWidth, borderWidth, borderWidth);
         float radii[] = {mRadius, mRadius, mRadius, mRadius, mRadius, mRadius, mRadius, mRadius};
         ShapeDrawable shapeDrawable = new ShapeDrawable(new RoundRectShape(radii, rectF, radii));
         shapeDrawable.getPaint().setColor(color);
+
+        if (colorEnd != Color.TRANSPARENT) {
+            LinearGradient shader = new LinearGradient(0, 0,containerWidth, 1, new int[]{color, colorEnd}, null, Shader.TileMode.CLAMP);
+            shapeDrawable.getPaint().setShader(shader);
+        }
+
         return shapeDrawable;
     }
 

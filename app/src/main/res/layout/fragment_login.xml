@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+
+    <com.hd.view.TitleBar
+        android:id="@+id/titleBar"
+        style="@style/lightTitleBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tbLeftImage="@mipmap/ic_back_black"
+        app:tbRightText="快捷登录" />
+
+    <!--<Space-->
+    <!--android:layout_width="1dp"-->
+    <!--android:layout_height="0dp"-->
+    <!--android:layout_weight="25" />-->
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/n30px"
+        android:text="密码登录"
+        android:layout_marginTop="@dimen/n50px"
+        android:textColor="@color/_464646"
+        android:textSize="@dimen/s48px"
+        android:textStyle="bold" />
+
+    <!--<Space-->
+    <!--android:layout_width="1dp"-->
+    <!--android:layout_height="0dp"-->
+    <!--android:layout_weight="25" />-->
+
+
+    <com.hd.view.edit.EditTextWithDel
+        android:id="@+id/etPhone"
+        android:layout_marginTop="@dimen/n50px"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/n70px"
+        android:layout_marginLeft="@dimen/n30px"
+        android:layout_marginRight="@dimen/n30px"
+        android:background="@null"
+        android:drawableBottom="@drawable/bg_edit"
+        android:hint="输入手机号"
+        android:inputType="number"
+        android:maxLength="13"
+        android:textColorHint="@color/_80000000"
+        android:textSize="@dimen/s48px" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/n70px"
+        android:layout_marginLeft="@dimen/n30px"
+        android:layout_marginTop="@dimen/n66px"
+        android:layout_marginRight="@dimen/n30px"
+        android:orientation="horizontal">
+
+
+        <com.hd.view.edit.EditTextWithDel
+            android:id="@+id/etPwd"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/n70px"
+            android:background="@null"
+            android:drawableBottom="@drawable/bg_edit"
+            android:hint="输入密码"
+            android:inputType="textPassword"
+            android:maxLength="10"
+            android:paddingRight="@dimen/n100px"
+            android:textColorHint="@color/_80000000"
+            android:textSize="@dimen/s48px" />
+
+
+        <ImageView
+            android:id="@+id/iv_pwd_eye"
+            android:layout_width="@dimen/n80px"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="center_vertical"
+            android:paddingLeft="@dimen/n23px"
+            android:paddingRight="@dimen/n23px"
+            android:src="@mipmap/my_login_eye_n" />
+
+
+    </RelativeLayout>
+
+
+    <com.hd.view.roundrect.ShapeCornerBgView
+        android:id="@+id/scb_confirm"
+        style="@style/btnRed"
+        android:layout_width="@dimen/n610px"
+        android:layout_height="@dimen/btnDefaultHeight"
+        android:layout_marginTop="@dimen/n50px"
+        android:enabled="false"
+        android:text="登录" />
+
+    <RelativeLayout
+        android:id="@+id/rlv_lableframe"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/n32px"
+        android:layout_marginLeft="@dimen/n70px"
+        android:layout_marginTop="@dimen/n80px"
+        android:layout_marginRight="@dimen/n70px"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/tv_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="手机注册"
+            android:textColor="@color/_399CFF"
+            android:textSize="@dimen/s28px" />
+
+        <TextView
+            android:id="@+id/tv_forget"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="忘记密码？"
+            android:textColor="@color/_399CFF"
+            android:textSize="@dimen/s28px" />
+    </RelativeLayout>
+
+    <Space
+        android:layout_width="@dimen/divider1pxHeight"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+
+</LinearLayout>

@@ -1,4 +1,4 @@
-package com.callphone.client;
+package com.callphone.client.base;
 
 import android.app.Application;
 import android.content.pm.ApplicationInfo;

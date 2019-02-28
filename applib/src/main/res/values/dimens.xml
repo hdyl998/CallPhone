@@ -11,17 +11,24 @@
     <!--圆角图形、矩形，线条等宽度-->
     <dimen name="shapeLineWidth">2px</dimen>
 
+
+    <!--默认圆角矩形的圆角幅度-->
+    <dimen name="defaultCornerRadius">@dimen/n6px</dimen>
+
+
     <!--1像素的高度-->
     <dimen name="divider1pxHeight">@dimen/lineHeight</dimen>
     <!--大分割线高度,内容之间的-->
-    <dimen name="dividerBigContentContent">@dimen/n15px</dimen>
+    <dimen name="dividerBigContentContent">@dimen/n16px</dimen>
     <!--大分割线高度,头部与内容之间的-->
     <dimen name="dividerBigHeadContent">@dimen/n20px</dimen>
     <!--我的菜单的高度-->
-    <dimen name="comMenuHeight">@dimen/n100px</dimen>
+    <dimen name="comMenuHeight">@dimen/n98px</dimen>
     <!--第二级菜单推荐的高度-->
     <dimen name="comMenuHeightText">@dimen/n90px</dimen>
 
+
+    <dimen name="comMenuTextSize">@dimen/s34px</dimen>
 
     <!--   字体-->
     <dimen name="titleSize">@dimen/s38px</dimen>

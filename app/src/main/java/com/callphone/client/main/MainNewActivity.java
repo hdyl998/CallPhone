@@ -21,7 +21,7 @@ import com.hd.view.navigation.NavigationBarView;
 import java.util.ArrayList;
 import java.util.List;
 //https://www.easyicon.net/538275-VoIP_icon.html
-public class MainPageActivity extends IBaseActivity {
+public class MainNewActivity extends IBaseActivity {
 
 
     @MyBindView(R.id.navigationBar)

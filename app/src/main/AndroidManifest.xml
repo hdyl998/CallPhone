@@ -8,14 +8,14 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
     <application
-        android:name=".App"
+        android:name=".base.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".main.MainPageActivity"
+            android:name=".main.MainNewActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -49,7 +49,20 @@
                 <action android:name="com.callphone" />
             </intent-filter>
         </receiver>
-
+        <!-- 启动页  -->
+        <activity
+            android:name=".start.LogoSplashActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:theme="@style/SplashTheme"
+            android:name=".start.StartActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

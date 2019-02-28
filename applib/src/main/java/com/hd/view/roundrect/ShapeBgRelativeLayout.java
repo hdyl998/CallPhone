@@ -9,14 +9,21 @@ import android.util.AttributeSet;
 import android.widget.RelativeLayout;
 
 import com.hd.R;
-import com.hd.utils.DensityUtils;
 
 
-/**圆角矩形背景的相对布局
+/**
+ * 圆角矩形背景的相对布局
  * Created by liugd on 2017/1/3.
  */
 
 public class ShapeBgRelativeLayout extends RelativeLayout {
+
+    private int mRadius;
+    private int mColorBg;
+    private int mBorderColor;
+    private int mBorderWidth;
+    private int mColorBgEnd;
+    private int mBorderColorEnd;
 
     public ShapeBgRelativeLayout(Context context) {
         super(context);
@@ -25,19 +32,35 @@ public class ShapeBgRelativeLayout extends RelativeLayout {
     public ShapeBgRelativeLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         TypedArray mTypedArray = context.obtainStyledAttributes(attrs, R.styleable.ShapeBgRelativeLayout);
-        int  mRadius = mTypedArray.getDimensionPixelSize(R.styleable.ShapeBgRelativeLayout_appRadius, DensityUtils.getDimenPx(5));
-        int  mColorBg = mTypedArray.getColor(R.styleable.ShapeBgRelativeLayout_appBgColor, Color.BLACK);
-        int mBorderColor = mTypedArray.getColor(R.styleable.ShapeBgRelativeLayout_appBorderColor, Color.TRANSPARENT);
-        int mBorderWidth = mTypedArray.getDimensionPixelSize(R.styleable.ShapeBgRelativeLayout_appBorderWidth, DensityUtils.getDimenPx(1));
+        mRadius = mTypedArray.getDimensionPixelSize(R.styleable.ShapeBgRelativeLayout_appRadius, RoundRectConstants.cornerRadius);
+        mColorBg = mTypedArray.getColor(R.styleable.ShapeBgRelativeLayout_appBgColor, Color.BLACK);
+        mBorderColor = mTypedArray.getColor(R.styleable.ShapeBgRelativeLayout_appBorderColor, Color.TRANSPARENT);
+        mBorderWidth = mTypedArray.getDimensionPixelSize(R.styleable.ShapeBgRelativeLayout_appBorderWidth, RoundRectConstants.shapeLineWidth);
+
+        mColorBgEnd = mTypedArray.getColor(R.styleable.ShapeBgRelativeLayout_appBgColorEnd, Color.TRANSPARENT);
+        mBorderColorEnd = mTypedArray.getColor(R.styleable.ShapeBgRelativeLayout_appBorderColorEnd, Color.TRANSPARENT);
         mTypedArray.recycle();
+    }
+
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        if (getBackground() == null) {
+            setBackgroundDrawable(getBgDrawable());
+        }
+    }
+
+
+    private Drawable getBgDrawable() {
         if (mBorderColor == Color.TRANSPARENT) {
-            this.setBackgroundDrawable(RoundRectTool.getRoundRectBgDrawable( mRadius, mColorBg));
+            return RoundRectTool.getRoundRectBgDrawable(mRadius, mColorBg, mColorBgEnd, getWidth());
         } else {
             Drawable[] array = {
-                    RoundRectTool.getRoundRectBgDrawable( mRadius, mColorBg),
-                    RoundRectTool.getRoundRectBorderDrawable( mRadius, mBorderColor, mBorderWidth)};
+                    RoundRectTool.getRoundRectBgDrawable(mRadius, mColorBg, mColorBgEnd, getWidth()),
+                    RoundRectTool.getRoundRectBorderDrawable(mRadius, mBorderColor, mBorderWidth, mBorderColorEnd, getWidth())};
             LayerDrawable ld = new LayerDrawable(array);
-            this.setBackgroundDrawable(ld);
+            return ld;
         }
     }
 }

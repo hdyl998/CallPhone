@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="defaultTextSize">@dimen/s28px</dimen>
+
+    <!--根据标准而制-->
+    <!--#40 大标题（加粗）-->
+    <dimen name="bigTitleTextSize">@dimen/s40px</dimen>
+
+    <!--#32 标题栏（加粗）-->
+    <dimen name="titleTextSize">@dimen/s32px</dimen>
+    <!--#28 一般字体（加粗、中等）-->
+    <dimen name="textTextSize">@dimen/defaultTextSize</dimen>
+    <!--#24 次小字-->
+    <dimen name="subTextSize">@dimen/s24px</dimen>
+    <!--#22 小字-->
+    <dimen name="smallTextSize">@dimen/s22px</dimen>
+
+
+
+    <!--底部固定按钮高度98px，字体34px-->
+    <dimen name="btnFixedHeight">@dimen/n98px</dimen>
+    <!--非底部固定按钮高度90px，字体34px-->
+    <dimen name="btnDefaultHeight">@dimen/n90px</dimen>
+    <!--按钮字体样式-->
+    <dimen name="btnTextSize">@dimen/s34px</dimen>
+
+</resources>

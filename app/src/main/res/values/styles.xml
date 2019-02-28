@@ -16,4 +16,29 @@
         <item name="android:textColor">@color/_333333</item>
         <item name="android:textSize">@dimen/s32px</item>
     </style>
+
+
+    <style name="SplashTheme" parent="@style/AppBaseTheme">
+        <item name="android:windowBackground">@drawable/logo_splash</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <!--按钮样式红色-->
+    <style name="btnRed">
+        <item name="appBgColor">@color/startRed</item>
+        <item name="appBgColorEnd">@color/endRed</item>
+        <item name="appDisableAlpha">0.5</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/btnTextSize</item>
+    </style>
+    <!--按钮样式蓝色-->
+    <style name="btnBlue">
+        <item name="appBgColor">@color/startBlue</item>
+        <item name="appBgColorEnd">@color/endBlue</item>
+        <item name="appDisableAlpha">0.5</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/btnTextSize</item>
+    </style>
 </resources>

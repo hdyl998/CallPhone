@@ -17,7 +17,6 @@ import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-
 import com.hd.R;
 import com.hd.base.inter.IPagerAdapterTitle;
 import com.hd.base.inter.IViewPagerIndicator;
@@ -45,11 +44,11 @@ public class ShapeCornerSelectView extends LinearLayout implements OnClickListen
 
     private int bgColor = Color.TRANSPARENT;// 没选中的颜色是透明的
 
-    private int mRadius = 5;// 圆角矩形半径
+    private int mRadius =RoundRectConstants.cornerRadius;// 圆角矩形半径
 
     private int borderColor = bgColorSelect;// 边框的颜色
 
-    private int borderWidth = 2;// 边框的宽度
+    private int borderWidth = RoundRectConstants.shapeLineWidth;// 边框的宽度
 
     private boolean isDivider = false;// 是否有分割线
 
@@ -66,8 +65,6 @@ public class ShapeCornerSelectView extends LinearLayout implements OnClickListen
 
         // 转换单位
         textSize = DensityUtils.getDimenPxForText(textSize);
-        mRadius = DensityUtils.getDimenPx(mRadius);
-//        borderWidth = Tools.getDimenPx(borderWidth);
 
         TypedArray mTypedArray = context.obtainStyledAttributes(attrs, R.styleable.ShapeCornerSelectView);
 

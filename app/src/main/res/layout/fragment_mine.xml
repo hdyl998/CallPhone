@@ -11,4 +11,41 @@
         android:layout_height="wrap_content"
         app:tbLeftVisiable="false"
         app:tbTitle="我的" />
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:fillViewport="true"
+        android:layout_height="wrap_content">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+
+
+            <com.hd.view.CircularImageView
+                android:id="@+id/ivHead"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="@dimen/n90px"
+                android:layout_height="@dimen/n90px"
+                android:src="@mipmap/ic_default_person"/>
+
+            <TextView
+                android:id="@+id/tvLogin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/n20px"
+                android:layout_gravity="center_horizontal"
+                android:text="请登录"
+                android:textColor="@color/_000000"
+                android:textSize="@dimen/s32px"
+                android:textStyle="bold"
+                android:visibility="visible" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
 </LinearLayout>

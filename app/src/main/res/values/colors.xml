@@ -3,4 +3,81 @@
     <color name="colorPrimary">#5495E6</color>
     <color name="colorPrimaryDark">#3F51B5</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="_112940">#112940</color>
+    <color name="_99ffffff">#99ffffff</color>
+    <color name="_d5d5d5">#d5d5d5</color>
+    <color name="black">#000000</color>
+    <color name="_777777">#777777</color>
+    <color name="defaultBgColor">#F5F5F5</color>
+    <color name="_F2F2F2">#f2f2f2</color>
+    <color name="_1c1d1e">#1c1d1e</color>
+    <color name="defaultTextColor">#464646</color>
+
+    <color name="_ff9600">#ff9600</color>
+
+    <color name="_F2408C">#F2408C</color>
+    <color name="statusBarColorDark">@color/colorPrimaryDark</color>
+    <color name="colorAccentEnableFalse">@color/_F59AC1</color>
+    <color name="_fefefe">#fefefe</color>
+    <color name="_80000000">#80000000</color>
+    <color name="_eeeeee">#eeeeee</color>
+    <color name="_4A4A4A">#4A4A4A</color>
+    <color name="_EFEFEF">#EFEFEF</color>
+    <color name="_FFFFFF">@color/white</color>
+    <color name="_CCCCCC">#CCCCCC</color>
+    <color name="_B0999999">#B0999999</color>
+    <color name="_B0000000">#B0000000</color>
+    <color name="_F59AC1">#F59AC1</color>
+    <color name="_7B9EDD">#7B9EDD</color>
+    <color name="_010101">#010101</color>
+    <color name="_000000">@color/black</color>
+    <color name="_F16FA7">#F16FA7</color>
+
+    <color name="lineColor">@color/_E5E5E5</color>
+    <color name="_21010E">#21010E</color>
+    <color name="picker_select_text_color">@color/colorAccent</color>
+    <color name="_FA5151">#FA5151</color>
+    <color name="_4EC0CA">#4EC0CA</color>
+    <color name="_22BA02">#22BA02</color>
+    <color name="_F7D046">#F7D046</color>
+    <color name="_E5E5E5">#E5E5E5</color>
+    <color name="_D9000000">#D9000000</color>
+    <color name="_E1E1E1">#E1E1E1</color>
+    <color name="_77000000">#77000000</color>
+    <color name="_2AD7FE">#2AD7FE</color>
+    <color name="_FFCE00">#FFCE00</color>
+    <color name="_00000000">#00000000</color>
+    <color name="_131A21">#131A21</color>
+    <color name="_64A0D7">#64A0D7</color>
+    <color name="_FC5535">#FC5535</color>
+
+    <color name="_399CFF">#399CFF</color>
+    <color name="_FF648B">#FF648B</color>
+
+
+    <color name="_FF74B9">#FF74B9</color>
+    <color name="_FF5377">#FF5377</color>
+
+    <color name="_54B7F4">#54B7F4</color>
+    <color name="_5C79EB">#5C79EB</color>
+
+    <!--根据标准而制-->
+
+    <color name="startBlue">@color/_54B7F4</color>
+    <color name="endBlue">@color/_5C79EB</color>
+
+    <color name="startRed">@color/_FF74B9</color>
+    <color name="endRed">@color/_FF5377</color>
+
+    <color name="darkText">@color/_464646</color>
+    <color name="secondText">@color/_999999</color>
+    <color name="weakText">@color/_CCCCCC</color>
+
+    <color name="blueText">@color/_399CFF</color>
+    <color name="redText">@color/_FF648B</color>
+    <color name="_62B1FF">#62B1FF</color>
+    <color name="_F5F5F5">#F5F5F5</color>
+    <color name="_F3CD8C">#F3CD8C</color>
+    <color name="_7B3100">#7B3100</color>
 </resources>

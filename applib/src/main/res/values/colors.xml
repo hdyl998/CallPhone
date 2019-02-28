@@ -34,7 +34,7 @@
     <color name="colorPrimary">@color/statusBarColorDark</color>
     <color name="colorPrimaryDark">@color/colorPrimary</color>
     <color name="colorAccent">@color/_DD4A4A</color>
-    <color name="navigationBarColor">@color/colorPrimary</color>
+    <color name="navigationBarColor">@color/black</color>
 
     <color name="colorSecondTitle">#99FFFFFF</color>
 

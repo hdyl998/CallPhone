@@ -58,6 +58,17 @@
     <!-- 边框线条的粗细 -->
     <attr name="appBorderColor" format="color" />
 
+
+    <!--背景色渐变最后一个色值,左右渐变,如果为透明色默认无渐变,起始渐变色为appBgColor-->
+    <attr name="appBgColorEnd" format="color" />
+
+    <!--背景边框渐变最后一个色值,左右渐变,如果为透明色默认无渐变,起始渐变色为appBorderColor-->
+    <attr name="appBorderColorEnd" format="color" />
+
+
+    <!--禁用时的透明度值,默认为1 (from=0.0, to=1.0)-->
+    <attr name="appDisableAlpha" format="float" />
+
     <!--  圆角矩形TextView-->
     <declare-styleable name="ShapeCornerBgView">
         <!-- 是否有边框 -->
@@ -70,23 +81,31 @@
         <attr name="appBgColor" />
         <!-- 圆角度数 -->
         <attr name="appRadius" />
-        <!-- 是否有圆角，默认，真 -->
-        <attr name="appTopLeftCorner" format="boolean" />
-        <!-- 是否有圆角，默认，真 -->
-        <attr name="appBottomLeftCorner" format="boolean" />
-        <!-- 是否有圆角，默认，真 -->
-        <attr name="appTopRightCorner" format="boolean" />
-        <!-- 是否有圆角，默认，真 -->
-        <attr name="appBottomRightCorner" format="boolean" />
+
+        <!--背景渐变色-->
+        <attr name="appBgColorEnd" />
+        <!--边框渐变色-->
+        <attr name="appBorderColorEnd" />
+
         <!--默认是不禁用的-->
         <!-- 禁用时的背景颜色 -->
-        <attr name="appEnableFalseBgColor" format="color" />
+        <attr name="appDisableBgColor" format="color" />
         <!-- 禁用时的文字颜色 -->
-        <attr name="appEnableFalseTextColor" format="color" />
-        <!-- 没选中时边框颜色 -->
-        <attr name="appEnableFalseBorderColor" format="color" />
-        <!-- 没选中时是否有边框 -->
-        <attr name="appEnableFalseBorder" format="boolean" />
+        <attr name="appDisableTextColor" format="color" />
+        <!-- 禁用时边框颜色 -->
+        <attr name="appDisableBorderColor" format="color" />
+        <!-- 禁用时是否有边框 -->
+        <attr name="appDisableBorder" format="boolean" />
+
+        <!--禁用时的透明度值,默认为1 (from=0.0, to=1.0)-->
+        <attr name="appDisableAlpha"/>
+
+        <!--禁用时背景色渐变最后一个色值,左右渐变,如果为透明色默认无渐变,起始渐变色为appDisableBgColor-->
+        <attr name="appDisableBgColorEnd" format="color" />
+
+        <!--禁用时背景边框渐变最后一个色值,左右渐变,如果为透明色默认无渐变,起始渐变色为appDisableBorderColor-->
+        <attr name="appDisableBorderColorEnd" format="color" />
+
 
         <!--默认是选中的-->
         <!-- 没选中时背景颜色 -->
@@ -100,10 +119,17 @@
         <!-- 是否选中 -->
         <attr name="appChecked" format="boolean" />
 
+
+        <!--没选中时背景色渐变最后一个色值,左右渐变,如果为透明色默认无渐变,起始渐变色为appUnCheckedBgColor-->
+        <attr name="appUnCheckedBgColorEnd" format="color" />
+        <!--没选中时背景边框渐变最后一个色值,左右渐变,如果为透明色默认无渐变,起始渐变色为appUnCheckedBorderColor-->
+        <attr name="appUnCheckedBorderColorEnd" format="color" />
+
+
         <!--按下去时的背景颜色-->
-        <attr name="appPressedBgColor" format="color" />
+        <attr name="appBgColorPressed" format="color" />
         <!--按下去时的文本颜色-->
-        <attr name="appPressedTextColor" format="color" />
+        <attr name="appTextColorPressed" format="color" />
         <!--是否按下去功能可用-->
         <attr name="appPressedStyle" format="boolean" />
     </declare-styleable>
@@ -144,6 +170,11 @@
         <attr name="appBorderWidth" />
         <!-- 边框线条的粗细 -->
         <attr name="appBorderColor" />
+
+        <!--背景渐变色-->
+        <attr name="appBgColorEnd" />
+        <!--边框渐变色-->
+        <attr name="appBorderColorEnd" />
     </declare-styleable>
 
     <!-- 圆角矩形可以选择的选择器 -->
@@ -154,11 +185,22 @@
         <attr name="appBorderWidth" />
         <!-- 边框线条的粗细 -->
         <attr name="appBorderColor" />
+
+        <!--背景渐变色-->
+        <attr name="appBgColorEnd" />
+        <!--边框渐变色-->
+        <attr name="appBorderColorEnd" />
     </declare-styleable>
     <declare-styleable name="PulltoRefreshAAMListView">
         <!--添加顶部一条线-->
         <attr name="addHeaderLine" format="boolean" />
     </declare-styleable>
+
+    <declare-styleable name="RoundRectImageView">
+        <!--添加顶部一条线-->
+        <attr name="appRadius" />
+    </declare-styleable>
+
 
 
     <!-- 滚动指示器的属性 -->

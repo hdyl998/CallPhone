@@ -6,7 +6,7 @@
         <item name="android:textViewStyle">@style/DefaultTextViewStyle</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <!-- 底部虚拟键的背景颜色-->
-        <item name="android:navigationBarColor">@color/navigationBarColor</item>
+        <item name="android:navigationBarColor">@color/black</item>
 
     </style>
 </resources>

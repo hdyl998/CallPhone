@@ -4,30 +4,35 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.Shader;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.widget.Checkable;
 
 import com.hd.R;
-import com.hd.utils.DensityUtils;
 
 
 /**
  * 圆角背景控件
  */
 public class ShapeCornerBgView extends DrawableCenterTextView implements Checkable {
-    int mBorderWidth = 2;// 默认1dimpx
+    int mBorderWidth = RoundRectConstants.shapeLineWidth;
     boolean isHasBorder = false;
 
     int mColorBorder;// 线条的颜色，默认与字的颜色相同
     int mColorBg;// 背景的颜色，默认是透明的
-    int mRadius = 5;// 默认5
+    int mRadius = RoundRectConstants.cornerRadius;
 
     int mColorText;
+
+    int mColorBorderEnd = Color.TRANSPARENT;
+    int mColorBgEnd = Color.TRANSPARENT;
+    float mAlpha;
 
     private Rect rect = new Rect();// 方角
 
@@ -37,16 +42,21 @@ public class ShapeCornerBgView extends DrawableCenterTextView implements Checkab
 //    boolean isTopRightCorner = true;
 //    boolean isBottomRightCorner = true;
 
-    int mColorBgEnableFalse;
-    int mColorTextEnableFalse;
-    int mColorBorderEnableFalse;
-    boolean isHasBorderEnableFalse = false;
+    int mDisableColorBg;
+    int mDisableColorText;
+    int mDisableColorBorder;
+    boolean isDisableHasBorder = false;
+    int mDisableColorBorderEnd;
+    int mDisableColorBgEnd;
+    float mDisableAlpha;
 
 
-    int mColorBgUnChecked;
-    int mColorTextUnchecked;
-    int mColorBorderUnchecked;
-    boolean isHasBorderUnchecked = false;
+    int mUnCheckedColorBg;
+    int mUnCheckedColorText;
+    int mUnCheckedColorBorder;
+    boolean isUnCheckedHasBorder = false;
+    int mUnCheckedColorBorderEnd ;
+    int mUnCheckedColorBgEnd ;
 
 
     boolean isPressedStyle = false;
@@ -59,10 +69,8 @@ public class ShapeCornerBgView extends DrawableCenterTextView implements Checkab
     public ShapeCornerBgView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-//        mBorderWidth = Tools.getDimenPx(mBorderWidth);
-        mRadius = DensityUtils.getDimenPx(mRadius);
 
-        mColorTextUnchecked=   mColorText = mColorTextEnableFalse = mColorBorder = getCurrentTextColor();
+        mUnCheckedColorText = mColorText = mDisableColorText = mColorBorder = getCurrentTextColor();
 
         TypedArray mTypedArray = context.obtainStyledAttributes(attrs, R.styleable.ShapeCornerBgView);
         isHasBorder = mTypedArray.getBoolean(R.styleable.ShapeCornerBgView_appBorder, isHasBorder);// 默认无边框
@@ -70,40 +78,58 @@ public class ShapeCornerBgView extends DrawableCenterTextView implements Checkab
         mRadius = mTypedArray.getDimensionPixelSize(R.styleable.ShapeCornerBgView_appRadius, mRadius);
 
         mColorBorder = mTypedArray.getColor(R.styleable.ShapeCornerBgView_appBorderColor, mColorBorder);
+        //初始化赋值
+        mUnCheckedColorBorder = mDisableColorBorder = mColorBorder;
 
         mColorBg = isHasBorder ? Color.TRANSPARENT : Color.RED;
 
         mColorBg = mTypedArray.getColor(R.styleable.ShapeCornerBgView_appBgColor, mColorBg);
-        // 四个角落是否全是圆角,默认全是真的
-//        isTopLeftCorner = mTypedArray.getBoolean(R.styleable.ShapeCornerBgView_appTopLeftCorner, isTopLeftCorner);
-//        isBottomLeftCorner = mTypedArray.getBoolean(R.styleable.ShapeCornerBgView_appBottomLeftCorner, isBottomLeftCorner);
-//        isTopRightCorner = mTypedArray.getBoolean(R.styleable.ShapeCornerBgView_appTopRightCorner, isTopRightCorner);
-//        isBottomRightCorner = mTypedArray.getBoolean(R.styleable.ShapeCornerBgView_appBottomRightCorner, isBottomRightCorner);
+        //初始化赋值
+        mDisableColorBg = mUnCheckedColorBg = mColorBg;
 
-        mColorBgEnableFalse = mTypedArray.getColor(R.styleable.ShapeCornerBgView_appEnableFalseBgColor, mColorBg);
-        mColorTextEnableFalse = mTypedArray.getColor(R.styleable.ShapeCornerBgView_appEnableFalseTextColor, mColorTextEnableFalse);
-        mColorBorderEnableFalse = mTypedArray.getColor(R.styleable.ShapeCornerBgView_appEnableFalseBorderColor, mColorBorder);
-        isHasBorderEnableFalse = mTypedArray.getBoolean(R.styleable.ShapeCornerBgView_appEnableFalseBorder, isHasBorderEnableFalse);
+        //渐变色
+        mColorBgEnd = mTypedArray.getColor(R.styleable.ShapeCornerBgView_appBgColorEnd, mColorBgEnd);
+        mColorBorderEnd = mTypedArray.getColor(R.styleable.ShapeCornerBgView_appBorderColorEnd, mColorBorderEnd);
+        //初始化赋值
+        mDisableColorBgEnd=mUnCheckedColorBgEnd=mColorBgEnd;
+        mDisableColorBorderEnd=mUnCheckedColorBorderEnd=mColorBorderEnd;
 
-        mColorBgUnChecked = mTypedArray.getColor(R.styleable.ShapeCornerBgView_appUnCheckedBgColor, mColorBg);
-        mColorTextUnchecked = mTypedArray.getColor(R.styleable.ShapeCornerBgView_appUnCheckedTextColor, mColorTextUnchecked);
-        mColorBorderUnchecked = mTypedArray.getColor(R.styleable.ShapeCornerBgView_appUnCheckedBorderColor, mColorBorder);
-        isHasBorderUnchecked = mTypedArray.getBoolean(R.styleable.ShapeCornerBgView_appUnCheckedBorder, isHasBorderUnchecked);
+
+        mDisableColorBg = mTypedArray.getColor(R.styleable.ShapeCornerBgView_appDisableBgColor, mDisableColorBg);
+        mDisableColorText = mTypedArray.getColor(R.styleable.ShapeCornerBgView_appDisableTextColor, mDisableColorText);
+        mDisableColorBorder = mTypedArray.getColor(R.styleable.ShapeCornerBgView_appDisableBorderColor, mDisableColorBorder);
+        isDisableHasBorder = mTypedArray.getBoolean(R.styleable.ShapeCornerBgView_appDisableBorder, isDisableHasBorder);
+
+        //渐变色,禁用时
+        mDisableColorBgEnd = mTypedArray.getColor(R.styleable.ShapeCornerBgView_appDisableBgColorEnd, mDisableColorBgEnd);
+        mDisableColorBorderEnd = mTypedArray.getColor(R.styleable.ShapeCornerBgView_appDisableBorderColorEnd, mDisableColorBorderEnd);
+        mDisableAlpha = mTypedArray.getFloat(R.styleable.ShapeCornerBgView_appDisableAlpha, 1f);
+
+        mUnCheckedColorBg = mTypedArray.getColor(R.styleable.ShapeCornerBgView_appUnCheckedBgColor, mUnCheckedColorBg);
+        mUnCheckedColorText = mTypedArray.getColor(R.styleable.ShapeCornerBgView_appUnCheckedTextColor, mUnCheckedColorText);
+        mUnCheckedColorBorder = mTypedArray.getColor(R.styleable.ShapeCornerBgView_appUnCheckedBorderColor, mUnCheckedColorBorder);
+        isUnCheckedHasBorder = mTypedArray.getBoolean(R.styleable.ShapeCornerBgView_appUnCheckedBorder, isUnCheckedHasBorder);
+        //渐变色
+        mUnCheckedColorBgEnd = mTypedArray.getColor(R.styleable.ShapeCornerBgView_appUnCheckedBgColorEnd, mUnCheckedColorBgEnd);
+        mUnCheckedColorBorderEnd = mTypedArray.getColor(R.styleable.ShapeCornerBgView_appUnCheckedBorderColorEnd, mUnCheckedColorBorderEnd);
+
 
         isChecked = mTypedArray.getBoolean(R.styleable.ShapeCornerBgView_appChecked, isChecked);
 
         isPressedStyle = mTypedArray.getBoolean(R.styleable.ShapeCornerBgView_appPressedStyle, isPressedStyle);
 
-        mColorTextPressed = mTypedArray.getColor(R.styleable.ShapeCornerBgView_appPressedTextColor, mColorTextPressed);
-        mColorBgPressed = mTypedArray.getColor(R.styleable.ShapeCornerBgView_appPressedBgColor, mColorBgPressed);
+        mColorTextPressed = mTypedArray.getColor(R.styleable.ShapeCornerBgView_appTextColorPressed, mColorTextPressed);
+        mColorBgPressed = mTypedArray.getColor(R.styleable.ShapeCornerBgView_appBgColorPressed, mColorBgPressed);
         mTypedArray.recycle();
 
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
+        mAlpha = getAlpha();
+
 //        shapeDrawable = new ShapeDrawable();
 
         //外部没设置值采用center为默认值
-        if(this.getGravity()==(Gravity.TOP | Gravity.START)){
+        if (this.getGravity() == (Gravity.TOP | Gravity.START)) {
             this.setGravity(Gravity.CENTER);// 全部居中显示
         }
         this.setIncludeFontPadding(false);//设置居中时要用到，不然会不能居中
@@ -111,7 +137,8 @@ public class ShapeCornerBgView extends DrawableCenterTextView implements Checkab
         this.setEnabled(isEnabled());
     }
 
-//    ShapeDrawable shapeDrawable;
+    //    ShapeDrawable shapeDrawable;
+    RectF rectF = new RectF();
 
     @Override
     protected void onDraw(Canvas canvas) {
@@ -120,16 +147,24 @@ public class ShapeCornerBgView extends DrawableCenterTextView implements Checkab
         int colorBG = mColorBg;
         boolean hasBorder = isHasBorder;
         int borderColor = mColorBorder;
+        int colorBGEnd = mColorBgEnd;
+        int colorBorderEnd = mColorBorderEnd;
         //禁用
-        if (isEnabled() == false) {
-            colorBG = mColorBgEnableFalse;
-            hasBorder = isHasBorderEnableFalse;
-            borderColor = mColorBorderEnableFalse;
+        if (!isEnabled()) {
+            colorBG = mDisableColorBg;
+            hasBorder = isDisableHasBorder;
+            borderColor = mDisableColorBorder;
+            colorBGEnd = mDisableColorBgEnd;
+            colorBorderEnd = mDisableColorBorderEnd;
+            setAlpha(mDisableAlpha);
         } else {
-            if (isChecked() == false) {//无选中时,默认是选中
-                colorBG = mColorBgUnChecked;
-                borderColor = mColorBorderUnchecked;
-                hasBorder = isHasBorderUnchecked;
+            setAlpha(mAlpha);
+            if (!isChecked()) {//无选中时,默认是选中
+                colorBG = mUnCheckedColorBg;
+                borderColor = mUnCheckedColorBorder;
+                hasBorder = isUnCheckedHasBorder;
+                colorBGEnd = mUnCheckedColorBgEnd;
+                colorBorderEnd = mUnCheckedColorBorderEnd;
             } else if (isPressedStyle && isPressed) {
                 colorBG = mColorBgPressed;
                 hasBorder = false;
@@ -138,19 +173,42 @@ public class ShapeCornerBgView extends DrawableCenterTextView implements Checkab
 
         // 先画背景
         if (colorBG != Color.TRANSPARENT) {// 透明就不用画了
-            RectF rectF = new RectF(0, 0, getWidth(), getHeight());
+            rectF.left = 0;
+            rectF.top = 0;
+            rectF.right = getWidth();
+            rectF.bottom = getHeight();
+
             mPaint.setColor(colorBG);
             mPaint.setStyle(Paint.Style.FILL);
+
+            if (colorBGEnd != Color.TRANSPARENT) {
+                LinearGradient shader = new LinearGradient(0, 0, getWidth(), 0, new int[]{colorBG, colorBGEnd}, null, Shader.TileMode.CLAMP);
+                mPaint.setShader(shader);
+            } else {
+                mPaint.setShader(null);
+            }
             canvas.drawRoundRect(rectF, mRadius, mRadius, mPaint);
         }
         // 有边框
         if (hasBorder) {
             //// 内部矩形与外部矩形的距离
             int borderHalf = mBorderWidth / 2;
-            RectF rectF = new RectF(borderHalf, borderHalf, getWidth() - borderHalf, getHeight() - borderHalf);
+
+            rectF.left = borderHalf;
+            rectF.top = borderHalf;
+            rectF.right = getWidth() - borderHalf;
+            rectF.bottom = getHeight() - borderHalf;
+
             mPaint.setStrokeWidth(mBorderWidth);
             mPaint.setColor(borderColor);
             mPaint.setStyle(Paint.Style.STROKE);
+
+            if (colorBorderEnd != Color.TRANSPARENT) {
+                LinearGradient shader = new LinearGradient(0, 0, getWidth(), 0, new int[]{borderColor, colorBorderEnd},null, Shader.TileMode.CLAMP);
+                mPaint.setShader(shader);
+            } else {
+                mPaint.setShader(null);
+            }
             canvas.drawRoundRect(rectF, mRadius, mRadius, mPaint);
         }
         super.onDraw(canvas);
@@ -201,7 +259,7 @@ public class ShapeCornerBgView extends DrawableCenterTextView implements Checkab
     @Override
     public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);
-        setTextColor(enabled ? mColorText : mColorTextEnableFalse);
+        setTextColor(enabled ? mColorText : mDisableColorText);
         invalidate();
     }
 
@@ -239,7 +297,7 @@ public class ShapeCornerBgView extends DrawableCenterTextView implements Checkab
             return;
         }
         isChecked = checked;
-        setTextColor(checked ? mColorText : mColorTextUnchecked);
+        setTextColor(checked ? mColorText : mUnCheckedColorText);
         invalidate();
     }
 
