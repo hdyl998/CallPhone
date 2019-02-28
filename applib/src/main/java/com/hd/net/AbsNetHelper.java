@@ -1,6 +1,7 @@
 package com.hd.net;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -58,7 +59,7 @@ public abstract class AbsNetHelper {
         for (Iterator<Map.Entry<String, String>> it = mapParams.entrySet().iterator(); it.hasNext(); ) {
             Map.Entry<String, String> item = it.next();
             String val = item.getValue();
-            if (val == null) {
+            if (TextUtils.isEmpty(val)) {
                 it.remove();
             }
         }

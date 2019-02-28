@@ -6,30 +6,30 @@ package com.hd.net;
  * E-Mail Address：986850427@qq.com
  */
 public class DefaultNetDataBean implements INetDataBean {
-    public int code;
-    public String msg;
-    public String data;
+    public int CODE;
+    public String MSG;
+    public String DATA;
 
     public DefaultNetDataBean(){
 
     }
 
     public DefaultNetDataBean(String data){
-        this.data=data;
+        this.DATA=data;
     }
 
     @Override
     public int getCode() {
-        return code;
+        return CODE;
     }
 
     @Override
     public String getMsg() {
-        return msg;
+        return MSG;
     }
 
     @Override
     public String getData() {
-        return data;
+        return DATA;
     }
 }

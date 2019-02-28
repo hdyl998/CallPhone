@@ -168,7 +168,7 @@ public abstract class IBaseViewPagerPullListViewFragment<T> extends IBaseViewPag
 
     @Override
     public void onSuccess(NetEntity entity) throws Exception {
-        List<T> list = JSON.parseArray(entity.data, tClass);
+        List<T> list = JSON.parseArray(entity.DATA, tClass);
         listViews[(int) entity.flag].setDataFromNetWork(list);//设置数据来自网络
     }
 

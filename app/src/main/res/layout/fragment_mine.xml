@@ -15,35 +15,64 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:fillViewport="true"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:fillViewport="true">
 
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/llHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/n50px"
+                android:paddingTop="@dimen/n50px">
+
+                <com.hd.view.CircularImageView
+                    android:id="@+id/ivHead"
+
+                    android:layout_width="@dimen/n120px"
+                    android:layout_height="@dimen/n120px"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@mipmap/ic_default_person" />
+
+                <TextView
+                    android:id="@+id/tvLogin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:padding="@dimen/n20px"
+                    android:text="请登录"
+                    android:textColor="@color/_000000"
+                    android:textSize="@dimen/s32px"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
 
 
-            <com.hd.view.CircularImageView
-                android:id="@+id/ivHead"
-                android:layout_gravity="center_horizontal"
-                android:layout_width="@dimen/n90px"
-                android:layout_height="@dimen/n90px"
-                android:src="@mipmap/ic_default_person"/>
+            </LinearLayout>
+
+            <include layout="@layout/divider_common_20" />
 
             <TextView
-                android:id="@+id/tvLogin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/n20px"
-                android:layout_gravity="center_horizontal"
-                android:text="请登录"
-                android:textColor="@color/_000000"
-                android:textSize="@dimen/s32px"
-                android:textStyle="bold"
-                android:visibility="visible" />
+                android:id="@+id/tvChangePwd"
+                style="@style/btnMenu"
+                android:text="修改密码" />
 
+            <include layout="@layout/view_line_1_deep" />
+
+
+            <TextView
+                android:id="@+id/tvSetting"
+                style="@style/btnMenu"
+                android:text="设置" />
+
+            <include layout="@layout/view_line_1_deep" />
         </LinearLayout>
 
     </ScrollView>

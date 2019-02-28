@@ -1,14 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <com.hd.view.TitleBar
         android:id="@+id/titleBar"
-        app:tbTitle="首页"
-        app:tbLeftVisiable="false"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        app:tbLeftVisiable="false"
+        app:tbTitle="@string/app_name" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tvBroadcast"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/_F3CD8C"
+            android:drawableLeft="@mipmap/ic_notice"
+            android:drawablePadding="@dimen/n19px"
+            android:gravity="center_vertical"
+            android:paddingBottom="@dimen/n15px"
+            android:paddingLeft="@dimen/n30px"
+            android:paddingTop="@dimen/n15px"
+            android:text="@string/app_name"
+            android:textColor="@color/_7B3100"
+            android:textSize="@dimen/s24px" />
+
+        <ImageView
+            android:id="@+id/ivNext"
+            android:layout_gravity="right|center_vertical"
+            android:layout_width="wrap_content"
+            android:src="@mipmap/ic_next_brown"
+            android:layout_marginRight="@dimen/defaultPadding"
+            android:layout_height="wrap_content" />
+    </FrameLayout>
+
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/comMenuHeight"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/n30px"
+        android:text="拨号记录"
+        android:background="@color/white"
+        android:textColor="@color/defaultTextColor"
+        android:textSize="@dimen/defaultTextSize" />
+
+    <com.hd.view.listview.PulltoRefreshAAMListView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </LinearLayout>

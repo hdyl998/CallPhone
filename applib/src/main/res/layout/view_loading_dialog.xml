@@ -13,7 +13,7 @@
     android:paddingTop="@dimen/n36px">
 
     <ProgressBar
-        android:indeterminateTint="@color/_DD4A4A"
+        android:indeterminateTint="@color/white"
         android:indeterminateTintMode="src_atop"
         android:layout_width="@dimen/n71px"
         android:layout_height="@dimen/n71px"/>

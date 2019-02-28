@@ -3,10 +3,9 @@ package com.callphone.client.main.mine;
 import android.text.TextUtils;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.callphone.client.login.LoginSuccItem;
 import com.callphone.client.mine.MinItem;
 import com.hd.cache.ICacheConfig;
-
+import com.callphone.client.mine.login.*;
 /**
  * Note：None
  * Created by Liuguodong on 2018/12/29 11:29
@@ -19,28 +18,16 @@ public class UserCacheConfig extends ICacheConfig {
     public String userid = "";
     public String token = "";
     public String headimg = "";
-    public int isdaren;
+    public String phone;
 
 
     public void setUserInfo(LoginSuccItem info){
-        this.userid=info.userid;
-        this.token=info.usersn;
+        this.token=info.ck;
+        this.phone=info.phone;
         //this.headimg=info.headimg;
         saveConfig();
     }
 
-    public void setUserInfo(UserItem info){
-        this.userid=info.userid;
-        this.username=info.nickname;
-        this.headimg=info.headimg;
-        saveConfig();
-    }
-    public void setUserInfo(MinItem info){
-        this.username=info.nickname;
-        this.headimg=info.headimg;
-        this.isdaren=info.isdaren;
-        saveConfig();
-    }
 
     public String getUid() {
         return userid;
@@ -70,12 +57,4 @@ public class UserCacheConfig extends ICacheConfig {
         return INSTANCE;
     }
 
-    /***
-     * 是否是达人
-     * @return
-     */
-    @JSONField(serialize = false)
-    public boolean isDarenPlayer(){
-        return 1==isdaren;
-    }
 }

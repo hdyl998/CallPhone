@@ -1,4 +1,4 @@
-package com.callphone.client.login;
+package com.callphone.client.mine.login;
 
 import java.io.Serializable;
 

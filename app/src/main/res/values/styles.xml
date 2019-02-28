@@ -6,15 +6,21 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="titleBarStyle">@style/darkTitleBar</item>
     </style>
 
     <style name="btnMenu">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/comMenuHeightText</item>
+        <item name="android:layout_height">@dimen/comMenuHeight</item>
         <item name="android:gravity">center_vertical</item>
-        <item name="android:paddingLeft">@dimen/n30px</item>
-        <item name="android:textColor">@color/_333333</item>
-        <item name="android:textSize">@dimen/s32px</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">@dimen/titleSizeSub</item>
+        <item name="android:background">@drawable/list_item_selectedbg</item>
+        <item name="android:drawableLeft">@mipmap/icon_mine_setting</item>
+        <item name="android:drawablePadding">@dimen/n22px</item>
+        <item name="android:paddingLeft">@dimen/defaultPadding</item>
+
     </style>
 
 

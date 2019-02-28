@@ -12,8 +12,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/n22px"
         android:gravity="center_horizontal"
-        android:textColor="@color/_333333"
-        android:textSize="@dimen/n36px"
+        android:textColor="@color/defaultTextColor"
+        android:textSize="@dimen/titleSize"
         android:visibility="gone" />
 
     <FrameLayout

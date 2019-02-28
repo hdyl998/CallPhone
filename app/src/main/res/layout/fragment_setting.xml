@@ -14,21 +14,24 @@
 
     <include layout="@layout/divider_common_20" />
 
-    <TextView
-
-        style="@style/btnMenu"
-        android:text="关于"
-
-        />
-
-    <include
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/lineHeight"
-        android:layout_marginLeft="@dimen/n30px"
-        layout="@layout/view_line_1_deep" />
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
 
-    <TextView
+        <TextView
+            android:id="@+id/tvAbout"
+            style="@style/btnMenu"
+            android:text="关于" />
 
-        style="@style/btnMenu"
-        android:text="退出登录" />
+        <include layout="@layout/view_line_1_deep" />
+
+        <TextView
+            android:id="@+id/tvLogout"
+            style="@style/btnMenu"
+
+            android:text="退出登录" />
+
+    </LinearLayout>
 </LinearLayout>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.hd.view.TitleBar
+        android:id="@+id/titleBar"
+        app:tbTitle="拨号详情"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/textView"
+        android:padding="@dimen/defaultPadding"
+        android:lineSpacingExtra="@dimen/n5px"
+        android:text="@string/app_test"
+        android:textColor="@color/defaultTextColor"
+        android:textSize="@dimen/titleTextSize"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

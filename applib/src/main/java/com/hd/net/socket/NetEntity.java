@@ -37,11 +37,11 @@ public class NetEntity<T> extends DefaultNetDataBean implements Serializable {
     }
 
     public int getCode() {
-        return code;
+        return CODE;
     }
 
     public void setCode(int code) {
-        this.code = code;
+        this.CODE = code;
     }
 
 
@@ -50,11 +50,11 @@ public class NetEntity<T> extends DefaultNetDataBean implements Serializable {
     }
 
     public void setData(String data) {
-        this.data = data;
+        this.DATA = data;
     }
 
     public void setMsg(String msg) {
-        this.msg = msg;
+        this.MSG = msg;
     }
 
     public Object getFlag() {
@@ -72,11 +72,11 @@ public class NetEntity<T> extends DefaultNetDataBean implements Serializable {
     }
 
     public String getMsg() {
-        return msg;
+        return MSG;
     }
 
     public String getData() {
-        return data;
+        return DATA;
     }
 
 //    @JSONField(serialize = false)
@@ -90,11 +90,11 @@ public class NetEntity<T> extends DefaultNetDataBean implements Serializable {
 
 
     public boolean isLoginError() {
-        return ERROR_NOT_LOGIN == code;
+        return ERROR_NOT_LOGIN == CODE;
     }
 
     public boolean isParaseError() {
-        return ERROR_PARASE == code;
+        return ERROR_PARASE == CODE;
     }
 
 
@@ -107,12 +107,12 @@ public class NetEntity<T> extends DefaultNetDataBean implements Serializable {
      */
     @JSONField(serialize = false) //不去序列化免得
     public <T> T getObjectData(Class<T> clazz) {
-        return JSON.parseObject(data, clazz);
+        return JSON.parseObject(DATA, clazz);
     }
 
     @JSONField(serialize = false) //不去序列化免得
     public JSONObject getJSONObject() {
-        return JSON.parseObject(data);
+        return JSON.parseObject(DATA);
     }
 
     /***
@@ -124,7 +124,7 @@ public class NetEntity<T> extends DefaultNetDataBean implements Serializable {
      */
     @JSONField(serialize = false) //不去序列化免得
     public <T> List<T> getArrayData(Class<T> clazz) {
-        return JSON.parseArray(data, clazz);
+        return JSON.parseArray(DATA, clazz);
     }
 
     /***
@@ -134,7 +134,7 @@ public class NetEntity<T> extends DefaultNetDataBean implements Serializable {
      */
     @JSONField(serialize = false) //不去序列化免得
     public boolean isDataEmpty() {
-        return TextUtils.isEmpty(data) || "[]".equals(data) || "{}".equals(data);
+        return TextUtils.isEmpty(DATA) || "[]".equals(DATA) || "{}".equals(DATA);
     }
 
     /***
@@ -160,10 +160,10 @@ public class NetEntity<T> extends DefaultNetDataBean implements Serializable {
 
 
     public String getCodeString() {
-        if(TextUtils.isEmpty(msg)){
-            return msgContainer.get(code);
+        if(TextUtils.isEmpty(MSG)){
+            return msgContainer.get(CODE);
         }
-        return msg;
+        return MSG;
     }
 
 }

@@ -5,11 +5,14 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 import com.callphone.client.R;
+import com.callphone.client.base.AppConstants;
 import com.callphone.client.home.HomeFragment;
 import com.callphone.client.mine.MineFragment;
 import com.hd.base.IBaseActivity;
 import com.hd.base.IBaseFragment;
 import com.hd.base.adapterbase.MyFragmentPagerAdapter;
+import com.hd.permission.PermissionCallback;
+import com.hd.permission.PermissionHelper;
 import com.hd.utils.bufferknife.MyBindView;
 import com.hd.utils.bufferknife.MyBufferKnifeUtils;
 import com.hd.utils.log.impl.LogUitls;
@@ -47,6 +50,8 @@ public class MainNewActivity extends IBaseActivity {
 //        android.os.Process.killProcess(android.os.Process.myPid());
     }
 
+
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -62,8 +67,8 @@ public class MainNewActivity extends IBaseActivity {
         //点击无动画
         navigationBarView.setClickAnimation(false);
         List<NavigationBarItem> listsMenus = new ArrayList<>(2);
-        listsMenus.add(new NavigationBarItem("拨号", KEY_PAGE_SCORE,
-                R.mipmap.icon_home_order_sel, R.mipmap.icon_home_order, new HomeFragment()));
+        listsMenus.add(new NavigationBarItem("首页", KEY_PAGE_SCORE,
+                R.mipmap.icon_home_home_sel, R.mipmap.icon_home_home, new HomeFragment()));
         listsMenus.add(new NavigationBarItem("我的", KEY_PAGE_MINE,
                 R.mipmap.icon_home_mine_sel, R.mipmap.icon_home_mine, new MineFragment()));
 

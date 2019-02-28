@@ -26,7 +26,7 @@
         android:paddingLeft="@dimen/n30px"
         android:paddingRight="@dimen/n30px"
         android:textColor="@color/colorWhiteStyleTextColor"
-        android:textSize="@dimen/s28px"
+        android:textSize="@dimen/titleSizeSub"
         android:visibility="visible" />
 
     <TextView
@@ -39,7 +39,7 @@
         android:paddingLeft="@dimen/n30px"
         android:paddingRight="@dimen/n30px"
         android:textColor="@color/colorWhiteStyleTextColor"
-        android:textSize="@dimen/s30px"
+        android:textSize="@dimen/titleSizeSub"
         android:visibility="visible" />
 
 

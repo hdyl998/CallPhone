@@ -5,10 +5,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.callphone.client.R;
+import com.callphone.client.base.data.AppSaveData;
+import com.callphone.client.main.bean.EventItem;
+import com.callphone.client.main.mine.UserCacheConfig;
+import com.callphone.client.mine.login.ChangePwdFragment;
 import com.callphone.client.main.mine.LoginManager;
 import com.hd.base.fragment.IBaseTitleBarFragment;
 import com.hd.utils.bufferknife.MyBindView;
 import com.hd.utils.bufferknife.MyBufferKnifeUtils;
+import com.hd.utils.log.impl.LogUitls;
+
+import org.greenrobot.eventbus.Subscribe;
 
 /**
  * Created by liugd on 2019/2/26.
@@ -16,30 +23,76 @@ import com.hd.utils.bufferknife.MyBufferKnifeUtils;
 
 public class MineFragment extends IBaseTitleBarFragment {
 
-    @MyBindView(value = R.id.ivHead, click = true)
+    @MyBindView(value = R.id.ivHead)
     ImageView ivHead;
 
-    @MyBindView(value = R.id.tvLogin, click = true)
+    @MyBindView(value = R.id.tvLogin)
     TextView tvLogin;
 
 
     @Override
     public void onClick(View v) {
-        if(LoginManager.isLoginAndRedict(mContext)){
+        if (!LoginManager.isLoginAndRedict(mContext)) {
             return;
         }
-        switch (v.getId()){
-            case R.id.ivHead:
-            case R.id.tvLogin:
+        switch (v.getId()) {
+            case R.id.llHeader:
+                break;
+            case R.id.tvSetting:
+                startFragment(SettingFragment.class);
+                break;
+            case R.id.tvChangePwd:
+                startFragment(ChangePwdFragment.class);
                 break;
 
         }
     }
 
+
+    @Override
+    public int[] setClickIDs() {
+        return new int[]{R.id.tvChangePwd, R.id.tvSetting, R.id.llHeader};
+    }
+
     @Override
     protected void initTitleBarView() {
         MyBufferKnifeUtils.inject(this);
+        updateUI(LoginManager.isLogin() ? AppSaveData.getUserVInfo() : null);
     }
+
+    @Override
+    protected boolean isEventBus() {
+        return true;
+    }
+
+
+    /***
+     * 当用户登录时
+     */
+    @Subscribe
+    public void onUserLogin(EventItem.LoginEvent item) {
+        updateUI(AppSaveData.getUserVInfo());
+    }
+
+    /***
+     * 当用户登录时
+     */
+    @Subscribe
+    public void onUserLogout(EventItem.LoginOutEvent item) {
+        updateUI(null);
+    }
+
+    private void updateUI(UserCacheConfig item) {
+
+        if (item == null) {
+            ivHead.setImageResource(R.mipmap.ic_default_person);
+            tvLogin.setText("登录后查看");
+        } else {
+            ivHead.setImageResource(R.mipmap.ic_person);
+            tvLogin.setText(item.phone);
+        }
+    }
+
 
     @Override
     public int getLayoutId() {

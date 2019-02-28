@@ -11,6 +11,6 @@ public class SuccessMessage implements IMessage {
 
     @Override
     public boolean isShowMsg(NetEntity netEntity) {
-        return netEntity.code >= 0;
+        return netEntity.CODE >= 0;
     }
 }

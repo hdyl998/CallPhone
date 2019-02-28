@@ -25,4 +25,6 @@
     <!--按钮字体样式-->
     <dimen name="btnTextSize">@dimen/s34px</dimen>
 
+
+    <dimen name="defaultPadding">@dimen/n30px</dimen>
 </resources>

@@ -32,7 +32,7 @@ public class AppDeviceInfo {
         manager.getDefaultDisplay().getMetrics(display);
         mScreenHeight = Math.max(display.heightPixels, display.widthPixels);
         mScreenWidth = Math.min(display.heightPixels, display.widthPixels);
-        mDialogWidth = (int) (mScreenWidth * 0.9f);
+        mDialogWidth = (int) (mScreenWidth * 0.8f);
         mWidthDP = DensityUtils.px2dip( AppDeviceInfo.mScreenWidth);
         //API19以上取大于0的值,否则不给值
         mStatusBarHeight = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ? DensityUtils.getStatusBarHeight(HdApp.getContext()) : 0;

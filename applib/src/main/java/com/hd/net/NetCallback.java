@@ -23,7 +23,7 @@ public interface NetCallback<T> {
      * @param response
      * @return
      */
-    default INetDataBean getNetDataProvider(String response){
+    default INetDataBean getNetDataProvider(String response) {
         return JSON.parseObject(response, DefaultNetDataBean.class);
     }
 
@@ -34,13 +34,15 @@ public interface NetCallback<T> {
      * @param response 解析用到的数据
      */
     default void doParse(NetEntity<T> item, String response) throws Exception {
-        INetDataBean inter=getNetDataProvider(response);
-        item.code=inter.getCode();
-        item.msg=inter.getMsg();
-        if (item.code > -1) {//0及以上为正常
-            item.data = inter.getData();
+        INetDataBean inter = getNetDataProvider(response);
+        item.setCode(inter.getCode());
+        ;
+        item.setMsg(inter.getMsg());
+        if (item.getCode() > -1) {//0及以上为正常
+            item.setData(inter.getData());
+            ;
             try {
-                item.dataBean = onParseData(item.data);
+                item.dataBean = onParseData(item.getData());
                 LogUitls.print(TAG, "dataBean是否为空" + (item.dataBean == null));
                 if (item.dataBean instanceof List) {
                     LogUitls.print(TAG, "item.dataBean 为 list size=" + ((List) item.dataBean).size());
@@ -49,7 +51,7 @@ public interface NetCallback<T> {
                 e.printStackTrace();
                 item.dataBean = null;
                 LogUitls.print(TAG, "解析数据失败");
-                throw new RuntimeException("解析数据失败"+item.data);
+                throw new RuntimeException("解析数据失败" + item.getData());
             }
         } else {
             item.dataBean = null;

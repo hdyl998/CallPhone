@@ -3,30 +3,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/_FFFFFF"
     android:gravity="center_horizontal"
-    android:orientation="vertical"
-    android:background="@color/_FFFFFF">
+    android:orientation="vertical">
 
 
     <com.hd.view.TitleBar
         android:id="@+id/titleBar"
-        style="@style/lightTitleBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:tbLeftImage="@mipmap/ic_back_black" />
+        android:layout_height="wrap_content" />
 
 
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text=""
-        android:textSize="@dimen/s48px"
-        android:textColor="@color/_464646"
-        android:textStyle="bold"
         android:layout_marginLeft="@dimen/n30px"
-        android:layout_marginTop="@dimen/n50px"/>
-
+        android:layout_marginTop="@dimen/n50px"
+        android:text=""
+        android:textColor="@color/_464646"
+        android:textSize="@dimen/s48px"
+        android:textStyle="bold" />
 
 
     <com.hd.view.edit.EditTextWithDel
@@ -35,15 +32,14 @@
         android:layout_height="@dimen/n70px"
         android:layout_marginLeft="@dimen/n70px"
         android:layout_marginRight="@dimen/n70px"
-        android:layout_marginTop="@dimen/n120px"
+        android:layout_marginTop="@dimen/n50px"
         android:background="@null"
-        android:textSize="@dimen/n32px"
         android:drawableBottom="@drawable/bg_edit"
         android:hint="请输入手机号"
-
         android:inputType="number"
         android:maxLength="13"
-        android:textColorHint="@color/_CCCCCC" />
+        android:textColorHint="@color/_CCCCCC"
+        android:textSize="@dimen/s48px" />
 
 
     <LinearLayout
@@ -56,52 +52,77 @@
 
 
         <com.hd.view.edit.EditTextWithDel
-            android:id="@+id/etPwd"
+            android:id="@+id/etCode"
             android:layout_width="0dp"
             android:layout_height="@dimen/n70px"
             android:layout_weight="1"
             android:background="@null"
-            android:textSize="@dimen/n32px"
             android:drawableBottom="@drawable/bg_edit"
             android:hint="请输入验证码"
             android:inputType="number"
             android:maxLength="6"
-            android:textColorHint="@color/_CCCCCC" />
-
-
+            android:textColorHint="@color/_CCCCCC"
+            android:textSize="@dimen/s48px" />
 
 
         <com.hd.view.roundrect.ShapeCornerBgView
             android:id="@+id/scb_get"
             android:layout_width="@dimen/n157px"
-            android:layout_height="@dimen/n44px"
+            android:layout_height="@dimen/n50px"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/n10px"
             android:text="获取验证码"
-            android:textColor="@color/_7B9EDD"
+            android:layout_gravity="center_vertical"
             android:textSize="@dimen/s24px"
-            android:visibility="visible"
-            app:appBgColor="@color/_FFFFFF"
-            app:appDisableBgColor="@color/_FFFFFF"
-            app:appRadius="@dimen/n22px" />
+            style="@style/btnBlue"
+            app:appRadius="@dimen/n25px" />
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/llv_password"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/n70px"
+        android:layout_marginLeft="@dimen/n70px"
+        android:layout_marginRight="@dimen/n70px"
+        android:layout_marginTop="@dimen/n66px"
+        android:orientation="horizontal">
+
+        <com.hd.view.edit.EditTextWithDel
+            android:id="@+id/etPwd"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            android:drawableBottom="@drawable/bg_edit"
+            android:gravity="center_vertical"
+            android:hint="6位以上数字+字母组合"
+            android:maxLength="16"
+            android:singleLine="true"
+            android:textColor="@color/_333333"
+            android:textColorHint="@color/_CCCCCC"
+            android:textSize="@dimen/s48px" />
+
+
+        <ImageView
+            android:id="@+id/iv_pwd_eye"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:paddingLeft="@dimen/n23px"
+            android:paddingRight="@dimen/n23px"
+            android:src="@mipmap/my_login_eye_n" />
+    </LinearLayout>
 
     <com.hd.view.roundrect.ShapeCornerBgView
-        android:id="@+id/scb_confirm"
+        android:id="@+id/btnConfirm"
+        style="@style/btnBlue"
         android:layout_width="@dimen/n610px"
         android:layout_height="@dimen/n84px"
         android:layout_marginTop="@dimen/n50px"
         android:enabled="false"
-        android:gravity="center"
-        android:text="确认"
-        android:textColor="@color/_FFFFFF"
-        android:textSize="@dimen/s32px"
-        app:appBgColor="@color/_F2408C"
-        app:appDisableBgColor="@color/_F59AC1"
-        app:appRadius="@dimen/n8px" />
+        android:text="确认" />
 
     <LinearLayout
         android:id="@+id/rlv_lableframe"
@@ -127,20 +148,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="同意"
-            android:textColor="#979fa5"
-            android:textSize="@dimen/n23px" />
+            android:textColor="@color/defaultTextColor"
+            android:textSize="@dimen/defaultTextSize" />
 
         <TextView
             android:id="@+id/tv_aggreement"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:padding="@dimen/n11px"
+            android:paddingTop="@dimen/n11px"
+            android:paddingBottom="@dimen/n11px"
             android:text="《注册协议》"
-            android:textColor="#979fa5"
-            android:textSize="@dimen/n23px" />
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/defaultTextSize" />
     </LinearLayout>
-
 
 
 </LinearLayout>

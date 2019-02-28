@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.app.Fragment;
+import android.widget.TableRow;
 
 import com.hd.appconfig.IAppConfigFactory;
 import com.hd.appconfig.IBaseAppConfig;
@@ -89,7 +90,7 @@ public class OkHttpHelper extends AbsNetHelper {
             formBuilder.add(k, v);
         }
         delMapNullData(params.getUrlMap());
-        params.baseUrl = params.baseUrl + params.getApi() + AppDataCollectUtils.map2Url(params.getUrlMap());
+        params.baseUrl = params.baseUrl + params.getApi() + AppDataCollectUtils.map2Url(params.getUrlMap(), true);
         Request.Builder requestBulder = new Request.Builder()
                 .url(params.baseUrl)
                 .post(formBuilder.build())
@@ -138,7 +139,7 @@ public class OkHttpHelper extends AbsNetHelper {
             LogUitls.print(TAG, e.toString());
             entity.setCode(NetEntity.ERROR_DEFAULT);
             mHandler.post(() -> {
-                netConfig.onHandleCodeMessage(entity.code);
+                netConfig.onHandleCodeMessage(entity.CODE);
                 if (isCallBackStateOK()) {
                     builder.iMessage.showMessage(entity);
                     try {
@@ -188,14 +189,14 @@ public class OkHttpHelper extends AbsNetHelper {
         }
 
         private void runOnUI() {
-            netConfig.onHandleCodeMessage(entity.code);
+            netConfig.onHandleCodeMessage(entity.CODE);
             if (!isCallBackStateOK()) {
                 return;
             }
-            builder.iMessage.showMessage(entity);
-            if (entity.code > -1) {//0及以上为正常
+            if (entity.CODE > -1) {//0及以上为正常
                 try {
                     builder.callback.onSuccess(entity);
+                    builder.iMessage.showMessage(entity);
                 } catch (Exception e) {//解析异常
                     e.printStackTrace();
                     entity.setCode(NetEntity.ERROR_PARASE);

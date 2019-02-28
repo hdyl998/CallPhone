@@ -11,6 +11,6 @@ public class ErrorMessage implements IMessage {
 
     @Override
     public boolean isShowMsg(NetEntity netEntity) {
-        return netEntity.code < 0 ;//&& !netEntity.isLoginError();
+        return netEntity.CODE < 0 ;//&& !netEntity.isLoginError();
     }
 }

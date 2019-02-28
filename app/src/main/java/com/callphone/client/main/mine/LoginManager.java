@@ -3,7 +3,7 @@ package com.callphone.client.main.mine;
 import android.content.Context;
 
 import com.callphone.client.base.data.AppSaveData;
-import com.callphone.client.login.LoginFragment;
+import com.callphone.client.mine.login.LoginFragment;
 import com.callphone.client.main.bean.EventItem;
 import com.hd.base.IBaseFragment;
 import com.hd.utils.toast.ToastUtils;

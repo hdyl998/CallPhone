@@ -10,11 +10,8 @@
 
     <com.hd.view.TitleBar
         android:id="@+id/titleBar"
-        style="@style/lightTitleBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:tbLeftImage="@mipmap/ic_back_black"
-        app:tbRightText="快捷登录" />
+        android:layout_height="wrap_content" />
 
     <!--<Space-->
     <!--android:layout_width="1dp"-->
@@ -26,8 +23,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/n30px"
-        android:text="密码登录"
         android:layout_marginTop="@dimen/n50px"
+        android:text="密码登录"
         android:textColor="@color/_464646"
         android:textSize="@dimen/s48px"
         android:textStyle="bold" />
@@ -40,17 +37,18 @@
 
     <com.hd.view.edit.EditTextWithDel
         android:id="@+id/etPhone"
-        android:layout_marginTop="@dimen/n50px"
         android:layout_width="match_parent"
         android:layout_height="@dimen/n70px"
         android:layout_marginLeft="@dimen/n30px"
         android:layout_marginRight="@dimen/n30px"
+        android:layout_marginTop="@dimen/n50px"
         android:background="@null"
         android:drawableBottom="@drawable/bg_edit"
         android:hint="输入手机号"
         android:inputType="number"
         android:maxLength="13"
-        android:textColorHint="@color/_80000000"
+        android:textColor="@color/_333333"
+        android:textColorHint="@color/_CCCCCC"
         android:textSize="@dimen/s48px" />
 
 
@@ -58,8 +56,8 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/n70px"
         android:layout_marginLeft="@dimen/n30px"
-        android:layout_marginTop="@dimen/n66px"
         android:layout_marginRight="@dimen/n30px"
+        android:layout_marginTop="@dimen/n66px"
         android:orientation="horizontal">
 
 
@@ -73,7 +71,8 @@
             android:inputType="textPassword"
             android:maxLength="10"
             android:paddingRight="@dimen/n100px"
-            android:textColorHint="@color/_80000000"
+            android:textColor="@color/_333333"
+            android:textColorHint="@color/_CCCCCC"
             android:textSize="@dimen/s48px" />
 
 
@@ -92,21 +91,21 @@
 
 
     <com.hd.view.roundrect.ShapeCornerBgView
-        android:id="@+id/scb_confirm"
-        style="@style/btnRed"
+        android:id="@+id/btnConfirm"
+        style="@style/btnBlue"
         android:layout_width="@dimen/n610px"
         android:layout_height="@dimen/btnDefaultHeight"
         android:layout_marginTop="@dimen/n50px"
         android:enabled="false"
-        android:text="登录" />
+        android:text="提交" />
 
     <RelativeLayout
         android:id="@+id/rlv_lableframe"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/n32px"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/n70px"
-        android:layout_marginTop="@dimen/n80px"
         android:layout_marginRight="@dimen/n70px"
+        android:layout_marginTop="@dimen/n80px"
         android:gravity="center_vertical">
 
         <TextView
@@ -114,6 +113,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="手机注册"
+            android:padding="@dimen/n10px"
             android:textColor="@color/_399CFF"
             android:textSize="@dimen/s28px" />
 
@@ -123,6 +123,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:text="忘记密码？"
+            android:padding="@dimen/n10px"
             android:textColor="@color/_399CFF"
             android:textSize="@dimen/s28px" />
     </RelativeLayout>

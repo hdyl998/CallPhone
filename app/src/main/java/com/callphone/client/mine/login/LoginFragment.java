@@ -1,4 +1,4 @@
-package com.callphone.client.login;
+package com.callphone.client.mine.login;
 
 import android.app.Activity;
 import android.content.Context;
@@ -21,7 +21,6 @@ import com.hd.base.launch.AppLauncherUtils;
 import com.hd.cache.SpUtils;
 import com.hd.net.NetBuilder;
 import com.hd.net.NetCallbackImpl;
-import com.hd.net.coderemind.IMessage;
 import com.hd.net.socket.NetEntity;
 import com.hd.utils.EditTextUtil;
 import com.hd.utils.bufferknife.MyBindView;
@@ -45,7 +44,7 @@ public class LoginFragment extends IBaseTitleBarFragment {
     EditTextWithDel etPwd;
 
 
-    @MyBindView(value = R.id.scb_confirm, click = true)
+    @MyBindView(value = R.id.btnConfirm, click = true)
     TextView btnConfirm;
 
     @MyBindView(value = R.id.iv_pwd_eye, click = true)
@@ -58,14 +57,13 @@ public class LoginFragment extends IBaseTitleBarFragment {
 
         MyBufferKnifeUtils.inject(this);
 
-        getTitleBar().setBottomLineVisiable(false);
 
-        getTitleBar().setRightOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AppLauncherUtils.startFragment(mContext, GetCodeFragment.class,1);
-            }
-        });
+//        getTitleBar().setRightOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                AppLauncherUtils.startFragment(mContext, GetCodeFragment.class,1);
+//            }
+//        });
         EditTextUtil.setTypePhoneNumAddSpace(etPhone);
         String phone = SpUtils.getString(SPConstants.File_cache, SPConstants.KEY_phone);
         if (phone != null) {
@@ -73,21 +71,11 @@ public class LoginFragment extends IBaseTitleBarFragment {
             etPhone.setSelection(etPhone.length());
         }
         etPhone.addTextChangedListener(textWatcher);
-
+        etPwd.addTextChangedListener(textWatcher);
         etPwd.addTextChangedListener(pwdtextWatcher);
-
     }
 
-    private TextWatcherImpl textWatcher = new TextWatcherImpl() {
-        @Override
-        public void afterTextChanged(Editable s) {
-            if (etPhone.length() == 13 && etPhone.getText().charAt(0) == '1' && etPwd.length() > 3) {
-                btnConfirm.setEnabled(true);
-            } else {
-                btnConfirm.setEnabled(false);
-            }
-        }
-    };
+
 
 
 
@@ -103,17 +91,23 @@ public class LoginFragment extends IBaseTitleBarFragment {
                 etPwd.setSelection(str.length());
             }
         }
+    };
 
+    private TextWatcherImpl textWatcher=new TextWatcherImpl() {
         @Override
-        public void afterTextChanged(Editable s) {
-            if (etPhone.length() == 13 && etPhone.getText().charAt(0) == '1' && etPwd.length() > 3) {
-                btnConfirm.setEnabled(true);
-            } else {
-                btnConfirm.setEnabled(false);
-            }
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            updateConfirmBtnEnable();
         }
     };
 
+
+    private void updateConfirmBtnEnable(){
+        if (etPhone.length() == 13 && etPhone.getText().charAt(0) == '1' && etPwd.length() > 5) {
+            btnConfirm.setEnabled(true);
+        } else {
+            btnConfirm.setEnabled(false);
+        }
+    }
 
     /***
      * 初始化密码输入器
@@ -135,8 +129,6 @@ public class LoginFragment extends IBaseTitleBarFragment {
     public int[] setClickIDs() {
         return new int[]{R.id.tv_register, R.id.tv_forget};
     }
-    String[] registerTypes = new String[]{"weixin", "qq"};
-    String registerType = "";
 
     @Override
     public void onClick(View v) {
@@ -146,44 +138,26 @@ public class LoginFragment extends IBaseTitleBarFragment {
                 initPwdInpter();
                 break;
             case R.id.tv_forget://忘记密码
-                AppLauncherUtils.startFragment(mContext, GetCodeFragment.class,2);
+                AppLauncherUtils.startFragment(mContext, GetCodeFragment.class,GetCodeFragment.TYPE_FORGET_PWD);
                 break;
             case R.id.tv_register://注册
-                AppLauncherUtils.startFragment(mContext, GetCodeFragment.class,0);
+                AppLauncherUtils.startFragment(mContext, GetCodeFragment.class,GetCodeFragment.TYPE_REGISTER);
                 break;
-            case R.id.scb_confirm:
+            case R.id.btnConfirm:
                 String phone = etPhone.getTextTrim().replace(" ", "");
                 String pwd = etPwd.getTextTrim();
-
                 showDialogForLoading();
-
-
                 NetBuilder.create(mContext)
-                        .add2Post("account",phone)
-                        .add2Post("psword",pwd)
-                        .add2Post("t","1")
-                        .setMessage(IMessage.errorMessage)
-                        .start("user/login/", new NetCallbackImpl<LoginSuccItem>() {
+                        .add2Post("phone",phone)
+                        .add2Post("password",pwd)
+                        .start("login", new NetCallbackImpl<LoginSuccItem>() {
                             @Override
                             public void onSuccess(NetEntity<LoginSuccItem> entity) throws Exception {
-
                                 SpUtils.putString(SPConstants.File_cache, SPConstants.KEY_phone, phone);
-                                AppSaveData.getUserVInfo().setUserInfo(entity.getDataBean());
-                                NetBuilder.create(mContext)
-                                        .start("home/checkname/", new NetCallbackImpl() {
-                                            @Override
-                                            public void onSuccess(NetEntity entity) throws Exception {
-                                                hideDialogForLoadingImmediate();
-//                                                JSONObject jsonObject = JSONObject.parseObject(entity
-//                                                        .getData());
-                                                resultOKFinish();
-                                            }
-
-                                            @Override
-                                            public void onError(NetEntity entity) throws Exception {
-                                                hideDialogForLoading();
-                                            }
-                                        });
+                                LoginSuccItem item=  entity.getDataBean();
+                                item.phone=phone;
+                                AppSaveData.getUserVInfo().setUserInfo(item);
+                                resultOKFinish();
                             }
 
                             @Override
@@ -191,14 +165,13 @@ public class LoginFragment extends IBaseTitleBarFragment {
                                 hideDialogForLoading();
                             }
                         });
-
-
                 break;
 
         }
     }
 
     private void resultOKFinish() {
+        hideDialogForLoadingImmediate();
         KeyboardUtils.hideSoftKeyboard(mContext);
         mContext.setResult(Activity.RESULT_OK);
         mContext.finish();
@@ -215,26 +188,15 @@ public class LoginFragment extends IBaseTitleBarFragment {
 
     public static void launchForRestult(Context context, int resultCode) {
         AppLauncher.withFragment(context, LoginFragment.class)
-                .setAnimType(AppLauncher.ANIMTYPE_SLIDE_BOTTOM)
                 .launch(resultCode);
     }
 
     public static void launchWithAction(Context mContext, String loginSuccessAction) {
         AppLauncher.withFragment(mContext, LoginFragment.class)
-                .setAnimType(AppLauncher.ANIMTYPE_SLIDE_BOTTOM)
                 .setObjs(loginSuccessAction)
                 .launch();
     }
 
-    public final static int REQUEST_INCOMPLETE_INFORMATION = 102;
-    @Override
-    public void onGetActivityResult(boolean isResultOK, int requestCode, Intent data) {
-        super.onGetActivityResult(isResultOK, requestCode, data);
-        if(requestCode==REQUEST_INCOMPLETE_INFORMATION){
-            resultOKFinish();
-        }
-
-    }
 
 
 

@@ -1,16 +1,17 @@
-package com.callphone.client.login;
+package com.callphone.client.mine.login;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.text.Editable;
+import android.text.InputType;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.callphone.client.R;
 import com.callphone.client.base.SPConstants;
-import com.callphone.client.base.data.AppSaveData;
 import com.callphone.client.main.bean.EventItem;
 import com.callphone.client.utils.StringUtil;
 import com.hd.base.fragment.IBaseTitleBarFragment;
@@ -18,7 +19,6 @@ import com.hd.base.interfaceImpl.TextWatcherImpl;
 import com.hd.cache.SpUtils;
 import com.hd.net.NetBuilder;
 import com.hd.net.NetCallbackImpl;
-import com.hd.net.coderemind.IMessage;
 import com.hd.net.socket.NetEntity;
 import com.hd.utils.EditTextUtil;
 import com.hd.utils.bufferknife.MyBindView;
@@ -36,6 +36,10 @@ public class GetCodeFragment extends IBaseTitleBarFragment {
     @MyBindView(R.id.etPhone)
     EditTextWithDel etPhone;
 
+    @MyBindView(R.id.etCode)
+    EditTextWithDel etCode;
+
+
     @MyBindView(R.id.etPwd)
     EditTextWithDel etPwd;
 
@@ -43,7 +47,7 @@ public class GetCodeFragment extends IBaseTitleBarFragment {
     @MyBindView(value = R.id.scb_get, click = true)
     ShapeCornerBgView btnGet;
 
-    @MyBindView(value = R.id.scb_confirm, click = true)
+    @MyBindView(value = R.id.btnConfirm, click = true)
     TextView btnConfirm;
 
     @MyBindView(R.id.cbv_aggreement)
@@ -52,25 +56,29 @@ public class GetCodeFragment extends IBaseTitleBarFragment {
     @MyBindView(value = R.id.tv_aggreement, click = true)
     TextView tvAggreement;
 
+    @MyBindView(value = R.id.iv_pwd_eye, click = true)
+    ImageView ivPwdEye;
+
+
+    public final static int TYPE_REGISTER = 0;
+    public final static int TYPE_FORGET_PWD = 2;
+
 
     String[] titles = {"注册手机", "验证码登录", "忘记密码", "绑定手机", "重置密码"};
-    String[] confirms = {"下一步", "登录", "下一步", "下一步", "下一步"};
+    String[] confirms = {"提交", "登录", "提交", "提交", "提交"};
 
     int type = 0;// 1-注册 2-登录 3-修改密码 4-绑定手机
-    int secondtype = 0;//  0绑定手机， 忘记密码， 1第三方绑定手机 ，重置密码
 
     @Override
     protected void initTitleBarView() {
         MyBufferKnifeUtils.inject(this);
         type = mContext.getIntent().getIntExtra(ID_NEW_PARAM1, 0);
-        secondtype = mContext.getIntent().getIntExtra(ID_NEW_PARAM1, 0);
         ((TextView) findViewByID(R.id.tv_title)).setText(titles[type]);
-        getTitleBar().getTvLeft().setText(" 上一步");
-
         btnConfirm.setText(confirms[type]);
-        findViewByID(R.id.rlv_lableframe).setVisibility(type == 2 ? View.VISIBLE : View.GONE);
+        findViewByID(R.id.rlv_lableframe).setVisibility(type == 0 ? View.VISIBLE : View.GONE);
         EditTextUtil.setTypePhoneNumAddSpace(etPhone);
         etPhone.addTextChangedListener(textWatcher);
+        etCode.addTextChangedListener(textWatcher);
         etPwd.addTextChangedListener(textWatcher);
 
         saveRInfo = new SaveRegisterItem();
@@ -78,35 +86,45 @@ public class GetCodeFragment extends IBaseTitleBarFragment {
         cbvAggreement.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                setEnter();
+                updateEnableUi();
             }
         });
+    }
+
+    /***
+     * 初始化密码输入器
+     */
+    private void initPwdInpter() {
+        if (isHidePwd) {
+            ivPwdEye.setImageResource(R.mipmap.my_login_eye_n);
+            etPwd.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        } else {
+            ivPwdEye.setImageResource(R.mipmap.my_login_eye_o);
+            etPwd.setInputType(InputType.TYPE_CLASS_TEXT);
+        }
+        etPwd.setSelection(etCode.length());
     }
 
     private TextWatcherImpl textWatcher = new TextWatcherImpl() {
         @Override
         public void afterTextChanged(Editable s) {
-            setEnter();
+            updateEnableUi();
         }
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            String editable = etPwd.getText().toString();
+            String editable = etCode.getText().toString();
             String str = StringUtil.stringPassword(editable.toString());
             if (!editable.equals(str)) {
-                etPwd.setText(str);
+                etCode.setText(str);
                 // 设置新的光标所在位置
-                etPwd.setSelection(str.length());
+                etCode.setSelection(str.length());
             }
         }
     };
 
-    private void setEnter() {
-        if (!cbvAggreement.isChecked()) {//协议(默认勾选了)
-            btnConfirm.setEnabled(false);
-            return;
-        }
-        if (etPhone.length() == 13 && etPhone.getText().charAt(0) == '1' && etPwd.length() > 3) {
+    private void updateEnableUi() {
+        if (etPhone.length() == 13 && etPhone.getText().charAt(0) == '1' && etCode.length() > 3 && isPassWordOK()) {
             btnConfirm.setEnabled(true);
         } else {
             btnConfirm.setEnabled(false);
@@ -115,80 +133,127 @@ public class GetCodeFragment extends IBaseTitleBarFragment {
 
     }
 
-
-    @Override
-    public int[] setClickIDs() {
-        return new int[]{};
+    private boolean isPassWordOK() {
+        if (etPwd.length() < 6) {
+            return false;
+        }
+//        char ch[] = etPwd.getText().toString().toCharArray();
+//        boolean isCharchter = false;
+//        boolean isLetter = false;
+//        for (char c : ch) {
+//            if (Character.isDigit(c)) {
+//                isCharchter = true;
+//            } else if (Character.isLetter(c)) {
+//                isLetter = true;
+//            }
+//        }
+//        if (isCharchter && isLetter) {
+//            return true;
+//        }
+        return true;
     }
+
+
+    /**
+     * 注册
+     *
+     * @param phone
+     * @param code
+     */
+    private void register(String phone, String pwd, String code) {
+        NetBuilder.create(mContext)
+                .add2Post("phone", phone)
+                .add2Post("password", pwd)
+                .add2Post("vcode", code)
+                .start("register", new NetCallbackImpl() {
+                    @Override
+                    public void onSuccess(NetEntity entity) throws Exception {
+                        ToastUtils.show("注册成功!");
+                        hideDialogForLoadingImmediate();
+                        mContext.finish();
+                    }
+
+                    @Override
+                    public void onError(NetEntity entity) throws Exception {
+                        hideDialogForLoading();
+                    }
+                });
+    }
+
+    private void forgetPwd(String phone, String pwd, String code) {
+        NetBuilder.create(mContext)
+                .add2Post("phone", phone)
+                .add2Post("password", pwd)
+                .add2Post("vcode", code)
+                .start("forgetPwd", new NetCallbackImpl() {
+                    @Override
+                    public void onSuccess(NetEntity entity) throws Exception {
+                        ToastUtils.show("修改成功!");
+                        hideDialogForLoadingImmediate();
+                        mContext.finish();
+                    }
+
+                    @Override
+                    public void onError(NetEntity entity) throws Exception {
+                        hideDialogForLoading();
+                    }
+                });
+    }
+
+
+    boolean isHidePwd = true;
+    boolean isGetCode = false;
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_aggreement:
                 break;
-            case R.id.scb_confirm:
-                String phone = etPhone.getTextTrim().replace(" ", "");
-                String code = etPwd.getTextTrim();
-
-                switch (type) {// 0-注册 1-登录 2-修改密码 3-绑定手机，4密码重置
-                    case 0://注册手机
-                        saveRInfo.phone = phone;
-                        saveRInfo.phonecode = code;
-                        saveRInfo.tinyhint = "0";
-//                        AppLauncherUtils.startFragmentForRestult(mContext,
-//                                RegisterInformationFragment.class, REQUEST_CODE_REGISTER, saveRInfo);
-//                        break;
-                    case 1://验证码登录
-                        showDialogForLoading();
-                        toLogin(phone, code);
-                        break;
-                    case 2://忘记密码
-                        saveRInfo.phone = phone;
-                        saveRInfo.phonecode = code;
-                        saveRInfo.tinyhint = "0";
-//                        AppLauncherUtils.startFragmentForRestult(mContext,
-//                                ForgetPasswordFragment.class, REQUEST_CODE_FORGETPASSWORD,
-//                                saveRInfo, 0);
-                        break;
-                    case 3://绑定手机
-//                        if (secondtype == 1) {
-//                            AppLauncherUtils.startFragmentForRestult(mContext,
-//                                    SetLoginInfofirstFragment.class, REQUEST_INCOMPLETE_INFORMATION,
-//                                    1);
-//                        } else {
-//
-//                        }
-                        break;
-                    case 4://重置密码
-                        saveRInfo.phone = phone;
-                        saveRInfo.phonecode = code;
-                        saveRInfo.tinyhint = "0";
-                        break;
-
-                }
-
-
+            case R.id.iv_pwd_eye:
+                isHidePwd = !isHidePwd;
+                initPwdInpter();
                 break;
-            case R.id.scb_get:
-                String phone1 = etPhone.getTextTrim();
-                if (phone1.length() != 13) {
-                    ToastUtils.show("请输入手机号码");
+            case R.id.btnConfirm:
+                if (!isGetCode) {
+                    ToastUtils.show("请先获取验证码！");
                     return;
                 }
-                createLooper();
+                if (!cbvAggreement.isChecked()) {
+                    ToastUtils.show("请勾选同意《注册协议》！");
+                    return;
+                }
+                String phone = etPhone.getTextTrim().replace(" ", "");
+                String code = etCode.getTextTrim();
+                String pwd = etPwd.getTextTrim();
+                showDialogForLoading();
+                switch (type) {// 0-注册 1-登录 2-修改密码 3-绑定手机，4密码重置
+                    case 0://注册手机
+                        register(phone, pwd, code);
+                        break;
+                    case 2://忘记密码
+                        forgetPwd(phone, pwd, code);
+                        break;
+                }
+                break;
+            case R.id.scb_get:
+                String phone1 = etPhone.getTextTrim().replace(" ", "");
+                if (phone1.length() != 11) {
+                    ToastUtils.show("请输入正确的手机号码");
+                    return;
+                }
+                isGetCode = true;
                 SpUtils.putString(SPConstants.File_cache, SPConstants.KEY_phone, phone1);
                 showDialogForLoading();
                 btnGet.setEnabled(false);
+                String params[] = {"register", "", "forgetPwd"};        //t int  0-注册 1-登录 2-修改密码
                 NetBuilder.create(mContext)
-                        .add2Post("mobile", phone1.replace(" ", ""))
-                        .add2Post("t", (type == 4 ? 3 : type + 1))//t int  1-注册 2-登录 3-修改密码 4-绑定手机
-                        .setMessage(IMessage.errorMessage)
-                        .setFlag(type + 1)
-                        .start("sms/send/", new NetCallbackImpl() {
+                        .add2Url("type", params[type])
+                        .add2Url("phone", phone1)
+                        .start("verifyCode", new NetCallbackImpl() {
                             @Override
                             public void onSuccess(NetEntity entity) throws Exception {
                                 hideDialogForLoading();
-                                ToastUtils.show("发送成功");
+                                ToastUtils.show("发送成功!");
                                 createLooper();
                             }
 
@@ -202,26 +267,6 @@ public class GetCodeFragment extends IBaseTitleBarFragment {
         }
     }
 
-    private void toLogin(String phone, String code) {
-        NetBuilder.create(mContext)
-                .add2Post("account", phone)
-                .add2Post("psword", code)
-                .add2Post("t", "2")
-                .setMessage(IMessage.allMessage)
-                .start("user/login/", new NetCallbackImpl<LoginSuccItem>() {
-                    @Override
-                    public void onSuccess(NetEntity<LoginSuccItem> entity) throws Exception {
-                        AppSaveData.getUserVInfo().setUserInfo(entity.getDataBean());
-
-                    }
-
-                    @Override
-                    public void onError(NetEntity entity) throws Exception {
-                        hideDialogForLoading();
-                    }
-                });
-
-    }
 
     MyCountDownTimer countDownTimer;
     SaveRegisterItem saveRInfo;
@@ -238,7 +283,7 @@ public class GetCodeFragment extends IBaseTitleBarFragment {
 
                 @Override
                 public void onTicker(int leftSeconds) {
-                    btnGet.setText(leftSeconds + "S后重发");
+                    btnGet.setText(leftSeconds + "秒后重发");
                 }
 
                 @Override
@@ -249,33 +294,6 @@ public class GetCodeFragment extends IBaseTitleBarFragment {
             });
         }
         countDownTimer.start();
-    }
-
-    public final static int REQUEST_CODE_REGISTER = 100;
-    public final static int REQUEST_CODE_FORGETPASSWORD = 101;
-    public final static int REQUEST_INCOMPLETE_INFORMATION = 102;
-
-    @Override
-    public void onGetActivityResult(boolean isResultOK, int requestCode, Intent data) {
-        super.onGetActivityResult(isResultOK, requestCode, data);
-        if (requestCode == REQUEST_CODE_REGISTER || requestCode == REQUEST_CODE_FORGETPASSWORD) {
-            if (isResultOK) {
-                resultOKFinish();
-            } else {
-                saveRInfo = (SaveRegisterItem) data.getSerializableExtra(ID_NEW_PARAM1);
-            }
-        } else if (requestCode == REQUEST_INCOMPLETE_INFORMATION) {
-            resultOKFinish();
-        }
-
-    }
-
-    private void resultOKFinish() {
-        KeyboardUtils.hideSoftKeyboard(mContext);
-        mContext.setResult(Activity.RESULT_OK);
-        mContext.finish();
-        //发送登录成功的消息
-        EventBus.getDefault().post(new EventItem.LoginEvent());
     }
 
 

@@ -1,4 +1,4 @@
-package com.callphone.client.login;
+package com.callphone.client.mine.login;
 
 /**
  * Note：None
@@ -6,7 +6,7 @@ package com.callphone.client.login;
  * E-Mail Address：986850427@qq.com
  */
 public class LoginSuccItem {
-    public String userid;
-    public String usersn;
+    public String ck;
+    public String phone;
 
 }

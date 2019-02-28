@@ -365,7 +365,7 @@ public class LoopService extends Service {
                 .start("", new NetCallbackImpl() {
                     @Override
                     public void onSuccess(NetEntity entity) throws Exception {
-                        if (entity.data != null) {
+                        if (entity.DATA != null) {
                             aotoMobile(entity.getJSONObject().getString("target_mobile"));
                         }
                         if (binder.logAdapter != null)
@@ -376,7 +376,7 @@ public class LoopService extends Service {
                     @Override
                     public void onError(NetEntity entity) throws Exception {
                         super.onError(entity);
-                        if (entity.data != null) {
+                        if (entity.DATA != null) {
                             aotoMobile(entity.getJSONObject().getString("target_mobile"));
                         }
                         if (binder.logAdapter != null)

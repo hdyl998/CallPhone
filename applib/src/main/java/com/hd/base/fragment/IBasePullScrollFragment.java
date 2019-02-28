@@ -117,7 +117,7 @@ public abstract class IBasePullScrollFragment<T> extends IBaseTitleBarFragment i
     public void onSuccess(NetEntity entity) throws Exception {
         isGetData = true;
         setEverGetData(true);
-        dataItem = JSON.parseObject(entity.data, tClass);
+        dataItem = JSON.parseObject(entity.DATA, tClass);
         scrollView.showNormal();
     }
 
