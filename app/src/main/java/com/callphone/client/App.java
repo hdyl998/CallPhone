@@ -1,5 +1,8 @@
 package com.callphone.client;
 
+import android.app.Application;
+import android.content.pm.ApplicationInfo;
+
 import com.hd.appconfig.IAppConfigFactory;
 import com.hd.base.HdApp;
 import com.hd.net.HttpFactory;
@@ -11,6 +14,11 @@ import com.hd.net.NetBuilder;
  */
 
 public class App extends HdApp {
+
+    public static Application getContext() {
+        return HdApp.getContext();
+    }
+
     @Override
     public void initApp() {
         HttpFactory.getNetHelper().setGlobalConfig(new INetConfig() {

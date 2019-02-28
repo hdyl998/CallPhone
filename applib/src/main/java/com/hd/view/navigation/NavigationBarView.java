@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hd.R;
+import com.hd.base.HdApp;
 import com.hd.base.adapterbase.BaseViewHolder;
 import com.hd.base.adapterbase.FindViewAdapter;
 import com.hd.base.maininterface.IComCallBacks;
@@ -259,7 +260,7 @@ public class NavigationBarView extends LinearLayout implements View.OnClickListe
 
 
     //颜色定制
-    private int selectedColor = 0xff293968;
+    private int selectedColor = HdApp.getContext().getResources().getColor(R.color.colorPrimary);
     private final int unSelectedColor = 0xff464646;
 
     public void setSelectedColor(int selectedColor) {

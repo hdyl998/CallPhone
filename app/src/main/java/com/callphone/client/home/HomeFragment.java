@@ -1,4 +1,4 @@
-package com.callphone.client.main;
+package com.callphone.client.home;
 
 import com.callphone.client.R;
 import com.hd.base.fragment.IBaseTitleBarFragment;

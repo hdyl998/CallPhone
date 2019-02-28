@@ -1,10 +1,11 @@
-package com.callphone.client;
+package com.callphone.client.main;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
-import com.callphone.client.main.HomeFragment;
+import com.callphone.client.R;
+import com.callphone.client.home.HomeFragment;
 import com.callphone.client.mine.MineFragment;
 import com.hd.base.IBaseActivity;
 import com.hd.base.IBaseFragment;
@@ -165,7 +166,7 @@ public class MainPageActivity extends IBaseActivity {
         // 连按两次退出应用
         if (System.currentTimeMillis() - lastPressedTime > 2000) {
             lastPressedTime = System.currentTimeMillis();
-            ToastUtils.show("再按一次退出应用");
+            ToastUtils.show("再按一次退出程序");
         } else {
             super.onBackPressed();
         }
