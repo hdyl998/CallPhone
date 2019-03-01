@@ -114,7 +114,7 @@
             android:layout_height="wrap_content"
             android:text="手机注册"
             android:padding="@dimen/n10px"
-            android:textColor="@color/_399CFF"
+            android:textColor="@color/colorPrimary"
             android:textSize="@dimen/s28px" />
 
         <TextView
@@ -124,7 +124,7 @@
             android:layout_alignParentRight="true"
             android:text="忘记密码？"
             android:padding="@dimen/n10px"
-            android:textColor="@color/_399CFF"
+            android:textColor="@color/colorPrimary"
             android:textSize="@dimen/s28px" />
     </RelativeLayout>
 

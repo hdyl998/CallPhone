@@ -42,7 +42,7 @@
         android:textSize="@dimen/s48px" />
 
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/n70px"
         android:layout_marginLeft="@dimen/n70px"
@@ -53,13 +53,13 @@
 
         <com.hd.view.edit.EditTextWithDel
             android:id="@+id/etCode"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="@dimen/n70px"
-            android:layout_weight="1"
             android:background="@null"
             android:drawableBottom="@drawable/bg_edit"
             android:hint="请输入验证码"
             android:inputType="number"
+            android:paddingRight="@dimen/n197px"
             android:maxLength="6"
             android:textColorHint="@color/_CCCCCC"
             android:textSize="@dimen/s48px" />
@@ -73,14 +73,14 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/n10px"
             android:text="获取验证码"
-            android:layout_gravity="center_vertical"
+            android:layout_gravity="center_vertical|right"
             android:textSize="@dimen/s24px"
             style="@style/btnBlue"
             app:appRadius="@dimen/n25px" />
 
-    </LinearLayout>
+    </FrameLayout>
 
-    <LinearLayout
+    <FrameLayout
         android:id="@+id/llv_password"
         android:layout_width="match_parent"
         android:layout_height="@dimen/n70px"
@@ -91,14 +91,15 @@
 
         <com.hd.view.edit.EditTextWithDel
             android:id="@+id/etPwd"
-            android:layout_width="0dp"
+            android:paddingRight="@dimen/n100px"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:background="@null"
             android:drawableBottom="@drawable/bg_edit"
             android:gravity="center_vertical"
             android:hint="6位以上数字+字母组合"
             android:maxLength="16"
+            android:inputType="textPassword"
             android:singleLine="true"
             android:textColor="@color/_333333"
             android:textColorHint="@color/_CCCCCC"
@@ -109,11 +110,11 @@
             android:id="@+id/iv_pwd_eye"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
+            android:layout_gravity="center_vertical|right"
             android:paddingLeft="@dimen/n23px"
             android:paddingRight="@dimen/n23px"
             android:src="@mipmap/my_login_eye_n" />
-    </LinearLayout>
+    </FrameLayout>
 
     <com.hd.view.roundrect.ShapeCornerBgView
         android:id="@+id/btnConfirm"
@@ -135,8 +136,9 @@
 
         <CheckBox
             android:id="@+id/cbv_aggreement"
-            android:layout_width="@dimen/n21px"
-            android:layout_height="@dimen/n21px"
+            android:layout_width="@dimen/n41px"
+            android:layout_height="@dimen/n41px"
+            android:padding="@dimen/n10px"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/n23px"
@@ -144,12 +146,6 @@
             android:button="@null"
             android:checked="true" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="同意"
-            android:textColor="@color/defaultTextColor"
-            android:textSize="@dimen/defaultTextSize" />
 
         <TextView
             android:id="@+id/tv_aggreement"
@@ -158,7 +154,7 @@
             android:gravity="center"
             android:paddingTop="@dimen/n11px"
             android:paddingBottom="@dimen/n11px"
-            android:text="《注册协议》"
+            android:text="同意《注册协议》"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/defaultTextSize" />
     </LinearLayout>

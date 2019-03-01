@@ -17,12 +17,11 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.hd.base.HdApp;
+import com.callphone.client.home.CallInfoItem;
+import com.callphone.client.home.socket.MsgSocket;
+import com.callphone.client.main.MainNewActivity;
 import com.hd.base.adapterbase.SuperAdapter;
 import com.hd.base.maininterface.IComCallBacks;
-import com.hd.net.NetBuilder;
-import com.hd.net.NetCallbackImpl;
-import com.hd.net.socket.NetEntity;
 import com.hd.net.socket.SocketMessageListener;
 import com.hd.permission.PermissionHelper;
 import com.hd.utils.DateUtils;
@@ -43,26 +42,13 @@ public class LoopService extends Service {
     HanderLoopHelper loopHelper;
     public final static int FOREGROUND_SERVICE = 101;
 
-    public static class DataItem {
-        public int type;
-        //public string msg;
-        //public int code;
-        public String person;
-        public String Data;
-        public final static int TYPE_MSG = 0;
-        public final static int TYPE_MSG_SERVER = 1;
-        public final static int TYPE_DOWNLINE = 2;
-    }
 
     private void closeSocket() {
-        if (socket != null) {
-            socket.stopSocket();
-        }
+        MsgSocket.getInstance().stopSocket();
     }
 
     static boolean isRequest = true;
 
-    PhoneSocket socket;
 
     HanderLoopHelper handerLoopHelper;
 
@@ -72,28 +58,22 @@ public class LoopService extends Service {
     Handler handler = new Handler();
 
     private void record() {
-
-
         //!Network.isConnected(LoopService.this)
         if (!pm.isScreenOn()) {
             PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "mywakelogtag");
             wl.acquire();
-
             addLog("唤醒屏幕");
         } else {
             addLog("唤醒屏幕 屏亮=" + pm.isScreenOn() + " net is Connected" + Network.isConnected(LoopService.this));
         }
     }
-    //唤醒屏幕并解锁
-    public void wakeUpAndUnlock(Context context) {
 
-        ToastUtils.show("请求点亮屏幕");
-        KeyguardManager km = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
+    //唤醒屏幕并解锁
+    public void wakeUpAndUnlock() {
+
         KeyguardManager.KeyguardLock kl = km.newKeyguardLock("unLock");
         //解锁
         kl.disableKeyguard();
-        //获取电源管理器对象
-        PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
         //获取PowerManager.WakeLock对象,后面的参数|表示同时传入两个值,最后的是LogCat里用的Tag
         PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "bright");
         //点亮屏幕
@@ -101,142 +81,39 @@ public class LoopService extends Service {
 //        //释放
 //        wl.release();
     }
-    /**
-     * author: wu
-     * date: on 2018/11/14.
-     * describe: 静态常量类
-     */
-
-    public static class Constant {
-        public static Integer TYPE1 = 1;
-        public static Integer TYPE2 = 2;
-        public static Integer TYPE3 = 3;
-    }
-
-    //设置通知栏消息样式
-    private void setNotification(int type) {
-//        //点击通知栏消息跳转页
-//        Intent intent = new Intent(this, MainActivity.class);
-//        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
-//        //创建通知消息管理类
-//        Notification notification;
-//        NotificationManager  manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-//        NotificationCompat.Builder builder = new NotificationCompat.Builder(this)//创建通知消息实例
-//                .setContentTitle("我是标题")
-//                .setContentText("我是内容")
-//                .setWhen(System.currentTimeMillis())//通知栏显示时间
-//                .setSmallIcon(R.mipmap.ic_launcher)//通知栏小图标
-//                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher))//通知栏下拉是图标
-//                .setContentIntent(pendingIntent)//关联点击通知栏跳转页面
-//                .setPriority(NotificationCompat.PRIORITY_MAX)//设置通知消息优先级
-//                .setAutoCancel(true)//设置点击通知栏消息后，通知消息自动消失
-////                .setSound(Uri.fromFile(new File("/system/MP3/music.mp3"))) //通知栏消息提示音
-//                .setVibrate(new long[]{0, 1000, 1000, 1000}) //通知栏消息震动
-//                .setLights(Color.GREEN, 1000, 2000) //通知栏消息闪灯(亮一秒间隔两秒再亮)
-//                .setDefaults(NotificationCompat.DEFAULT_ALL); //通知栏提示音、震动、闪灯等都设置为默认
-//
-//        if (type == 1) {
-//            //短文本
-//            notification = builder.build();
-//            //Constant.TYPE1为通知栏消息标识符，每个id都是不同的
-//            manager.notify(Constant.TYPE1, notification);
-//        } else if (type == 2) {
-//            //长文本
-//            notification = builder.setStyle(new NotificationCompat.BigTextStyle().
-//                    bigText("我是长文字内容:　今年双十一结束后，一如既往又出现了一波冲动剁手党被理智唤醒的退货潮。不过，一位来自福建厦门的网友在这其中贡献了堪称历史里程碑式的高光时刻。别人退衣服退鞋子，而他要退的是一只蓝孔雀、一只宠物小香猪、还有一斤娃娃鱼……"))
-//                    .build();
-//            manager.notify(Constant.TYPE2, notification);
-//        } else {
-//            //带图片
-//            notification = builder.setStyle(new NotificationCompat.BigPictureStyle().
-//                    bigPicture(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher)))
-//                    .build();
-//            manager.notify(Constant.TYPE3, notification);
-//        }
-    }
 
 
     private void createLooper() {
-
         if (handerLoopHelper != null) {
             handerLoopHelper.stopLoop();
         }
         pm = (PowerManager) this.getSystemService(Context.POWER_SERVICE);
         km = (KeyguardManager) this.getSystemService(Context.KEYGUARD_SERVICE);
         closeSocket();
-
-        socket = new PhoneSocket();
-
-
-        socket.addOnGetSocketDataListener(new SocketMessageListener() {
-            @Override
-            public void onServerMessage(String event, String data) throws Exception {
-                switch (event) {
-                    case PhoneSocket.init:
-                        JSONObject object = JSON.parseObject(data);
-                        int code = object.getInteger("code");
-                        String msg = object.getString("msg");
-                        ToastUtils.show(code + msg);
-                        break;
-                    case PhoneSocket.change:
-                        JSONObject obj1 = JSON.parseObject(data);
-                        String phone = obj1.getString("target_phone");
-                        isLocked = km.isKeyguardLocked();
-                        if (binder.logAdapter != null)
-                            binder.logAdapter.add(DateUtils.getSimpleDate().format(new Date()) + "isLocked=" + isLocked + phone);
-                        aotoMobile(phone);
-
-                        break;
-                    case PhoneSocket.hearting:
-                        addLog(event + " " + data);
-                        break;
-                }
-            }
-
-            @Override
-            public void onLocalMessageStr(String note) throws Exception {
-                if (binder.tvSocketInfo != null) {
-                    binder.tvSocketInfo.setText(note);
-                }
-                addLog(note);
-                if (!note.contains("成功")) {
-                    record();
-                    setNotification(1);
-                    wakeUpAndUnlock(LoopService.this);
-                }
-            }
-
-            @Override
-            public void onLocalMessageConnect() throws Exception {
-                socket.sendMyInfo(localPhoneNum);
-            }
-        });
-        socket.startSocket();
+        MsgSocket.getInstance().startSocket();
         handerLoopHelper = new HanderLoopHelper();
         handerLoopHelper.setLoopTimeMillis(3000);
         handerLoopHelper.setLoopCallBacks(new IComCallBacks() {
             @Override
             public void call(Object obj) {
                 nums++;
-                if (socket.isConnectSuccess()) {
-                    socket.sendSocketMessage("hearting", nums + "");
+                if (MsgSocket.getInstance().isConnectSuccess()) {
+                    MsgSocket.getInstance().sendSocketMessage("hearting", nums + "");
                 } else {
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
                             record();
-                            setNotification(1);
-                            wakeUpAndUnlock(LoopService.this);
+                            wakeUpAndUnlock();
                         }
                     });
                 }
-
-                if(nums%20==0){
+                //每15秒唤醒一次
+                if (nums % 5 == 0) {
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            setNotification(1);
-                            wakeUpAndUnlock(LoopService.this);
+                            wakeUpAndUnlock();
                         }
                     });
                 }
@@ -244,94 +121,37 @@ public class LoopService extends Service {
             }
         });
         handerLoopHelper.startLoop();
-//        if(!isRequest) {
-//
-//        }
-//        else {
-////            if (loopHelper == null) {
-////                loopHelper = new HanderLoopHelper();
-////                loopHelper.setLoopTimeMillis(1 * 1000);
-////                loopHelper.setLoopCallBacks(new IComCallBacks() {
-////                    @Override
-////                    public void call(Object obj) {
-////                        if (km.isKeyguardLocked()) {
-////                            isLocked = true;
-////                            request();
-////                        } else if (times % 3 == 0) {
-////                            isLocked = false;
-////                            request();
-////                        }
-////                        times++;
-////                    }
-////                });
-////            }
-////            loopHelper.startLoop();
-//        }
-
-
     }
 
     public void addLog(String str) {
-        if (binder.logAdapter != null)
-            binder.logAdapter.add(DateUtils.getSimpleDate().format(new Date()) + " " + str + " islocked=" + km.isKeyguardLocked());
+//        if (binder.logAdapter != null)
+//            binder.logAdapter.add(DateUtils.getSimpleDate().format(new Date()) + " " + str + " islocked=" + km.isKeyguardLocked());
     }
 
-    boolean isLocked = false;
-
-    int times = 0;
-
-    public String localPhoneNum;
 
     KeyguardManager km;
 
     public void aotoMobile(String phone) {
-        wakeUpAndUnlock(LoopService.this);
+        wakeUpAndUnlock();
         //拿到锁屏管理者
-        if (km == null) {
-            if (binder.logAdapter != null)
-                binder.logAdapter.add(DateUtils.getSimpleDate().format(new Date()) + " KeyguardManager is Null");
+        if (km.isKeyguardLocked()) {
+            Intent intent = new Intent();
+            intent.setAction("com.callphone");
+            intent.putExtra("phone", phone);
+            this.sendBroadcast(intent);
+            LogUitls.print(TAG, "发送广播" + phone);
+            CallInfoItem historyItem = new CallInfoItem();
+            historyItem.phone = phone;
+            historyItem.updatetime = DateUtils.getSimpleDate().format(new Date()) + "(锁屏拨打)";
+            binder.addCallInfoItem(historyItem);
         } else {
-            if (km.isKeyguardLocked()) {
-
-//                Notification.Builder messageNotification = new  Notification.Builder(getApplication());
-//                messageNotification.setDefaults(Notification.DEFAULT_ALL);
-//                messageNotification.setAutoCancel(true);
-//                Notification notification  = messageNotification.build();
-//                NotificationManager  messageNotificatioManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-//                messageNotificatioManager.cancel(8848);
-//                messageNotificatioManager.notify(8848,notification);
-
-
-                Intent intent = new Intent();
-                intent.setAction("com.callphone");
-                intent.putExtra("phone", phone);
-                this.sendBroadcast(intent);
-                LogUitls.print(TAG, "发送广播" + phone);
-
-
-                HistoryItem historyItem = new HistoryItem();
-                historyItem.isCallByHand = false;
-                historyItem.targetPhone = phone;
-                historyItem.date = DateUtils.getSimpleDate().format(new Date()) + "(锁屏拨打)";
-                if (binder.adapter != null)
-                    binder.adapter.add(0, historyItem);
-
-            } else {
-
-//                Intent intent = new Intent();
-//                intent.setAction("com.callphone");
-//                intent.putExtra("phone", phone);
-//                this.sendBroadcast(intent);
-//                LogUitls.print(TAG, "发送广播" + phone);
-
-                callPhone(phone, false);
-            }
+            callPhone(phone);
         }
 
     }
 
     @SuppressLint("MissingPermission")
-    private void callPhone(String phone, boolean isCallByHand) {
+    private void callPhone(String phone) {
         LogUitls.print(TAG, "callPhone" + phone);
         if (PermissionHelper.hasPermissions(android.Manifest.permission.CALL_PHONE)) {
             try {
@@ -341,12 +161,10 @@ public class LoopService extends Service {
                 intent.setData(data);
                 startActivity(intent);
 
-                HistoryItem historyItem = new HistoryItem();
-                historyItem.isCallByHand = isCallByHand;
-                historyItem.targetPhone = phone;
-                historyItem.date = DateUtils.getSimpleDate().format(new Date());
-                if (binder.adapter != null)
-                    binder.adapter.add(0, historyItem);
+                CallInfoItem historyItem = new CallInfoItem();
+                historyItem.phone = phone;
+                historyItem.updatetime = DateUtils.getSimpleDate().format(new Date());
+                binder.addCallInfoItem(historyItem);
             } catch (Exception e) {
                 e.printStackTrace();
                 ToastUtils.show("没有权限，拨打电话失败`1");
@@ -354,35 +172,6 @@ public class LoopService extends Service {
         } else {
             ToastUtils.show("没有权限，拨打电话失败`1");
         }
-    }
-
-    private void request() {
-        if (localPhoneNum == null) {
-            return;
-        }
-        LogUitls.print(TAG, "request" + localPhoneNum);
-        NetBuilder.create(HdApp.getContext()).add2Url("mobile", localPhoneNum)
-                .start("", new NetCallbackImpl() {
-                    @Override
-                    public void onSuccess(NetEntity entity) throws Exception {
-                        if (entity.DATA != null) {
-                            aotoMobile(entity.getJSONObject().getString("target_mobile"));
-                        }
-                        if (binder.logAdapter != null)
-                            binder.logAdapter.add(0, String.format("%s 请求成功！code=%d data=%s isLocked=" + isLocked, DateUtils.getSimpleDate().format(new Date()), entity.getCode(), entity.getData()));
-
-                    }
-
-                    @Override
-                    public void onError(NetEntity entity) throws Exception {
-                        super.onError(entity);
-                        if (entity.DATA != null) {
-                            aotoMobile(entity.getJSONObject().getString("target_mobile"));
-                        }
-                        if (binder.logAdapter != null)
-                            binder.logAdapter.add(0, String.format("%s 请求失败！code=%d data=%s", DateUtils.getSimpleDate().format(new Date()), entity.getCode(), entity.getData()));
-                    }
-                });
     }
 
     /**
@@ -395,29 +184,34 @@ public class LoopService extends Service {
             return LoopService.this;
         }
 
-        SuperAdapter<String> logAdapter;
-
-        TextView tvSocketInfo;
+        SuperAdapter<CallInfoItem> adapter;
 
 
-        public void setTvSocketInfo(TextView tvSocketInfo) {
-            this.tvSocketInfo = tvSocketInfo;
+        TextView tvInfo;
+
+        public void setTvInfo(TextView tvInfo) {
+            this.tvInfo = tvInfo;
         }
 
-        public void setLogAdapter(SuperAdapter<String> logAdapter) {
-            this.logAdapter = logAdapter;
-        }
-
-        HistoryAdapter adapter;
-
-        public void setAdapter(HistoryAdapter adapter) {
+        public void setAdapter(SuperAdapter<CallInfoItem> adapter) {
             this.adapter = adapter;
         }
 
         public void removeAll() {
-            adapter = null;
-            logAdapter = null;
-            tvSocketInfo = null;
+            tvInfo = null;
+        }
+
+        public void addCallInfoItem(CallInfoItem item) {
+            if (adapter != null) {
+                adapter.add(0, item);
+            }
+        }
+
+
+        public void setInfoText(String text) {
+            if (tvInfo != null) {
+                tvInfo.setText(text);
+            }
         }
     }
 
@@ -426,24 +220,19 @@ public class LoopService extends Service {
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        LogUitls.print(TAG, "onBind" + binder);
-        String phone = intent.getStringExtra("phone");
-        localPhoneNum = phone;
-        LogUitls.print(TAG, "onStartCommand" + localPhoneNum);
         createLooper();
-        ToastUtils.show("开始looper");
-        fun();
+        bindNotification();
         return binder;
     }
 
 
-    private void fun() {
-        CharSequence text = "启动了";
+    private void bindNotification() {
+        CharSequence text = "程序正在运行中，点击进入";
         CharSequence title = getText(R.string.app_name);
 
         // The PendingIntent to launch our activity if the user selects this notification
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-                new Intent(this, MainActivity.class), 0);
+                new Intent(this, MainNewActivity.class), 0);
 
         // Set the info for the views that show in the notification panel.
         Notification notification = new Notification.Builder(this)
@@ -463,8 +252,6 @@ public class LoopService extends Service {
         if (loopHelper != null)
             loopHelper.stopLoop();
         binder.removeAll();
-//        if (socket != null)
-//            socket.stopSocket();
         if (handerLoopHelper != null)
             handerLoopHelper.stopLoop();
         return super.onUnbind(intent);
@@ -475,14 +262,6 @@ public class LoopService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         LogUitls.print(TAG, "onStartCommand");
-
-//        String phone = intent.getStringExtra("phone");
-//        localPhoneNum = phone;
-//        LogUitls.print(TAG, "onStartCommand" + localPhoneNum);
-//        createLooper();
-//        ToastUtils.show("开始looper");
-//        fun();
-
         return START_NOT_STICKY;
     }
 
@@ -499,4 +278,39 @@ public class LoopService extends Service {
         }
         stopForeground(true);
     }
+
+
+    private SocketMessageListener listener = new SocketMessageListener() {
+        @Override
+        public void onServerMessage(String event, String data) throws Exception {
+            switch (event) {
+                case MsgSocket.init:
+                    JSONObject object = JSON.parseObject(data);
+                    int code = object.getInteger("code");
+                    String msg = object.getString("msg");
+                    binder.setInfoText(String.format("连接状态：%s", "初始化成功！"));
+                    break;
+                case MsgSocket.change:
+                    JSONObject obj1 = JSON.parseObject(data);
+                    String phone = obj1.getString("target_phone");
+                    break;
+                case MsgSocket.hearting:
+                    break;
+                case MsgSocket.err:
+                    break;
+            }
+        }
+
+        @Override
+        public void onLocalMessageStr(String note) throws Exception {
+            binder.setInfoText(String.format("连接状态：%s", note));
+        }
+
+        @Override
+        public void onLocalMessageConnect() throws Exception {
+            //发送登录成功的消息
+            MsgSocket.getInstance().sendMyInfo();
+        }
+    };
+
 }

@@ -42,7 +42,7 @@
         android:textSize="@dimen/s48px" />
 
 
-    <LinearLayout
+    <FrameLayout
         android:id="@+id/llv_password"
         android:layout_width="match_parent"
         android:layout_height="@dimen/n70px"
@@ -53,14 +53,15 @@
 
         <com.hd.view.edit.EditTextWithDel
             android:id="@+id/etPwd2"
-            android:layout_width="0dp"
+            android:paddingRight="@dimen/n100px"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:background="@null"
             android:drawableBottom="@drawable/bg_edit"
             android:gravity="center_vertical"
             android:hint="6位以上数字+字母组合"
             android:maxLength="16"
+            android:inputType="textPassword"
             android:singleLine="true"
             android:textColor="@color/_333333"
             android:textColorHint="@color/_CCCCCC"
@@ -71,11 +72,11 @@
             android:id="@+id/iv_pwd_eye"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
+            android:layout_gravity="center_vertical|right"
             android:paddingLeft="@dimen/n23px"
             android:paddingRight="@dimen/n23px"
             android:src="@mipmap/my_login_eye_n" />
-    </LinearLayout>
+    </FrameLayout>
 
     <com.hd.view.roundrect.ShapeCornerBgView
         android:id="@+id/btnConfirm"

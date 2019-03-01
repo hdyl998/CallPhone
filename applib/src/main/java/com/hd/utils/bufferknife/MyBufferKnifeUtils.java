@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
+import com.hd.utils.log.impl.LogUitls;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
@@ -18,26 +20,34 @@ public class MyBufferKnifeUtils {
 //    private TextView textView;
 
     public static void inject(Object obj, View rootView) {
+        String error = null;
         try {
             Field[] fields = obj.getClass().getDeclaredFields();
             for (Field field : fields) {
                 MyBindView bindView = field.getAnnotation(MyBindView.class);
                 if (bindView != null) {
+                    error = field.getName();
                     field.setAccessible(true);
-                    View var=rootView.findViewById(bindView.value());
-                    field.set(obj,var );
-                    boolean isClick=bindView.click();
-                    if(isClick&& obj instanceof View.OnClickListener){
+                    View var = rootView.findViewById(bindView.value());
+                    field.set(obj, var);
+                    boolean isClick = bindView.click();
+                    if (isClick && obj instanceof View.OnClickListener) {
                         var.setOnClickListener((View.OnClickListener) obj);
                     }
                 }
             }
         } catch (Exception e) {
+
+            LogUitls.print(TAG, "error field " + error);
             RuntimeException runtimeException = new RuntimeException("注解异常");
             runtimeException.initCause(e);
             throw runtimeException;
         }
     }
+
+
+    private static final String TAG = "MyBufferKnifeUtils";
+
 
     public static void injetClick(Fragment fragment) {
         injetClick(fragment, fragment.getView());

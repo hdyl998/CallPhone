@@ -1,10 +1,21 @@
 package com.callphone.client.main;
 
+import android.app.Activity;
+import android.app.Service;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.IBinder;
+import android.os.PowerManager;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 
+import com.callphone.client.AlarmHandlerActivity;
+import com.callphone.client.LoopService;
 import com.callphone.client.R;
+import com.callphone.client.ScreenListener;
 import com.callphone.client.base.AppConstants;
 import com.callphone.client.home.HomeFragment;
 import com.callphone.client.mine.MineFragment;
@@ -23,6 +34,7 @@ import com.hd.view.navigation.NavigationBarView;
 
 import java.util.ArrayList;
 import java.util.List;
+
 //https://www.easyicon.net/538275-VoIP_icon.html
 public class MainNewActivity extends IBaseActivity {
 
@@ -43,25 +55,9 @@ public class MainNewActivity extends IBaseActivity {
         MyBufferKnifeUtils.inject(this);
         viewPager.setScrollAbleFalse();
         createNavigationBar();
-//        Intent startMain = new Intent(Intent.ACTION_MAIN);
-//        startMain.addCategory(Intent.CATEGORY_HOME);
-//        startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//        startActivity(startMain);
-//        android.os.Process.killProcess(android.os.Process.myPid());
+        initOthers();
     }
 
-
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
-
-    //    @Override
-//    public boolean isStatusBarColor() {
-//        return false;
-//    }
 
     private void createNavigationBar() {
         //点击无动画
@@ -97,8 +93,6 @@ public class MainNewActivity extends IBaseActivity {
         });
         goToIndexPage(getIntent());//启动时去页码指引
     }
-
-    private static final String TAG = "MainActivity";
 
 
     /**
@@ -184,5 +178,77 @@ public class MainNewActivity extends IBaseActivity {
 
     public boolean isAttItem() {
         return navigationBarView.isCurrentPage(KEY_PAGE_ATT);
+    }
+
+    private ScreenListener screenListener;
+
+    Handler handler = new Handler();
+
+
+    PowerManager.WakeLock mWakeLock;
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mWakeLock != null) {
+            mWakeLock.acquire();
+        }
+    }
+
+
+    private static final String TAG = "MainNewActivity";
+
+    private void initOthers() {
+        PowerManager powerManager = (PowerManager) mContext.getSystemService(Activity.POWER_SERVICE);
+        if (powerManager != null) {
+            //PARTIAL_WAKE_LOCK :保持CPU 运转，屏幕和键盘灯有可能是关闭的。
+            // SCREEN_DIM_WAKE_LOCK ：保持CPU 运转，允许保持屏幕显示但有可能是灰的，允许关闭键盘灯
+            // SCREEN_BRIGHT_WAKE_LOCK ：保持CPU 运转，允许保持屏幕高亮显示，允许关闭键盘灯
+            //FULL_WAKE_LOCK ：保持CPU 运转，保持屏幕高亮显示，键盘灯也保持亮度
+            LogUitls.print(TAG, "请求屏幕常亮");
+            mWakeLock = powerManager.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "WakeLock");
+        }
+        screenListener = new ScreenListener(mContext);
+        screenListener.begin(new ScreenListener.ScreenStateListener() {
+
+            @Override
+            public void onUserPresent() {
+                Log.e("onUserPresent", "onUserPresent");
+
+            }
+
+            @Override
+            public void onScreenOn() {
+                Log.e("onScreenOn", "onScreenOn");
+            }
+
+            @Override
+            public void onScreenOff() {
+
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (mWakeLock != null) {
+                            mWakeLock.acquire();
+                        }
+                        startActivity(new Intent(mContext, AlarmHandlerActivity.class));
+                        Log.e("onScreenOff", "onScreenOff");
+                    }
+                }, 300);
+            }
+        });
+
+    }
+
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        handler.removeCallbacks(null);
+        if (mWakeLock != null) {
+            mWakeLock.release();
+        }
+        screenListener.unregisterListener();
     }
 }

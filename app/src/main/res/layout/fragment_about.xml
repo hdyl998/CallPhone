@@ -8,7 +8,7 @@
 
     <com.hd.view.TitleBar
         android:id="@+id/titleBar"
-        app:tbTitle="关于"
+        app:tbTitle="关于软件"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

@@ -1,29 +1,56 @@
 package com.callphone.client.home;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.KeyguardManager;
+import android.app.Service;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
+import android.net.Uri;
+import android.os.Handler;
+import android.os.IBinder;
+import android.os.PowerManager;
+import android.util.Log;
 import android.view.View;
+import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.callphone.client.AlarmHandlerActivity;
+import com.callphone.client.HistoryItem;
+import com.callphone.client.LoopService;
+import com.callphone.client.PhoneSocket;
 import com.callphone.client.R;
+import com.callphone.client.ScreenListener;
 import com.callphone.client.base.AppConstants;
 import com.callphone.client.home.detail.CallInfoFragment;
 import com.callphone.client.home.socket.MsgSocket;
 import com.callphone.client.main.bean.EventItem;
 import com.callphone.client.main.mine.LoginManager;
+import com.callphone.client.utils.OSHelper;
 import com.callphone.client.utils.StringUtil;
 import com.hd.base.adapterbase.BaseViewHolder;
+import com.hd.base.adapterbase.SuperAdapter;
 import com.hd.base.fragment.IBasePullListViewFragment;
 import com.hd.net.NetBuilder;
 import com.hd.net.socket.NetEntity;
 import com.hd.net.socket.SocketMessageListener;
 import com.hd.permission.PermissionCallback;
 import com.hd.permission.PermissionHelper;
+import com.hd.utils.DateUtils;
 import com.hd.utils.GoUtils;
 import com.hd.utils.TextViewUtils;
 import com.hd.utils.bufferknife.MyBindView;
 import com.hd.utils.bufferknife.MyBufferKnifeUtils;
+import com.hd.utils.log.impl.LogUitls;
+import com.hd.utils.toast.ToastUtils;
 
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -36,7 +63,6 @@ public class HomeFragment extends IBasePullListViewFragment<CallInfoItem> {
     TextView tvBroadcast;
     @MyBindView(R.id.ivNext)
     View ivNext;
-
 
 
     boolean isPermissionOK = false;
@@ -77,27 +103,8 @@ public class HomeFragment extends IBasePullListViewFragment<CallInfoItem> {
     protected void initTitleBarListView() {
         MyBufferKnifeUtils.inject(this);
         checkPermission();
-        MsgSocket.getInstance().addOnGetSocketDataListener(listener);
+        createService();
     }
-
-    private SocketMessageListener listener = new SocketMessageListener() {
-        @Override
-        public void onServerMessage(String event, String data) throws Exception {
-
-        }
-
-        @Override
-        public void onLocalMessageStr(String note) throws Exception {
-            if (isPermissionOK) {
-                tvBroadcast.setText(String.format("连接状态：%s", note));
-            }
-        }
-
-        @Override
-        public void onLocalMessageConnect() throws Exception {
-            MsgSocket.getInstance().sendMyInfo();
-        }
-    };
 
     @Override
     protected void setAPIRequest() {
@@ -120,7 +127,6 @@ public class HomeFragment extends IBasePullListViewFragment<CallInfoItem> {
     public void onSuccess(NetEntity entity) throws Exception {
         super.onSuccess(entity);
         //获取成功直接开启socket
-        MsgSocket.getInstance().startSocket();
     }
 
     @Override
@@ -146,7 +152,7 @@ public class HomeFragment extends IBasePullListViewFragment<CallInfoItem> {
     @Subscribe
     public void onUserLogin(EventItem.LoginEvent item) {
         setAPIRequest();
-        MsgSocket.getInstance().startSocket();
+        MsgSocket.getInstance().sendMyInfo();
     }
 
     /***
@@ -158,7 +164,6 @@ public class HomeFragment extends IBasePullListViewFragment<CallInfoItem> {
         adapter.notifyDataSetChanged();
         listView.getEmptyLayout().setEmptyMessage("登录后查看数据");
         listView.showEmpty();
-        MsgSocket.getInstance().stopSocket();
     }
 
 
@@ -166,6 +171,7 @@ public class HomeFragment extends IBasePullListViewFragment<CallInfoItem> {
     public void onDestroy() {
         super.onDestroy();
         MsgSocket.getInstance().onDestory();
+        mContext.unbindService(getConn());
     }
 
     @Override
@@ -180,4 +186,41 @@ public class HomeFragment extends IBasePullListViewFragment<CallInfoItem> {
         holder.setText(R.id.tvPhone, item.phone);
         holder.setText(R.id.tvStatus, item.getStatusString());
     }
+
+    private void createService() {
+        Intent intent = new Intent(mContext, LoopService.class);
+        mContext.bindService(intent, getConn(), Service.BIND_AUTO_CREATE);
+    }
+
+
+    @Override
+    protected BaseAdapter setBaseAdapter(Context mContext, List<CallInfoItem> listData) {
+        return super.setBaseAdapter(mContext, listData);
+    }
+
+    LoopService mService;
+    ServiceConnection conn = null;
+
+    public ServiceConnection getConn() {
+        if (conn == null) {
+            conn = new ServiceConnection() {
+                @Override
+                public void onServiceConnected(ComponentName name, IBinder service) {
+                    LogUitls.print(TAG, "绑定成功调用：onServiceConnected");
+                    LoopService.LocalBinder binder = (LoopService.LocalBinder) service;
+                    binder.setTvInfo(tvBroadcast);
+                    binder.setAdapter((SuperAdapter<CallInfoItem>) adapter);
+                    mService = binder.getService();
+                }
+
+                @Override
+                public void onServiceDisconnected(ComponentName name) {
+                    mService = null;
+                }
+            };
+        }
+        return conn;
+    }
+
+
 }

@@ -68,9 +68,31 @@
 
 
             <TextView
+                android:id="@+id/tvAppSetting"
+                style="@style/btnMenu"
+                android:text="应用设置" />
+
+            <LinearLayout
+                android:id="@+id/llMiSetting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include layout="@layout/view_line_1_deep" />
+
+                <TextView
+                    style="@style/btnMenu"
+                    android:text="小米MIUI系统设置" />
+
+            </LinearLayout>
+
+            <include layout="@layout/view_line_1_deep" />
+
+            <TextView
                 android:id="@+id/tvSetting"
                 style="@style/btnMenu"
                 android:text="设置" />
+
 
             <include layout="@layout/view_line_1_deep" />
         </LinearLayout>

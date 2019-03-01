@@ -8,11 +8,9 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.IBinder;
 import android.os.PowerManager;
-import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
@@ -67,7 +65,7 @@ public class MainActivity extends IBaseActivity {
 
     @MyBindView(R.id.tvSocketInfo)
     TextView tvSocketInfo;
-    private ScreenListener l;
+    private ScreenListener screenListener;
 
 
     @Override
@@ -120,9 +118,9 @@ public class MainActivity extends IBaseActivity {
 // 获取Binder
                     LoopService.LocalBinder binder = (LoopService.LocalBinder) service;
 
-                    binder.setAdapter(adapter);
-                    binder.setLogAdapter(logAdapter);
-                    binder.setTvSocketInfo(tvSocketInfo);
+//                    binder.setAdapter(adapter);
+//                    binder.setLogAdapter(logAdapter);
+//                    binder.setTvSocketInfo(tvSocketInfo);
 
 // 获取服务对象
                     mService = binder.getService();
@@ -158,8 +156,7 @@ public class MainActivity extends IBaseActivity {
         if (mWakeLock != null) {
             mWakeLock.release();
         }
-        l.unregisterListener();
-
+        screenListener.unregisterListener();
         unbindService(getConn());
     }
 
@@ -170,19 +167,10 @@ public class MainActivity extends IBaseActivity {
 
     public void WifiNeverDormancy(Context mContext) {
         ContentResolver resolver = mContext.getContentResolver();
-
         int value = Settings.System.getInt(resolver, Settings.System.WIFI_SLEEP_POLICY, Settings.System.WIFI_SLEEP_POLICY_DEFAULT);
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
-
-//        SharedPreferences.Editor editor = prefs.edit();
-//        editor.putInt(mContext.getString(android.R.string.wifi_sleep_policy_default), value);
-//        editor.commit();
-
         if (Settings.System.WIFI_SLEEP_POLICY_NEVER != value) {
             Settings.System.putInt(resolver, Settings.System.WIFI_SLEEP_POLICY, Settings.System.WIFI_SLEEP_POLICY_NEVER);
-
         }
-        ToastUtils.show("wifi value:" + value);
     }
 
     @Override
@@ -250,8 +238,8 @@ public class MainActivity extends IBaseActivity {
         }
 
 
-        l = new ScreenListener(this);
-        l.begin(new ScreenListener.ScreenStateListener() {
+        screenListener = new ScreenListener(this);
+        screenListener.begin(new ScreenListener.ScreenStateListener() {
 
             @Override
             public void onUserPresent() {
@@ -276,9 +264,7 @@ public class MainActivity extends IBaseActivity {
                         startActivity(new Intent(mContext,AlarmHandlerActivity.class));
                         Log.e("onScreenOff", "onScreenOff");
                     }
-                },500);
-
-
+                },300);
             }
         });
     }
@@ -357,18 +343,18 @@ public class MainActivity extends IBaseActivity {
 
     private static final String TAG = "MainActivity";
 
-    private void getPhoneInfo() {
-        PhoneInfo siminfo = new PhoneInfo(this);
-        localPhoneNum = siminfo.getNativePhoneNumber();
-
-        LogUitls.print(TAG, "getProvidersName:" + siminfo.getProvidersName());
-        LogUitls.print(TAG, "getNativePhoneNumber:" + localPhoneNum);
-        LogUitls.print(TAG, "------------------------");
-        LogUitls.print(TAG, "getPhoneInfo:" + siminfo.getPhoneInfo());
-        if (localPhoneNum.startsWith("+861")) {
-            localPhoneNum = localPhoneNum.substring(4);
-        }
-    }
+//    private void getPhoneInfo() {
+//        PhoneInfo siminfo = new PhoneInfo(this);
+//        localPhoneNum = siminfo.getNativePhoneNumber();
+//
+//        LogUitls.print(TAG, "getProvidersName:" + siminfo.getProvidersName());
+//        LogUitls.print(TAG, "getNativePhoneNumber:" + localPhoneNum);
+//        LogUitls.print(TAG, "------------------------");
+//        LogUitls.print(TAG, "getPhoneInfo:" + siminfo.getPhoneInfo());
+//        if (localPhoneNum.startsWith("+861")) {
+//            localPhoneNum = localPhoneNum.substring(4);
+//        }
+//    }
 
     static String ISDOUBLE;
     static String SIMCARD;

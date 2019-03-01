@@ -33,22 +33,20 @@
 
         <ImageView
             android:id="@+id/ivNext"
-            android:layout_gravity="right|center_vertical"
             android:layout_width="wrap_content"
-            android:src="@mipmap/ic_next_brown"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
             android:layout_marginRight="@dimen/defaultPadding"
-            android:layout_height="wrap_content" />
+            android:src="@mipmap/ic_next_brown" />
     </FrameLayout>
-
-
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="@dimen/comMenuHeight"
+        android:background="@color/white"
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/n30px"
         android:text="拨号记录"
-        android:background="@color/white"
         android:textColor="@color/defaultTextColor"
         android:textSize="@dimen/defaultTextSize" />
 

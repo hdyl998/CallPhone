@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:textSize="@dimen/titleTextSize"
+        android:textColor="@color/defaultTextColor"
+        android:padding="@dimen/defaultPadding"
+        android:text="设置-权限管理-打开图示权限"
+        android:layout_height="wrap_content" />
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/defaultPadding"
+        android:src="@mipmap/ic_help2" />
+
+    <include
+        layout="@layout/view_line_1_deep"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:text="设置-省电策略-无限制"
+        android:textSize="@dimen/titleTextSize"
+        android:textColor="@color/defaultTextColor"
+        android:padding="@dimen/defaultPadding"
+        android:layout_height="wrap_content" />
+    <ImageView
+        android:layout_width="match_parent"
+        android:padding="@dimen/defaultPadding"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_help1" />
+
+</LinearLayout>

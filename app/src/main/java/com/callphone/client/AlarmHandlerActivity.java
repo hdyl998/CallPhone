@@ -46,7 +46,7 @@ public class AlarmHandlerActivity extends Activity {
 
         LogUitls.print(TAG, phone + "PHONE");
 
-        textView.setText(String.format("拨打电话：" + phone));
+        textView.setText(getString(R.string.app_name) + "正在运行中...");
         aquire();
 //        new Handler().postDelayed(new Runnable() {
 //            @Override
@@ -78,10 +78,9 @@ public class AlarmHandlerActivity extends Activity {
 
     private static final String TAG = "AlarmHandlerActivity";
 
-    private void aquire(){
+    private void aquire() {
         PowerManager pm = (PowerManager) this.getSystemService(Context.POWER_SERVICE);
         if (!pm.isScreenOn()) {
-//            textView.setText(String.format("拨打电话：" + phone));
             PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.SCREEN_DIM_WAKE_LOCK, "mywakelogtag");
             wl.acquire();
         }
@@ -89,26 +88,7 @@ public class AlarmHandlerActivity extends Activity {
 
     @Override
     protected void onNewIntent(Intent intent) {
-
         aquire();
-//        LogUitls.print(TAG, "onNewIntent: 调用");
-//        PowerManager pm = (PowerManager) this.getSystemService(Context.POWER_SERVICE);
-//        if (!pm.isScreenOn()) {
-//            String phone = getIntent().getStringExtra("phone");
-//
-//
-//            LogUitls.print(TAG, phone + "PHONE");
-//
-//            textView.setText(String.format("拨打电话：" + phone));
-//            PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "bright");
-//            wl.acquire();
-//        }
-//        new Handler().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                callPhone(intent.getStringExtra("phone"));
-//            }
-//        }, 1000);
     }
 
 }

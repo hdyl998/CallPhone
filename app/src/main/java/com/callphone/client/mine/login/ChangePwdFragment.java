@@ -31,7 +31,7 @@ public class ChangePwdFragment extends IBaseTitleBarFragment {
     TextWatcherImpl textWatcher=new TextWatcherImpl() {
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            btnConfirm.setEnabled(etPwd.length()>=6&&etPwd2.length()>6);
+            btnConfirm.setEnabled(etPwd.length()>=6&&etPwd2.length()>=6);
         }
     };
 
@@ -65,12 +65,12 @@ public class ChangePwdFragment extends IBaseTitleBarFragment {
     private void initPwdInpter() {
         if (isHidePwd) {
             ivPwdEye.setImageResource(R.mipmap.my_login_eye_n);
-            etPwd.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            etPwd2.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         } else {
             ivPwdEye.setImageResource(R.mipmap.my_login_eye_o);
-            etPwd.setInputType(InputType.TYPE_CLASS_TEXT);
+            etPwd2.setInputType(InputType.TYPE_CLASS_TEXT);
         }
-        etPwd.setSelection(etPwd.length());
+        etPwd2.setSelection(etPwd.length());
     }
 
 
@@ -82,6 +82,7 @@ public class ChangePwdFragment extends IBaseTitleBarFragment {
                 changePwd(etPwd.getText().toString(),etPwd2.getText().toString());
                 break;
             case R.id.iv_pwd_eye:
+                isHidePwd = !isHidePwd;
                 initPwdInpter();
                 break;
         }
