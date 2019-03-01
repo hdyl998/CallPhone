@@ -199,6 +199,7 @@ public class LoopService extends Service {
 
         public void removeAll() {
             tvInfo = null;
+            this.adapter=null;
         }
 
         public void addCallInfoItem(CallInfoItem item) {
