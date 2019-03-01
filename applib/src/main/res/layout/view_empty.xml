@@ -10,12 +10,15 @@
     android:paddingTop="16dp">
 
 
+
     <TextView
         android:id="@+id/tv_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/n40px"
+        android:drawablePadding="@dimen/n10px"
         android:text="@string/empty_message"
+        android:drawableTop="@mipmap/empty_drawable"
         android:textColor="@color/_999999"
         android:textSize="@dimen/s32px" />
 

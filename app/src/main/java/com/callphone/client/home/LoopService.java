@@ -1,4 +1,4 @@
-package com.callphone.client;
+package com.callphone.client.home;
 
 import android.annotation.SuppressLint;
 import android.app.KeyguardManager;
@@ -17,11 +17,13 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.callphone.client.home.CallInfoItem;
+import com.callphone.client.R;
 import com.callphone.client.home.socket.MsgSocket;
 import com.callphone.client.main.MainNewActivity;
+import com.callphone.client.main.mine.LoginManager;
 import com.hd.base.adapterbase.SuperAdapter;
 import com.hd.base.maininterface.IComCallBacks;
+import com.hd.net.socket.MapBuilder;
 import com.hd.net.socket.SocketMessageListener;
 import com.hd.permission.PermissionHelper;
 import com.hd.utils.DateUtils;
@@ -42,10 +44,6 @@ public class LoopService extends Service {
     HanderLoopHelper loopHelper;
     public final static int FOREGROUND_SERVICE = 101;
 
-
-    private void closeSocket() {
-        MsgSocket.getInstance().stopSocket();
-    }
 
     static boolean isRequest = true;
 
@@ -78,18 +76,44 @@ public class LoopService extends Service {
         PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "bright");
         //点亮屏幕
         wl.acquire();
-//        //释放
-//        wl.release();
+    }
+
+    /***
+     * 唤醒屏幕并解锁
+     * 高亮
+     */
+    public void fullWakeup() {
+
+        KeyguardManager.KeyguardLock kl = km.newKeyguardLock("unLock");
+        //解锁
+        kl.disableKeyguard();
+        PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "bright1");
+        wl.acquire();
     }
 
 
-    private void createLooper() {
+    private void stopLooper() {
         if (handerLoopHelper != null) {
             handerLoopHelper.stopLoop();
         }
-        pm = (PowerManager) this.getSystemService(Context.POWER_SERVICE);
-        km = (KeyguardManager) this.getSystemService(Context.KEYGUARD_SERVICE);
-        closeSocket();
+        MsgSocket.getInstance().stopSocket();
+        LogUitls.print(TAG, "stopLooper");
+        isLooper = false;
+    }
+
+
+    boolean isLooper = false;
+
+
+    private void startLooper() {
+        if (isLooper) {
+            return;
+        }
+        nums = 0;
+        stopLooper();
+        isLooper = true;
+        LogUitls.print(TAG, "createLooper");
+        MsgSocket.getInstance().addOnGetSocketDataListener(listener);
         MsgSocket.getInstance().startSocket();
         handerLoopHelper = new HanderLoopHelper();
         handerLoopHelper.setLoopTimeMillis(3000);
@@ -131,8 +155,8 @@ public class LoopService extends Service {
 
     KeyguardManager km;
 
-    public void aotoMobile(String phone) {
-        wakeUpAndUnlock();
+    public boolean aotoMobile(String phone) {
+        fullWakeup();
         //拿到锁屏管理者
         if (km.isKeyguardLocked()) {
             Intent intent = new Intent();
@@ -142,16 +166,18 @@ public class LoopService extends Service {
             LogUitls.print(TAG, "发送广播" + phone);
             CallInfoItem historyItem = new CallInfoItem();
             historyItem.phone = phone;
+            historyItem.status = 1;
             historyItem.updatetime = DateUtils.getSimpleDate().format(new Date()) + "(锁屏拨打)";
             binder.addCallInfoItem(historyItem);
+            return true;
         } else {
-            callPhone(phone);
+            return callPhone(phone);
         }
 
     }
 
     @SuppressLint("MissingPermission")
-    private void callPhone(String phone) {
+    private boolean callPhone(String phone) {
         LogUitls.print(TAG, "callPhone" + phone);
         if (PermissionHelper.hasPermissions(android.Manifest.permission.CALL_PHONE)) {
             try {
@@ -163,67 +189,35 @@ public class LoopService extends Service {
 
                 CallInfoItem historyItem = new CallInfoItem();
                 historyItem.phone = phone;
+                historyItem.status = 1;
                 historyItem.updatetime = DateUtils.getSimpleDate().format(new Date());
                 binder.addCallInfoItem(historyItem);
+                return true;
             } catch (Exception e) {
                 e.printStackTrace();
                 ToastUtils.show("没有权限，拨打电话失败`1");
+                return false;
             }
         } else {
             ToastUtils.show("没有权限，拨打电话失败`1");
+            return false;
         }
     }
 
-    /**
-     * 创建Binder对象，返回给客户端即Activity使用，提供数据交换的接口
-     */
-    public class LocalBinder extends Binder {
-        // 声明一个方法，getService。（提供给客户端调用）
-        public LoopService getService() {
-            // 返回当前对象LocalService,这样我们就可在客户端端调用Service的公共方法了
-            return LoopService.this;
-        }
-
-        SuperAdapter<CallInfoItem> adapter;
-
-
-        TextView tvInfo;
-
-        public void setTvInfo(TextView tvInfo) {
-            this.tvInfo = tvInfo;
-        }
-
-        public void setAdapter(SuperAdapter<CallInfoItem> adapter) {
-            this.adapter = adapter;
-        }
-
-        public void removeAll() {
-            tvInfo = null;
-            this.adapter=null;
-        }
-
-        public void addCallInfoItem(CallInfoItem item) {
-            if (adapter != null) {
-                adapter.add(0, item);
-            }
-        }
-
-
-        public void setInfoText(String text) {
-            if (tvInfo != null) {
-                tvInfo.setText(text);
-            }
-        }
-    }
 
     private LocalBinder binder = new LocalBinder();
 
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        createLooper();
-        bindNotification();
+        init();
         return binder;
+    }
+
+    private void init() {
+        pm = (PowerManager) this.getSystemService(Context.POWER_SERVICE);
+        km = (KeyguardManager) this.getSystemService(Context.KEYGUARD_SERVICE);
+        bindNotification();
     }
 
 
@@ -274,37 +268,73 @@ public class LoopService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (loopHelper != null) {
-            loopHelper.onDestory();
-        }
+        stopLooper();
         stopForeground(true);
+    }
+
+    long recordTime = System.currentTimeMillis();
+
+    private boolean isMoreTime() {
+        if (System.currentTimeMillis() - recordTime > 8000) {
+            return true;
+        }
+        return false;
+    }
+
+    private void recordTime() {
+        recordTime = System.currentTimeMillis();
     }
 
 
     private SocketMessageListener listener = new SocketMessageListener() {
         @Override
         public void onServerMessage(String event, String data) throws Exception {
+
             switch (event) {
                 case MsgSocket.init:
                     JSONObject object = JSON.parseObject(data);
                     int code = object.getInteger("code");
                     String msg = object.getString("msg");
-                    binder.setInfoText(String.format("连接状态：%s", "初始化成功！"));
+                    binder.setInfoText("服务初始化成功！");
                     break;
                 case MsgSocket.change:
                     JSONObject obj1 = JSON.parseObject(data);
                     String phone = obj1.getString("target_phone");
+                    String id = obj1.getString("id");
+                    binder.setInfoText(String.format("拨打电话...(%s)", phone));
+                    boolean isSuccess = aotoMobile(phone);
+                    if (isSuccess) {
+                        MsgSocket.getInstance().sendSockData("notice", MapBuilder.create().add("id", id));
+                    }
+                    recordTime();
                     break;
                 case MsgSocket.hearting:
+                    if (isMoreTime()) {
+                        binder.setInfoText(String.format("已连接...(%s)", data));
+                    }
                     break;
                 case MsgSocket.err:
+                    JSONObject object1 = JSON.parseObject(data);
+                    int code1 = object1.getInteger("code");
+                    String msg1 = object1.getString("msg");
+                    ToastUtils.show(msg1);
+                    binder.setInfoText(msg1);
+                    switch (code1) {
+                        case -1:
+                        case -9999:
+                            LoginManager.logout();
+                            break;
+                        default:
+                            break;
+                    }
+                    recordTime();
                     break;
             }
         }
 
         @Override
         public void onLocalMessageStr(String note) throws Exception {
-            binder.setInfoText(String.format("连接状态：%s", note));
+            binder.setInfoText(note);
         }
 
         @Override
@@ -313,5 +343,65 @@ public class LoopService extends Service {
             MsgSocket.getInstance().sendMyInfo();
         }
     };
+
+
+    /**
+     * 创建Binder对象，返回给客户端即Activity使用，提供数据交换的接口
+     */
+    public class LocalBinder extends Binder {
+        // 声明一个方法，getService。（提供给客户端调用）
+        public LoopService getService() {
+            // 返回当前对象LocalService,这样我们就可在客户端端调用Service的公共方法了
+            return LoopService.this;
+        }
+
+        SuperAdapter<CallInfoItem> adapter;
+
+
+        TextView tvInfo;
+
+        public void setTvInfo(TextView tvInfo) {
+            this.tvInfo = tvInfo;
+        }
+
+        public void setAdapter(SuperAdapter<CallInfoItem> adapter) {
+            this.adapter = adapter;
+        }
+
+        public void removeAll() {
+            tvInfo = null;
+            this.adapter = null;
+        }
+
+        public void addCallInfoItem(CallInfoItem item) {
+            if (adapter != null) {
+                adapter.add(0, item);
+            }
+        }
+
+
+        public void setInfoText(String text) {
+            if (tvInfo != null) {
+                tvInfo.setText(String.format("连接状态: %s", text));
+            }
+        }
+
+        /***
+         * 开始循环
+         */
+        public void startLooper() {
+            setInfoText("开始连接");
+            LoopService.this.startLooper();
+        }
+
+        /***
+         * 开始退出
+         */
+        public void stopLooper() {
+            LoopService.this.stopLooper();
+            setInfoText("未连接");
+        }
+
+    }
 
 }

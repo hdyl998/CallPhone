@@ -10,7 +10,7 @@ import android.Manifest;
 public interface AppConstants {
 
      String permissionStart[] = {Manifest.permission.CALL_PHONE,
-            Manifest.permission.READ_PHONE_STATE,Manifest.permission.WRITE_EXTERNAL_STORAGE};
+            Manifest.permission.READ_PHONE_STATE};
 
 //     String permissionCallPhone=Manifest.permission.CALL_PHONE;
 //     String permissionCallReadPhoneState=Manifest.permission.READ_PHONE_STATE;

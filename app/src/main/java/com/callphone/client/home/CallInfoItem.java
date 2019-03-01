@@ -23,6 +23,6 @@ public class CallInfoItem implements Serializable{
 
     @Override
     public String toString() {
-        return String.format("拨号id：%s\n手机号：%s\n状态：%s\n拨号时间：\n",id,phone,getStatusString(),updatetime);
+        return String.format("手机号：%s\n状态：%s\n拨号时间：%s\n",phone,getStatusString(),updatetime);
     }
 }

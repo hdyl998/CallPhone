@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.callphone.client.home.LoopService;
 import com.hd.base.IBaseActivity;
 import com.hd.base.adapterbase.BaseViewHolder;
 import com.hd.base.adapterbase.SuperAdapter;
@@ -364,9 +365,9 @@ public class MainActivity extends IBaseActivity {
 
 
     public void onclickType(View view) {
-        LoopService.isRequest = !LoopService.isRequest;
-        TextView textView = (TextView) view;
-        textView.setText(LoopService.isRequest ? "网页请求" : "socket请求");
+//        LoopService.isRequest = !LoopService.isRequest;
+//        TextView textView = (TextView) view;
+//        textView.setText(LoopService.isRequest ? "网页请求" : "socket请求");
     }
 
 

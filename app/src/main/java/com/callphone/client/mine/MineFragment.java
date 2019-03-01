@@ -6,18 +6,14 @@ import android.widget.TextView;
 
 import com.callphone.client.R;
 import com.callphone.client.base.data.AppSaveData;
-import com.callphone.client.home.MiUIHelpFragment;
 import com.callphone.client.main.bean.EventItem;
 import com.callphone.client.main.mine.UserCacheConfig;
 import com.callphone.client.mine.login.ChangePwdFragment;
 import com.callphone.client.main.mine.LoginManager;
-import com.callphone.client.utils.MIUIUtils;
-import com.callphone.client.utils.OSHelper;
 import com.hd.base.fragment.IBaseTitleBarFragment;
 import com.hd.utils.GoUtils;
 import com.hd.utils.bufferknife.MyBindView;
 import com.hd.utils.bufferknife.MyBufferKnifeUtils;
-import com.hd.utils.log.impl.LogUitls;
 
 import org.greenrobot.eventbus.Subscribe;
 

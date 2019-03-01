@@ -35,7 +35,7 @@
         </activity>
 
         <service
-            android:name=".LoopService"
+            android:name=".home.LoopService"
             android:enabled="true"
             android:exported="true" />
 

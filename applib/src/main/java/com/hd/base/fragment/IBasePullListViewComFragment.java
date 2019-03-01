@@ -85,7 +85,6 @@ public abstract class IBasePullListViewComFragment<T, V extends PullToRefreshBas
         LogUitls.print("范型的类型", tClass + "" + isInited());
 
         listData = new ArrayList();//list数据
-        setScrollLoadEnabledFalse();
         initTitleBarListView();
         //设置适配器
         adapter = setBaseAdapter(mContext, listData);

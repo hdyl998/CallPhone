@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        configs1 {
+            keyAlias 'callphone123'
+            keyPassword 'callphone123'
+            storeFile file('./callphone.jks')
+            storePassword 'callphone123'
+        }
+    }
     compileSdkVersion project.ext.compileSdkVersion
     defaultConfig {
         applicationId "com.callphone.client"
@@ -11,8 +19,13 @@ android {
     }
     buildTypes {
         release {
+            signingConfig signingConfigs.configs1
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug{
+            signingConfig signingConfigs.configs1
+            debuggable true
         }
     }
     compileOptions {

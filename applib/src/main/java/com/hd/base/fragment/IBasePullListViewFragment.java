@@ -23,7 +23,6 @@ public abstract class IBasePullListViewFragment<T> extends IBasePullListViewComF
     @Override
     protected View setBodyView(Context mContext) {
         listView = new PulltoRefreshAAMListView(mContext);
-        listView.setNoDivider();
         LogUitls.print("ttt", "create");
 //        listView.addHeaderLine(10);
         return listView;

@@ -58,7 +58,7 @@ public class StringUtil {
 
         //当天的返回时间
         if (date.getDate() == now.getDate() && distance < DateUtils.DAY) {
-            return DateUtils.getDateFormatString(timeStr, "HH:mm");
+            return DateUtils.getDateFormatString(timeStr, "今天 HH:mm");
         }
         if (distance >= DateUtils.WEEK) {//消息大于1周,显示手机收发时间的日期
             return DateUtils.getDateFormatString(timeStr, "yyyy/MM/dd HH:mm");

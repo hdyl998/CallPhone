@@ -1,4 +1,4 @@
-package com.callphone.client.home;
+package com.callphone.client.mine;
 
 import android.view.View;
 

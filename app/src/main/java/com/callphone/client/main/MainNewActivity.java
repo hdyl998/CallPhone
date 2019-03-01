@@ -1,23 +1,20 @@
 package com.callphone.client.main;
 
 import android.app.Activity;
-import android.app.Service;
-import android.content.ComponentName;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.IBinder;
 import android.os.PowerManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 
 import com.callphone.client.AlarmHandlerActivity;
-import com.callphone.client.LoopService;
 import com.callphone.client.R;
 import com.callphone.client.ScreenListener;
 import com.callphone.client.base.AppConstants;
 import com.callphone.client.home.HomeFragment;
+import com.callphone.client.main.bean.EventItem;
+import com.callphone.client.main.mine.LoginManager;
 import com.callphone.client.mine.MineFragment;
 import com.hd.base.IBaseActivity;
 import com.hd.base.IBaseFragment;
@@ -31,6 +28,8 @@ import com.hd.utils.toast.ToastUtils;
 import com.hd.view.NoScrollViewPager;
 import com.hd.view.navigation.NavigationBarItem;
 import com.hd.view.navigation.NavigationBarView;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +55,7 @@ public class MainNewActivity extends IBaseActivity {
         viewPager.setScrollAbleFalse();
         createNavigationBar();
         initOthers();
+        checkPermission();
     }
 
 
@@ -63,7 +63,7 @@ public class MainNewActivity extends IBaseActivity {
         //点击无动画
         navigationBarView.setClickAnimation(false);
         List<NavigationBarItem> listsMenus = new ArrayList<>(2);
-        listsMenus.add(new NavigationBarItem("首页", KEY_PAGE_SCORE,
+        listsMenus.add(new NavigationBarItem("首页", KEY_PAGE_HOME,
                 R.mipmap.icon_home_home_sel, R.mipmap.icon_home_home, new HomeFragment()));
         listsMenus.add(new NavigationBarItem("我的", KEY_PAGE_MINE,
                 R.mipmap.icon_home_mine_sel, R.mipmap.icon_home_mine, new MineFragment()));
@@ -82,9 +82,7 @@ public class MainNewActivity extends IBaseActivity {
 
         navigationBarView.setClickCallBacks(obj -> {
             switch (obj.itemId) {
-                case KEY_PAGE_SCORE://比赛
-                    break;
-                case KEY_PAGE_ATT:
+                case KEY_PAGE_HOME://比赛
                     break;
                 case KEY_PAGE_MINE:
                     break;
@@ -121,11 +119,10 @@ public class MainNewActivity extends IBaseActivity {
     }
 
 
-    public final static int KEY_PAGE_SCORE = 112;//比分
+    public final static int KEY_PAGE_HOME = 112;//比分
 
-    public final static int KEY_PAGE_DEFAULT = KEY_PAGE_SCORE;//比分
+    public final static int KEY_PAGE_DEFAULT = KEY_PAGE_HOME;
 
-    public final static int KEY_PAGE_ATT = 113;//关注
     public final static int KEY_PAGE_MINE = 114;//我的
 
     public void goToPage(int page, Object parsms) {
@@ -172,7 +169,7 @@ public class MainNewActivity extends IBaseActivity {
     }
 
     public boolean isMatchItem() {
-        return navigationBarView.isCurrentPage(KEY_PAGE_SCORE);
+        return navigationBarView.isCurrentPage(KEY_PAGE_HOME);
     }
 
 
@@ -251,4 +248,51 @@ public class MainNewActivity extends IBaseActivity {
         }
         screenListener.unregisterListener();
     }
+
+
+
+    boolean hasPermission=false;
+
+    private void checkPermission() {
+        PermissionHelper.create(mContext).setPermissions(AppConstants.permissionStart)
+                .request(new PermissionCallback() {
+                    @Override
+                    public void onPermissionGranted() {
+                        hasPermission=true;
+                    }
+
+                    @Override
+                    public void onPermissionDenied(List<String> permissions) {
+                        super.onPermissionDenied(permissions);
+                        hasPermission=false;
+                    }
+                });
+    }
+
+
+    @Override
+    protected boolean isEventBus() {
+        return true;
+    }
+
+
+    /***
+     * 当用户登录时
+     */
+    @Subscribe
+    public void onUserLogin(EventItem.LoginEvent item) {
+
+    }
+
+    /***
+     * 当用户登录时
+     */
+    @Subscribe
+    public void onUserLogout(EventItem.LoginOutEvent item) {
+        if (navigationBarView.isCurrentPage(KEY_PAGE_HOME)) {
+            selectedPage(KEY_PAGE_HOME);
+            LoginManager.isLoginAndRedict(mContext);
+        }
+    }
+
 }
