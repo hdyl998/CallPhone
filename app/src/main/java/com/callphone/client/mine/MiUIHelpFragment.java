@@ -13,7 +13,7 @@ import com.hd.utils.GoUtils;
 public class MiUIHelpFragment extends IBaseScrollViewFragment {
     @Override
     protected void initScrollView() {
-        getTitleBar().setTitleText("小米手机参照配置").setRightText("设置", new View.OnClickListener() {
+        getTitleBar().setTitleText("小米MIUI系统参考设置").setRightText("设置", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 GoUtils.goAppDetailsSetting(mContext);

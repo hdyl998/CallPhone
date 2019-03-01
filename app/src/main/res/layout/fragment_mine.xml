@@ -70,7 +70,7 @@
             <TextView
                 android:id="@+id/tvAppSetting"
                 style="@style/btnMenu"
-                android:text="应用设置" />
+                android:text="应用详情" />
 
             <LinearLayout
                 android:id="@+id/llMiSetting"
@@ -82,7 +82,7 @@
 
                 <TextView
                     style="@style/btnMenu"
-                    android:text="小米MIUI系统设置" />
+                    android:text="小米MIUI系统参考设置" />
 
             </LinearLayout>
 
