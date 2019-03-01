@@ -34,4 +34,5 @@
     <dimen name="titleSize">@dimen/s38px</dimen>
     <dimen name="defaultTextSize">@dimen/s30px</dimen>
     <dimen name="titleSizeSub">@dimen/s34px</dimen>
+    <dimen name="defaultPadding">@dimen/n30px</dimen>
 </resources>

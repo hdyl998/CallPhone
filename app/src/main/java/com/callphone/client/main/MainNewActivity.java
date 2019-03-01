@@ -168,14 +168,6 @@ public class MainNewActivity extends IBaseActivity {
         }
     }
 
-    public boolean isMatchItem() {
-        return navigationBarView.isCurrentPage(KEY_PAGE_HOME);
-    }
-
-
-    public boolean isAttItem() {
-        return navigationBarView.isCurrentPage(KEY_PAGE_ATT);
-    }
 
     private ScreenListener screenListener;
 
@@ -238,7 +230,6 @@ public class MainNewActivity extends IBaseActivity {
     }
 
 
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -250,21 +241,20 @@ public class MainNewActivity extends IBaseActivity {
     }
 
 
-
-    boolean hasPermission=false;
+    boolean hasPermission = false;
 
     private void checkPermission() {
         PermissionHelper.create(mContext).setPermissions(AppConstants.permissionStart)
                 .request(new PermissionCallback() {
                     @Override
                     public void onPermissionGranted() {
-                        hasPermission=true;
+                        hasPermission = true;
                     }
 
                     @Override
                     public void onPermissionDenied(List<String> permissions) {
                         super.onPermissionDenied(permissions);
-                        hasPermission=false;
+                        hasPermission = false;
                     }
                 });
     }
