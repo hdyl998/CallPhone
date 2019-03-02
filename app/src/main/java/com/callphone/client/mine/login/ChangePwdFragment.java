@@ -72,7 +72,7 @@ public class ChangePwdFragment extends IBaseTitleBarFragment {
             ivPwdEye.setImageResource(R.mipmap.my_login_eye_o);
             etPwd2.setInputType(InputType.TYPE_CLASS_TEXT);
         }
-        etPwd2.setSelection(etPwd.length());
+        etPwd2.setSelection(etPwd2.length());
 
 
     }

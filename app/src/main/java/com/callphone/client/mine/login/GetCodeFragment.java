@@ -93,7 +93,7 @@ public class GetCodeFragment extends IBaseTitleBarFragment {
             ivPwdEye.setImageResource(R.mipmap.my_login_eye_o);
             etPwd.setInputType(InputType.TYPE_CLASS_TEXT);
         }
-        etPwd.setSelection(etCode.length());
+        etPwd.setSelection(etPwd.length());
     }
 
     private TextWatcherImpl textWatcher = new TextWatcherImpl() {
