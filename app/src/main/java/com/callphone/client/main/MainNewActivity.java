@@ -281,8 +281,8 @@ public class MainNewActivity extends IBaseActivity {
     public void onUserLogout(EventItem.LoginOutEvent item) {
         if (navigationBarView.isCurrentPage(KEY_PAGE_HOME)) {
             selectedPage(KEY_PAGE_HOME);
-            LoginManager.isLoginAndRedict(mContext);
         }
+        LoginManager.isLoginAndRedict(mContext);
     }
 
 }

@@ -37,15 +37,17 @@ public class MineFragment extends IBaseTitleBarFragment {
     @MyBindView(value = R.id.llMiSetting, click = true)
     View llMiSetting;
 
+    @MyBindView(value = R.id.tvLogout)
+    TextView tvLogout;
+    @MyBindView(value = R.id.tvChangePwd)
+    TextView tvChangePwd;
+
 
     @Override
     public void onClick(View v) {
-
-        if (!LoginManager.isLoginAndRedict(mContext)) {
-            return;
-        }
         switch (v.getId()) {
             case R.id.llHeader:
+                LoginManager.isLoginAndRedict(mContext);
                 break;
             case R.id.tvChangePwd:
                 startFragment(ChangePwdFragment.class);
@@ -81,7 +83,6 @@ public class MineFragment extends IBaseTitleBarFragment {
                     public void onSuccess(NetEntity entity) throws Exception {
                         LoginManager.logout();
                         hideDialogForLoadingImmediate();
-                        mContext.finish();
                     }
 
                     @Override
@@ -136,9 +137,13 @@ public class MineFragment extends IBaseTitleBarFragment {
         if (item == null) {
             ivHead.setImageResource(R.mipmap.ic_default_person);
             tvLogin.setText("登录后查看");
+            tvLogout.setVisibility(View.GONE);
+            tvChangePwd.setVisibility(View.GONE);
         } else {
             ivHead.setImageResource(R.mipmap.ic_person);
             tvLogin.setText(item.phone);
+            tvLogout.setVisibility(View.VISIBLE);
+            tvChangePwd.setVisibility(View.VISIBLE);
         }
     }
 

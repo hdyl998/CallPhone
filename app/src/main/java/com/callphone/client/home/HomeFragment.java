@@ -149,10 +149,6 @@ public class HomeFragment extends IBasePullListViewFragment<CallInfoItem> {
     }
 
 
-    @Override
-    protected BaseAdapter setBaseAdapter(Context mContext, List<CallInfoItem> listData) {
-        return super.setBaseAdapter(mContext, listData);
-    }
 
     LoopService mService;
     ServiceConnection conn = null;
