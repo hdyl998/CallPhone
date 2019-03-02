@@ -266,13 +266,6 @@ public class MainNewActivity extends IBaseActivity {
     }
 
 
-    /***
-     * 当用户登录时
-     */
-    @Subscribe
-    public void onUserLogin(EventItem.LoginEvent item) {
-
-    }
 
     /***
      * 当用户登录时

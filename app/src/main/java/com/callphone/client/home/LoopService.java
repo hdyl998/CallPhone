@@ -320,6 +320,7 @@ public class LoopService extends Service {
                         case -1:
                         case -9999:
                             LoginManager.logout();
+                            LogUitls.print("logint","socketlogout");
                             break;
                         default:
                             break;
@@ -379,7 +380,7 @@ public class LoopService extends Service {
 
         public void setInfoText(String text) {
             if (tvInfo != null) {
-                tvInfo.setText(String.format("连接状态: %s", text));
+                tvInfo.setText(text);
             }
         }
 
@@ -396,7 +397,7 @@ public class LoopService extends Service {
          */
         public void stopLooper() {
             LoopService.this.stopLooper();
-            setInfoText("连接断开!");
+            setInfoText("请先登录！");
         }
 
     }

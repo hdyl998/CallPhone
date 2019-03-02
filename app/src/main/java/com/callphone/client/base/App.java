@@ -13,6 +13,7 @@ import com.hd.net.INetConfig;
 import com.hd.net.NetBuilder;
 import com.hd.net.NetCallback;
 import com.hd.net.socket.NetEntity;
+import com.hd.utils.log.impl.LogUitls;
 
 /**
  * Created by liugd on 2019/1/17.
@@ -38,9 +39,10 @@ public class App extends HdApp {
 
             @Override
             public void onHandleCodeMessage(int code) {
-                if (NetEntity.ERROR_NOT_LOGIN == code) {
-                    LoginManager.logout();
-                }
+//                if (NetEntity.ERROR_NOT_LOGIN == code) {
+//                    LogUitls.print("logint","codelogout");
+//                    LoginManager.logout();
+//                }
             }
 
             @Override

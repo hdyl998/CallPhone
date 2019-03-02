@@ -11,7 +11,7 @@ public class OnlineAppConfig extends BaseAppConfig {
         isOnline=true;
         isTestFun=false;
         isDebug=false;
-        baseUrl="http://api.topspeedcloud.com/index.php?s=index/";
-        msgSocketUrl="http://203.195.170.189:20001";
+        baseUrl = "http://47.106.179.199:8000/?act=";
+        msgSocketUrl = "http://47.106.179.199:8001";
     }
 }

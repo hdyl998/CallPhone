@@ -93,6 +93,11 @@ public class NetEntity<T> extends DefaultNetDataBean implements Serializable {
         return ERROR_NOT_LOGIN == CODE;
     }
 
+    public boolean isDefaultError(){
+        return CODE==ERROR_DEFAULT;
+    }
+
+
     public boolean isParaseError() {
         return ERROR_PARASE == CODE;
     }

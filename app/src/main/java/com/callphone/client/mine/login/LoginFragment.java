@@ -174,14 +174,12 @@ public class LoginFragment extends IBaseTitleBarFragment {
 
     public static void launchForRestult(Context context, int resultCode) {
         AppLauncher.withFragment(context, LoginFragment.class)
-                .setAnimType(AppLauncher.ANIMTYPE_SLIDE_BOTTOM)
                 .launch(resultCode);
     }
 
     public static void launchWithAction(Context mContext, String loginSuccessAction) {
         AppLauncher.withFragment(mContext, LoginFragment.class)
                 .setObjs(loginSuccessAction)
-                .setAnimType(AppLauncher.ANIMTYPE_SLIDE_BOTTOM)
                 .launch();
     }
 

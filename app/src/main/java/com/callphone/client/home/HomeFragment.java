@@ -53,14 +53,10 @@ public class HomeFragment extends IBasePullListViewFragment<CallInfoItem> {
     @Override
     protected void initTitleBarListView() {
         MyBufferKnifeUtils.inject(this);
-        createService();
     }
 
     @Override
     protected void setAPIRequest() {
-        if (LoginManager.isLogin()) {
-            listView.getEmptyLayout().setEmptyMessage(getString(R.string.empty_message));
-        }
         CallInfoItem item = getTailItem();
 
         NetBuilder.create(mContext)
@@ -75,19 +71,25 @@ public class HomeFragment extends IBasePullListViewFragment<CallInfoItem> {
 
     @Override
     public void onSuccess(NetEntity entity) throws Exception {
+        //登录成功
+        listView.getEmptyLayout().setEmptyMessage(getString(R.string.empty_message));
         super.onSuccess(entity);
+        createService();//先用这个接口看是否登录态失效
         //获取成功直接开启socket
     }
+
 
     @Override
     public void onError(NetEntity entity) throws Exception {
         if (entity.isLoginError()) {
-            listView.getEmptyLayout().setEmptyMessage("登录后查看数据");
-            listView.showEmpty();
-            listView.setDataFromNetWork(null);
+            LoginManager.logout();
         } else {
             super.onError(entity);
+            if (entity.isDefaultError()) {
+                tvSocketStatus.setText("连接错误，请检查网络");
+            }
         }
+        createService();
     }
 
     @Override
@@ -105,6 +107,7 @@ public class HomeFragment extends IBasePullListViewFragment<CallInfoItem> {
         if (binder != null) {
             binder.startLooper();
         }
+
     }
 
     /***
@@ -112,10 +115,8 @@ public class HomeFragment extends IBasePullListViewFragment<CallInfoItem> {
      */
     @Subscribe
     public void onUserLogout(EventItem.LoginOutEvent item) {
-        listData.clear();
-        adapter.notifyDataSetChanged();
         listView.getEmptyLayout().setEmptyMessage("登录后查看数据");
-        listView.showEmpty();
+        listView.setDataFromNetWork(null);
 
         if (binder != null) {
             binder.stopLooper();
@@ -143,11 +144,16 @@ public class HomeFragment extends IBasePullListViewFragment<CallInfoItem> {
         holder.setTextColor(R.id.tvStatus, item.getStatusColor());
     }
 
-    private void createService() {
-        Intent intent = new Intent(mContext, LoopService.class);
-        mContext.bindService(intent, getConn(), Service.BIND_AUTO_CREATE);
-    }
+    private boolean isCreateService = false;
 
+    private void createService() {
+        if (!isCreateService) {
+            isCreateService = true;
+            Intent intent = new Intent(mContext, LoopService.class);
+            mContext.bindService(intent, getConn(), Service.BIND_AUTO_CREATE);
+        }
+
+    }
 
 
     LoopService mService;
@@ -168,6 +174,8 @@ public class HomeFragment extends IBasePullListViewFragment<CallInfoItem> {
 
                     if (LoginManager.isLogin()) {
                         binder.startLooper();
+                    } else {
+                        binder.stopLooper();
                     }
                 }
 

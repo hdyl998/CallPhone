@@ -7,6 +7,7 @@ import android.widget.TextView;
 import com.callphone.client.R;
 import com.callphone.client.about.AboutFragment;
 import com.callphone.client.base.data.AppSaveData;
+import com.callphone.client.home.socket.MsgSocket;
 import com.callphone.client.main.bean.EventItem;
 import com.callphone.client.main.mine.LoginManager;
 import com.callphone.client.main.mine.UserCacheConfig;
@@ -20,6 +21,7 @@ import com.hd.net.socket.NetEntity;
 import com.hd.utils.GoUtils;
 import com.hd.utils.bufferknife.MyBindView;
 import com.hd.utils.bufferknife.MyBufferKnifeUtils;
+import com.hd.utils.log.impl.LogUitls;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -75,13 +77,20 @@ public class MineFragment extends IBaseTitleBarFragment {
                 break;
         }
     }
+
     private void requestExit() {
+        //连接成功的，才先断开socket
+        if(MsgSocket.getInstance().isConnectSuccess()){
+            MsgSocket.getInstance().stopSocket();
+        }
+        showDialogForLoading();
         NetBuilder.create(mContext)
                 .setMessage(IMessage.allMessage)
                 .start("loginOut", new NetCallbackImpl() {
                     @Override
                     public void onSuccess(NetEntity entity) throws Exception {
                         LoginManager.logout();
+                        LogUitls.print("logint", "requestExit");
                         hideDialogForLoadingImmediate();
                     }
 
@@ -94,7 +103,7 @@ public class MineFragment extends IBaseTitleBarFragment {
 
     @Override
     public int[] setClickIDs() {
-        return new int[]{R.id.tvChangePwd, R.id.llHeader, R.id.tvAppSetting,R.id.tvAbout, R.id.tvLogout};
+        return new int[]{R.id.tvChangePwd, R.id.llHeader, R.id.tvAppSetting, R.id.tvAbout, R.id.tvLogout};
     }
 
     @Override

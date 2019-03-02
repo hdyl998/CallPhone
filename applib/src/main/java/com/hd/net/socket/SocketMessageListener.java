@@ -35,7 +35,7 @@ public abstract class SocketMessageListener {
     }
 
     final static HashMap<String,String>hashMap=new HashMap<>(4);
-    final static String MSG_ERROR = "连接错误";
+    final static String MSG_ERROR = "连接错误，请检查网络";
     final static String MSG_CONNECT = "连接成功";
     final static String MSG_TIMEOUT = "连接超时";
     final static String MSG_DISCONNECT = "连接已断开";

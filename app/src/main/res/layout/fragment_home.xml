@@ -44,7 +44,7 @@
         android:paddingLeft="@dimen/n30px"
         android:paddingTop="@dimen/n15px"
         android:paddingBottom="@dimen/n15px"
-        android:text="未连接"
+        android:text="加载中..."
         android:textColor="@color/_7B3100"
         android:textSize="@dimen/s24px" />
     <include layout="@layout/view_line_1_deep" />

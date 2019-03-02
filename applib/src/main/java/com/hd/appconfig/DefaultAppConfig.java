@@ -8,7 +8,7 @@ package com.hd.appconfig;
 public class DefaultAppConfig implements IBaseAppConfig {
     @Override
     public boolean isDebug() {
-        return true;
+        return false;
     }
 
     @Override
