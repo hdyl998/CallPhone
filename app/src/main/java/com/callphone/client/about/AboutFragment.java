@@ -21,4 +21,10 @@ public class AboutFragment extends IBaseTitleBarFragment {
     public int getLayoutId() {
         return R.layout.fragment_about;
     }
+
+
+    @Override
+    public int setBackgroundColor() {
+        return R.color._FFFFFF;
+    }
 }

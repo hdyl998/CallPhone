@@ -38,4 +38,9 @@ public class CallInfoFragment extends IBaseTitleBarFragment {
                 break;
         }
     }
+
+    @Override
+    public int setBackgroundColor() {
+        return R.color._FFFFFF;
+    }
 }
