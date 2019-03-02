@@ -1,23 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <com.hd.view.TitleBar
         android:id="@+id/titleBar"
-        app:tbTitle="拨号详情"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        app:tbTitle="拨号详情" />
 
     <TextView
         android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:lineSpacingExtra="@dimen/n10px"
         android:padding="@dimen/defaultPadding"
-        android:lineSpacingExtra="@dimen/n5px"
         android:text="@string/app_test"
         android:textColor="@color/defaultTextColor"
-        android:textSize="@dimen/titleTextSize"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:textSize="@dimen/titleSize" />
+
+    <com.hd.view.roundrect.ShapeCornerBgView
+        android:id="@+id/btnConfirm"
+        style="@style/btnBlue"
+        android:layout_width="@dimen/n610px"
+        android:layout_height="@dimen/btnDefaultHeight"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/n50px"
+        android:text="关闭" />
 </LinearLayout>

@@ -11,6 +11,8 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.hd.R;
+import com.hd.utils.StringUtils;
+import com.hd.utils.TextViewUtils;
 
 
 /**
@@ -160,5 +162,9 @@ public class EditTextWithDel extends AppCompatEditText implements View.OnTouchLi
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void addPasswordFilter() {
+        StringUtils.setEditTextPasswordFilter(this);
     }
 }

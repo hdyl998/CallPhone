@@ -26,12 +26,14 @@ public class ChangePwdFragment extends IBaseTitleBarFragment {
         MyBufferKnifeUtils.inject(this);
         etPwd.addTextChangedListener(textWatcher);
         etPwd2.addTextChangedListener(textWatcher);
+        etPwd.addPasswordFilter();
+        etPwd2.addPasswordFilter();
     }
 
     TextWatcherImpl textWatcher=new TextWatcherImpl() {
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            btnConfirm.setEnabled(etPwd.length()>=6&&etPwd2.length()>=6);
+            btnConfirm.setEnabled(etPwd.length()>=LoginConstants.MIN_PASSWROD_LEN&&etPwd2.length()>=LoginConstants.MIN_PASSWROD_LEN);
         }
     };
 
@@ -71,6 +73,8 @@ public class ChangePwdFragment extends IBaseTitleBarFragment {
             etPwd2.setInputType(InputType.TYPE_CLASS_TEXT);
         }
         etPwd2.setSelection(etPwd.length());
+
+
     }
 
 

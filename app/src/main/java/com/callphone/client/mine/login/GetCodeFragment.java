@@ -1,8 +1,5 @@
 package com.callphone.client.mine.login;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.text.Editable;
 import android.text.InputType;
 import android.view.View;
 import android.widget.CheckBox;
@@ -12,8 +9,6 @@ import android.widget.TextView;
 
 import com.callphone.client.R;
 import com.callphone.client.base.SPConstants;
-import com.callphone.client.main.bean.EventItem;
-import com.callphone.client.utils.StringUtil;
 import com.hd.base.fragment.IBaseTitleBarFragment;
 import com.hd.base.interfaceImpl.TextWatcherImpl;
 import com.hd.cache.SpUtils;
@@ -24,12 +19,9 @@ import com.hd.utils.EditTextUtil;
 import com.hd.utils.bufferknife.MyBindView;
 import com.hd.utils.bufferknife.MyBufferKnifeUtils;
 import com.hd.utils.loopdo.MyCountDownTimer;
-import com.hd.utils.other.KeyboardUtils;
 import com.hd.utils.toast.ToastUtils;
 import com.hd.view.edit.EditTextWithDel;
 import com.hd.view.roundrect.ShapeCornerBgView;
-
-import org.greenrobot.eventbus.EventBus;
 
 public class GetCodeFragment extends IBaseTitleBarFragment {
 
@@ -80,8 +72,7 @@ public class GetCodeFragment extends IBaseTitleBarFragment {
         etPhone.addTextChangedListener(textWatcher);
         etCode.addTextChangedListener(textWatcher);
         etPwd.addTextChangedListener(textWatcher);
-
-        saveRInfo = new SaveRegisterItem();
+        etPwd.addPasswordFilter();
         cbvAggreement.setChecked(true);
         cbvAggreement.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -107,19 +98,8 @@ public class GetCodeFragment extends IBaseTitleBarFragment {
 
     private TextWatcherImpl textWatcher = new TextWatcherImpl() {
         @Override
-        public void afterTextChanged(Editable s) {
-            updateEnableUi();
-        }
-
-        @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            String editable = etCode.getText().toString();
-            String str = StringUtil.stringPassword(editable.toString());
-            if (!editable.equals(str)) {
-                etCode.setText(str);
-                // 设置新的光标所在位置
-                etCode.setSelection(str.length());
-            }
+            updateEnableUi();
         }
     };
 
@@ -134,7 +114,7 @@ public class GetCodeFragment extends IBaseTitleBarFragment {
     }
 
     private boolean isPassWordOK() {
-        if (etPwd.length() < 6) {
+        if (etPwd.length() < LoginConstants.MIN_PASSWROD_LEN) {
             return false;
         }
 //        char ch[] = etPwd.getText().toString().toCharArray();
@@ -269,7 +249,6 @@ public class GetCodeFragment extends IBaseTitleBarFragment {
 
 
     MyCountDownTimer countDownTimer;
-    SaveRegisterItem saveRInfo;
 
     private void createLooper() {
         if (countDownTimer == null) {

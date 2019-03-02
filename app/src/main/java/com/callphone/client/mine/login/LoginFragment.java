@@ -2,8 +2,6 @@ package com.callphone.client.mine.login;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.text.Editable;
 import android.text.InputType;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,7 +11,6 @@ import com.callphone.client.R;
 import com.callphone.client.base.SPConstants;
 import com.callphone.client.base.data.AppSaveData;
 import com.callphone.client.main.bean.EventItem;
-import com.callphone.client.utils.StringUtil;
 import com.hd.base.fragment.IBaseTitleBarFragment;
 import com.hd.base.interfaceImpl.TextWatcherImpl;
 import com.hd.base.launch.AppLauncher;
@@ -72,7 +69,7 @@ public class LoginFragment extends IBaseTitleBarFragment {
         }
         etPhone.addTextChangedListener(textWatcher);
         etPwd.addTextChangedListener(textWatcher);
-        etPwd.addTextChangedListener(pwdtextWatcher);
+        etPwd.addPasswordFilter();
     }
 
 
@@ -80,18 +77,7 @@ public class LoginFragment extends IBaseTitleBarFragment {
 
 
 
-    private TextWatcherImpl pwdtextWatcher=new TextWatcherImpl() {
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-            String editable = etPwd.getText().toString();
-            String str = StringUtil.stringPassword(editable.toString());
-            if (!editable.equals(str)) {
-                etPwd.setText(str);
-                // 设置新的光标所在位置
-                etPwd.setSelection(str.length());
-            }
-        }
-    };
+
 
     private TextWatcherImpl textWatcher=new TextWatcherImpl() {
         @Override
@@ -102,7 +88,7 @@ public class LoginFragment extends IBaseTitleBarFragment {
 
 
     private void updateConfirmBtnEnable(){
-        if (etPhone.length() == 13 && etPhone.getText().charAt(0) == '1' && etPwd.length() > 5) {
+        if (etPhone.length() == 13 && etPhone.getText().charAt(0) == '1' && etPwd.length() >= LoginConstants.MIN_PASSWROD_LEN) {
             btnConfirm.setEnabled(true);
         } else {
             btnConfirm.setEnabled(false);

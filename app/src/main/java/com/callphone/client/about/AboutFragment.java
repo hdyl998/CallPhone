@@ -1,6 +1,5 @@
 package com.callphone.client.about;
 
-import android.text.TextUtils;
 import android.widget.TextView;
 
 import com.callphone.client.R;

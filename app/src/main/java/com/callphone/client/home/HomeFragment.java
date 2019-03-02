@@ -45,8 +45,6 @@ public class HomeFragment extends IBasePullListViewFragment<CallInfoItem> {
     TextView tvSocketStatus;
 
 
-
-
     @Override
     public int getLayoutId() {
         return R.layout.fragment_home;
@@ -120,7 +118,7 @@ public class HomeFragment extends IBasePullListViewFragment<CallInfoItem> {
         listView.showEmpty();
 
         if (binder != null) {
-            binder.stopLooper();;
+            binder.stopLooper();
         }
     }
 
@@ -142,6 +140,7 @@ public class HomeFragment extends IBasePullListViewFragment<CallInfoItem> {
         holder.setText(R.id.tvDate, StringUtil.getPostTime(item.updatetime));
         holder.setText(R.id.tvPhone, item.phone);
         holder.setText(R.id.tvStatus, item.getStatusString());
+        holder.setTextColor(R.id.tvStatus, item.getStatusColor());
     }
 
     private void createService() {
@@ -171,7 +170,7 @@ public class HomeFragment extends IBasePullListViewFragment<CallInfoItem> {
                     binder.setAdapter((SuperAdapter<CallInfoItem>) adapter);
                     mService = binder.getService();
 
-                    if(LoginManager.isLogin()){
+                    if (LoginManager.isLogin()) {
                         binder.startLooper();
                     }
                 }

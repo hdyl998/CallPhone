@@ -5,12 +5,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.callphone.client.R;
+import com.callphone.client.about.AboutFragment;
 import com.callphone.client.base.data.AppSaveData;
 import com.callphone.client.main.bean.EventItem;
+import com.callphone.client.main.mine.LoginManager;
 import com.callphone.client.main.mine.UserCacheConfig;
 import com.callphone.client.mine.login.ChangePwdFragment;
-import com.callphone.client.main.mine.LoginManager;
+import com.hd.base.dialog.SimpleDialog;
 import com.hd.base.fragment.IBaseTitleBarFragment;
+import com.hd.net.NetBuilder;
+import com.hd.net.NetCallbackImpl;
+import com.hd.net.coderemind.IMessage;
+import com.hd.net.socket.NetEntity;
 import com.hd.utils.GoUtils;
 import com.hd.utils.bufferknife.MyBindView;
 import com.hd.utils.bufferknife.MyBufferKnifeUtils;
@@ -41,9 +47,6 @@ public class MineFragment extends IBaseTitleBarFragment {
         switch (v.getId()) {
             case R.id.llHeader:
                 break;
-            case R.id.tvSetting:
-                startFragment(SettingFragment.class);
-                break;
             case R.id.tvChangePwd:
                 startFragment(ChangePwdFragment.class);
                 break;
@@ -53,13 +56,44 @@ public class MineFragment extends IBaseTitleBarFragment {
             case R.id.tvAppSetting:
                 GoUtils.goAppDetailsSetting(mContext);
                 return;
+            case R.id.tvAbout:
+                startFragment(AboutFragment.class);
+                break;
+            case R.id.tvLogout:
+                SimpleDialog.create(mContext)
+                        .setTvTitle("确定要退出登录？")
+                        .setBtnLeft("否")
+                        .setBtnRight("退出登录")
+                        .setOnClickListener(new SimpleDialog.SimpleDialogClick() {
+                            @Override
+                            public void onRightClick(SimpleDialog simpleDialog) {
+                                requestExit();
+                            }
+                        });
+                break;
         }
     }
+    private void requestExit() {
+        NetBuilder.create(mContext)
+                .setMessage(IMessage.allMessage)
+                .start("loginOut", new NetCallbackImpl() {
+                    @Override
+                    public void onSuccess(NetEntity entity) throws Exception {
+                        LoginManager.logout();
+                        hideDialogForLoadingImmediate();
+                        mContext.finish();
+                    }
 
+                    @Override
+                    public void onError(NetEntity entity) throws Exception {
+                        hideDialogForLoading();
+                    }
+                });
+    }
 
     @Override
     public int[] setClickIDs() {
-        return new int[]{R.id.tvChangePwd, R.id.tvSetting, R.id.llHeader, R.id.tvAppSetting};
+        return new int[]{R.id.tvChangePwd, R.id.llHeader, R.id.tvAppSetting,R.id.tvAbout, R.id.tvLogout};
     }
 
     @Override

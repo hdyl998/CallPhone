@@ -27,4 +27,10 @@
 
 
     <dimen name="defaultPadding">@dimen/n30px</dimen>
+
+
+    <dimen name="editTextTextSize">@dimen/s40px</dimen>
+
+    <string name="editHintText">6~10位数字+字母组合</string>
+    <integer name="maxPasswordLength">10</integer>
 </resources>

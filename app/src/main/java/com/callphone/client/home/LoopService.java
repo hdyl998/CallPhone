@@ -44,10 +44,6 @@ public class LoopService extends Service {
     HanderLoopHelper loopHelper;
     public final static int FOREGROUND_SERVICE = 101;
 
-
-    static boolean isRequest = true;
-
-
     HanderLoopHelper handerLoopHelper;
 
     int nums = 0;
@@ -167,7 +163,8 @@ public class LoopService extends Service {
             CallInfoItem historyItem = new CallInfoItem();
             historyItem.phone = phone;
             historyItem.status = 1;
-            historyItem.updatetime = DateUtils.getSimpleDate().format(new Date()) + "(锁屏拨打)";
+            historyItem.updatetime = DateUtils.getSimpleDate().format(new Date());
+            historyItem.extraMsg="(锁屏拨打)";
             binder.addCallInfoItem(historyItem);
             return true;
         } else {
@@ -275,7 +272,7 @@ public class LoopService extends Service {
     long recordTime = System.currentTimeMillis();
 
     private boolean isMoreTime() {
-        if (System.currentTimeMillis() - recordTime > 8000) {
+        if (System.currentTimeMillis() - recordTime > 6000) {
             return true;
         }
         return false;
@@ -390,7 +387,7 @@ public class LoopService extends Service {
          * 开始循环
          */
         public void startLooper() {
-            setInfoText("开始连接");
+            setInfoText("开始连接...");
             LoopService.this.startLooper();
         }
 
@@ -399,7 +396,7 @@ public class LoopService extends Service {
          */
         public void stopLooper() {
             LoopService.this.stopLooper();
-            setInfoText("未连接");
+            setInfoText("连接断开!");
         }
 
     }

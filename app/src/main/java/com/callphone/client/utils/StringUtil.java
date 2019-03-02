@@ -1,5 +1,8 @@
 package com.callphone.client.utils;
 
+import android.widget.EditText;
+
+import com.hd.base.interfaceImpl.TextWatcherImpl;
 import com.hd.utils.DateUtils;
 
 import java.util.Calendar;
@@ -15,21 +18,7 @@ import java.util.regex.PatternSyntaxException;
  */
 public class StringUtil {
 
-    /**
-     * @param str
-     * @return String
-     * @throws PatternSyntaxException
-     * @throws
-     * @方法名: stringpassword
-     * @功能描述:密码格式
-     */
-    public static String stringPassword(String str) throws PatternSyntaxException {
-        // 只允许字母、数字 和 !#$\%^&*.~
-        String regEx = "[^a-zA-Z0-9!#$%^@&*.~]";
-        Pattern p = Pattern.compile(regEx);
-        Matcher m = p.matcher(str);
-        return m.replaceAll("").trim();
-    }
+
 
 
     /***
