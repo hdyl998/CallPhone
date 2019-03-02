@@ -43,6 +43,7 @@ public class StartActivity extends IBaseActivity {
     }
 
 
+
     @Override
     protected void onDestroy() {
         super.onDestroy();

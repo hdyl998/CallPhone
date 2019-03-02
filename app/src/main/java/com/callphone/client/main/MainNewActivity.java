@@ -21,6 +21,7 @@ import com.hd.base.IBaseFragment;
 import com.hd.base.adapterbase.MyFragmentPagerAdapter;
 import com.hd.permission.PermissionCallback;
 import com.hd.permission.PermissionHelper;
+import com.hd.utils.Utils;
 import com.hd.utils.bufferknife.MyBindView;
 import com.hd.utils.bufferknife.MyBufferKnifeUtils;
 import com.hd.utils.log.impl.LogUitls;
@@ -241,6 +242,26 @@ public class MainNewActivity extends IBaseActivity {
     }
 
 
+    @Override
+    protected boolean isEventBus() {
+        return true;
+    }
+
+
+    /***
+     * 当用户登录时
+     */
+    @Subscribe
+    public void onUserLogout(EventItem.LoginOutEvent item) {
+        if (navigationBarView.isCurrentPage(KEY_PAGE_HOME)) {
+            selectedPage(KEY_PAGE_HOME);
+        }
+        if (PermissionHelper.hasPermissions(AppConstants.permissionStart)) {
+            LoginManager.isLoginAndRedict(mContext);
+        }
+    }
+
+
     boolean hasPermission = false;
 
     private void checkPermission() {
@@ -257,25 +278,6 @@ public class MainNewActivity extends IBaseActivity {
                         hasPermission = false;
                     }
                 });
-    }
-
-
-    @Override
-    protected boolean isEventBus() {
-        return true;
-    }
-
-
-
-    /***
-     * 当用户登录时
-     */
-    @Subscribe
-    public void onUserLogout(EventItem.LoginOutEvent item) {
-        if (navigationBarView.isCurrentPage(KEY_PAGE_HOME)) {
-            selectedPage(KEY_PAGE_HOME);
-        }
-        LoginManager.isLoginAndRedict(mContext);
     }
 
 }
