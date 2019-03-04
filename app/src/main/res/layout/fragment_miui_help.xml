@@ -34,4 +34,20 @@
         android:layout_height="wrap_content"
         android:src="@mipmap/ic_help1" />
 
+
+    <TextView
+        android:layout_width="match_parent"
+        android:text="如无图示提示,需打开悬浮窗权限,步骤为:\n设置-权限管理-显示悬浮窗"
+        android:textSize="@dimen/titleTextSize"
+        android:textColor="@color/defaultTextColor"
+        android:padding="@dimen/defaultPadding"
+        android:layout_height="wrap_content" />
+    <ImageView
+        android:layout_width="match_parent"
+        android:padding="@dimen/defaultPadding"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_help_toast" />
+
+
+
 </LinearLayout>
