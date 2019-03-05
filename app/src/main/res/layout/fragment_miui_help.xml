@@ -6,48 +6,75 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:textSize="@dimen/titleTextSize"
-        android:textColor="@color/defaultTextColor"
+        android:layout_height="wrap_content"
         android:padding="@dimen/defaultPadding"
         android:text="设置-权限管理-打开图示权限"
-        android:layout_height="wrap_content" />
+        android:textColor="@color/defaultTextColor"
+        android:textSize="@dimen/titleTextSize" />
+
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/defaultPadding"
         android:src="@mipmap/ic_help2" />
 
-    <include
-        layout="@layout/view_line_1_deep"
-        />
+    <include layout="@layout/view_line_1_deep" />
 
     <TextView
         android:layout_width="match_parent"
-        android:text="设置-省电策略-无限制"
-        android:textSize="@dimen/titleTextSize"
-        android:textColor="@color/defaultTextColor"
+        android:layout_height="wrap_content"
         android:padding="@dimen/defaultPadding"
-        android:layout_height="wrap_content" />
+        android:text="设置-省电策略-无限制"
+        android:textColor="@color/defaultTextColor"
+        android:textSize="@dimen/titleTextSize" />
+
     <ImageView
         android:layout_width="match_parent"
-        android:padding="@dimen/defaultPadding"
         android:layout_height="wrap_content"
+        android:padding="@dimen/defaultPadding"
         android:src="@mipmap/ic_help1" />
 
 
     <TextView
         android:layout_width="match_parent"
-        android:text="如无图示提示,需打开悬浮窗权限,步骤为:\n设置-权限管理-显示悬浮窗"
-        android:textSize="@dimen/titleTextSize"
-        android:textColor="@color/defaultTextColor"
+        android:layout_height="wrap_content"
         android:padding="@dimen/defaultPadding"
-        android:layout_height="wrap_content" />
+        android:text="如无图示提示,需打开悬浮窗权限,步骤为:\n设置-权限管理-显示悬浮窗"
+        android:textColor="@color/defaultTextColor"
+        android:textSize="@dimen/titleTextSize" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:padding="@dimen/defaultPadding">
+
+        <com.hd.view.roundrect.ShapeCornerBgView
+            android:id="@+id/btnTestToast"
+            style="@style/btnBlue"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/btnDefaultHeight"
+            android:paddingLeft="@dimen/defaultPadding"
+            android:paddingRight="@dimen/defaultPadding"
+            android:text="测试弹层提示" />
+
+        <com.hd.view.roundrect.ShapeCornerBgView
+            android:id="@+id/btnSet"
+            android:layout_marginLeft="@dimen/defaultPadding"
+            style="@style/btnBlue"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/btnDefaultHeight"
+            android:paddingLeft="@dimen/defaultPadding"
+            android:paddingRight="@dimen/defaultPadding"
+            android:text="去设置" />
+    </LinearLayout>
+
     <ImageView
         android:layout_width="match_parent"
-        android:padding="@dimen/defaultPadding"
         android:layout_height="wrap_content"
+        android:padding="@dimen/defaultPadding"
         android:src="@mipmap/ic_help_toast" />
-
 
 
 </LinearLayout>
