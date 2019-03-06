@@ -57,9 +57,11 @@ public class StartActivity extends IBaseActivity {
     protected void initView() {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         textView = findViewByID(R.id.text);
+        showDialogForLoading("检查更新中...");
         NetBuilder.create(mContext).start("getVersion", new NetCallbackImpl<UpdateInfoItem>() {
             @Override
             public void onSuccess(NetEntity<UpdateInfoItem> entity) throws Exception {
+                hideDialogForLoading();
                 boolean isNeedUpdate = UpdateUtils.isNeedUpdate(Utils.getVersionName(), entity.getDataBean().version);
                 if (isNeedUpdate) {
                     textView.setText("发现新版本 " + entity.getDataBean().version);
@@ -72,6 +74,7 @@ public class StartActivity extends IBaseActivity {
 
             @Override
             public void onError(NetEntity entity) throws Exception {
+                hideDialogForLoading();
                 textView.setText("更新检查错误！");
                 go();
             }
@@ -86,12 +89,12 @@ public class StartActivity extends IBaseActivity {
 
         new AlertDialog.Builder(mContext).setTitle(getString(R.string.app_name) + " 发现新版本 " + infoItem.version)
                 .setMessage(infoItem.remark)
-                .setNeutralButton("取消", new DialogInterface.OnClickListener() {
+                .setNeutralButton("下次再说", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        mContext.finish();
+                        go();
                     }
-                }).setPositiveButton("立即更新", new DialogInterface.OnClickListener() {
+                }).setPositiveButton("立即下载", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 downloadApk(infoItem);
@@ -111,15 +114,10 @@ public class StartActivity extends IBaseActivity {
             }
         });
         View viewCancel = view.findViewById(R.id.btnCancel);
-        viewCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mContext.finish();
-            }
-        });
+
 
         View llMenu = view.findViewById(R.id.llMenu);
-        llMenu.setVisibility(View.GONE);
+        llMenu.setVisibility(View.INVISIBLE);
 
 
         ProgressBar progressBar = view.findViewById(R.id.progressBar);
@@ -128,6 +126,15 @@ public class StartActivity extends IBaseActivity {
                 .setView(view)
                 .setCancelable(false)
                 .setView(view).show();
+
+        viewCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.setEnabled(false);
+                dialog.dismiss();
+                go();
+            }
+        });
         if (downUtil != null)
             downUtil.cacleDown();
         downUtil = new DownUtil();
