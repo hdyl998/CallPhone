@@ -5,7 +5,7 @@ import com.hd.base.HdApp;
 
 /**
  * Note：None
- * Created by Liuguodong on 2019/2/14 17:10
+ * Created by lgd on 2019/2/14 17:10
  * E-Mail Address：986850427@qq.com
  */
 public class RoundRectConstants {

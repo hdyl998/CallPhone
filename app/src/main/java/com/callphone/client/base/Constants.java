@@ -4,7 +4,7 @@ import android.Manifest;
 
 /**
  * Note：None
- * Created by Liuguodong on 2019/1/7 13:59
+ * Created by lgd on 2019/1/7 13:59
  * E-Mail Address：986850427@qq.com
  */
 public interface Constants {

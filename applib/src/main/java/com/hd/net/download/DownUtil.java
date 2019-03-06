@@ -107,7 +107,7 @@ public class DownUtil implements Callback {
 
     @Override
     public void onResponse(Call call, Response response) throws IOException {
-        lastProgress=0f;
+        lastProgress = 0f;
         InputStream is = null;
         byte[] buf = new byte[2048];
         int len = 0;
@@ -135,15 +135,16 @@ public class DownUtil implements Callback {
                 //1秒更新一次
                 if (System.currentTimeMillis() - systemCurrentMi >= 1000) {
                     systemCurrentMi = System.currentTimeMillis();
-                    final float progress =  (sum * 1.0f / total * 100);
+                    final float progress = (sum * 1.0f / total * 100);
                     final long speed = sum - saveSum;
                     saveSum = sum;
-                    updateProgress(progress, speed);
+                    updateProgress(progress, speed, sum, total);
                 }
             }
+            updateProgress(100, sum - saveSum, sum, total);
             fos.flush();
             if (downListener != null)
-                handler.post(() -> downListener.downSuccess(downPath));
+                handler.post(() -> downListener.downSuccess(file.getPath()));
             LogUitls.print("down", "=================success==");
         } catch (Exception e) {
             onDownFailed(e.toString());
@@ -163,10 +164,10 @@ public class DownUtil implements Callback {
 
     float lastProgress = 0;
 
-    private void updateProgress(float progress, long speed) {
+    private void updateProgress(float progress, long speed, long sum, long total) {
         if (progress > lastProgress) {
             if (downListener != null) {
-                handler.post(() -> downListener.downProgress(progress, speed));
+                handler.post(() -> downListener.downProgress(progress, speed, sum, total));
             }
         }
         lastProgress = progress;

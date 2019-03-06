@@ -38,7 +38,7 @@ dependencies {
     api 'org.greenrobot:eventbus:3.0.0'
 
     //IO socket
-    implementation('io.socket:socket.io-client:1.0.0') {
+    api('io.socket:socket.io-client:1.0.0') {
         // excluding org.json which is provided by Android
         exclude group: 'org.json', module: 'json'
     }

@@ -12,6 +12,7 @@ import com.callphone.client.main.bean.EventItem;
 import com.callphone.client.main.mine.LoginManager;
 import com.callphone.client.main.mine.UserCacheConfig;
 import com.callphone.client.mine.login.ChangePwdFragment;
+import com.callphone.client.utils.StringUtil;
 import com.hd.base.dialog.SimpleDialog;
 import com.hd.base.fragment.IBaseTitleBarFragment;
 import com.hd.net.NetBuilder;
@@ -150,7 +151,7 @@ public class MineFragment extends IBaseTitleBarFragment {
             tvChangePwd.setVisibility(View.GONE);
         } else {
             ivHead.setImageResource(R.mipmap.ic_person);
-            tvLogin.setText(item.phone);
+            tvLogin.setText(StringUtil.mobileStrHide(item.phone));
             tvLogout.setVisibility(View.VISIBLE);
             tvChangePwd.setVisibility(View.VISIBLE);
         }

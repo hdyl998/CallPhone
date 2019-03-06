@@ -11,7 +11,7 @@ import com.hd.utils.DensityUtils;
 
 /**
  * Note：None
- * Created by Liuguodong on 2018/12/17 15:40
+ * Created by lgd on 2018/12/17 15:40
  * E-Mail Address：986850427@qq.com
  */
 public class AppDeviceInfo {

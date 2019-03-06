@@ -29,7 +29,7 @@ import org.greenrobot.eventbus.EventBus;
 
 /**
  * Note：None
- * Created by Liuguodong on 2018/12/29 15:07
+ * Created by lgd on 2018/12/29 15:07
  * E-Mail Address：986850427@qq.com
  */
 public class LoginFragment extends IBaseTitleBarFragment {

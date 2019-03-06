@@ -13,13 +13,27 @@ import java.util.regex.PatternSyntaxException;
 
 /**
  * Note：None
- * Created by Liuguodong on 2019/2/28 17:49
+ * Created by lgd on 2019/2/28 17:49
  * E-Mail Address：986850427@qq.com
  */
 public class StringUtil {
 
 
-
+    /***
+     * 把手机号码中间四位转成****
+     *
+     * @param mobileStr
+     * @return
+     */
+    public static String mobileStrHide(String mobileStr) {
+        if (mobileStr == null) {
+            return "";
+        }
+        if (mobileStr.length() != 11) {
+            return mobileStr;
+        }
+        return mobileStr.substring(0, 3) + "****" + mobileStr.substring(mobileStr.length() - 4);
+    }
 
     /***
      * 显示规则  1当天的消息以5分钟为一个跨度的显示时间;

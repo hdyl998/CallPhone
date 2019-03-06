@@ -3,7 +3,9 @@ package com.hd.utils.update;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Environment;
 
+import com.hd.base.HdApp;
 import com.hd.utils.NumberUtil;
 import com.hd.utils.Utils;
 
@@ -14,7 +16,30 @@ import java.io.File;
  */
 
 public class UpdateUtils {
+    /***
+     * app缓存目录,卸载app会被清空
+     * @return
+     */
+    public static String getAppCachePath() {
+        if (isExistSDCard()) {
+            return HdApp.getContext().getExternalCacheDir().getPath();
+        } else {
+            return HdApp.getContext().getCacheDir().getPath();
+        }
+    }
 
+    /**
+     * 方法名: hasSdcard
+     * <p/>
+     * 功能描述:检查是否存在SDCard
+     *
+     * @return 类型boolean:true:存在,false:不存在
+     * <p/>
+     * </br>throws
+     */
+    public static boolean isExistSDCard() {
+        return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
+    }
     /**
      * @param curVer 当前app版本号
      * @param serVer 服务器版本号
