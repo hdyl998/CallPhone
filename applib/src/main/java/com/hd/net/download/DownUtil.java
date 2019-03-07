@@ -127,21 +127,17 @@ public class DownUtil implements Callback {
             }
             fos = new FileOutputStream(file);
             long sum = 0;
-            long saveSum = 0;
             long systemCurrentMi = System.currentTimeMillis();
             while ((len = is.read(buf)) != -1) {
                 fos.write(buf, 0, len);
                 sum += len;
-                //1秒更新一次
-                if (System.currentTimeMillis() - systemCurrentMi >= 1000) {
+                if (System.currentTimeMillis() - systemCurrentMi >= 200) {
                     systemCurrentMi = System.currentTimeMillis();
                     final float progress = (sum * 1.0f / total * 100);
-                    final long speed = sum - saveSum;
-                    saveSum = sum;
-                    updateProgress(progress, speed, sum, total);
+                    updateProgress(progress, sum, total);
                 }
             }
-            updateProgress(100, sum - saveSum, sum, total);
+            updateProgress(100, sum, total);
             fos.flush();
             if (downListener != null)
                 handler.post(() -> downListener.downSuccess(file.getPath()));
@@ -164,10 +160,10 @@ public class DownUtil implements Callback {
 
     float lastProgress = 0;
 
-    private void updateProgress(float progress, long speed, long sum, long total) {
+    private void updateProgress(float progress, long sum, long total) {
         if (progress > lastProgress) {
             if (downListener != null) {
-                handler.post(() -> downListener.downProgress(progress, speed, sum, total));
+                handler.post(() -> downListener.downProgress(progress, sum, total));
             }
         }
         lastProgress = progress;

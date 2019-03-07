@@ -149,7 +149,7 @@ public class StartActivity extends IBaseActivity {
             }
 
             @Override
-            public void downProgress(float progress, long speed, long sum, long target) {
+            public void downProgress(float progress, long sum, long target) {
                 progressBar.setProgress((int) progress);
                 textView.setText(Formatter.formatFileSize(mContext, sum) + "/" + Formatter.formatFileSize(mContext, target));
             }
