@@ -2,7 +2,7 @@ package com.callphone.client.base;
 
 /**
  * Note：None
- * Created by Liuguodong on 2018/12/17 14:31
+ * Created by lgd on 2018/12/17 14:31
  * E-Mail Address：986850427@qq.com
  */
 public interface SPConstants {

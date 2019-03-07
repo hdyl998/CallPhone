@@ -15,7 +15,7 @@ public interface DownListener {
      * @param progress
      * @param speed
      */
-    void downProgress(float progress, long speed);
+    void downProgress(float progress, long speed,long sum,long total);
 
     /***
      * 下载完成

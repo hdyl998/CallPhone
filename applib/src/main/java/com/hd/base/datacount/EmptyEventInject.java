@@ -4,7 +4,7 @@ import android.content.Context;
 
 /**
  * Note：None
- * Created by Liuguodong on 2019/1/4 14:30
+ * Created by lgd on 2019/1/4 14:30
  * E-Mail Address：986850427@qq.com
  */
 public class EmptyEventInject implements IEventInject {

@@ -2,7 +2,7 @@ package com.hd.net;
 
 /**
  * Note：None
- * Created by Liuguodong on 2018/12/24 10:41
+ * Created by lgd on 2018/12/24 10:41
  * E-Mail Address：986850427@qq.com
  */
 public class DefaultNetDataBean implements INetDataBean {

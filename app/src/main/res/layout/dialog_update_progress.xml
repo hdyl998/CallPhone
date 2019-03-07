@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/defaultPadding">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/n10px"
+        android:text="@string/app_name"
+        android:textColor="@color/defaultTextColor"
+        android:textSize="@dimen/titleSizeSub" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/n10px"
+        android:max="100"
+        android:progress="10" />
+
+    <RelativeLayout
+        android:id="@+id/llMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/btnCancel"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/comMenuHeightText"
+            android:paddingLeft="@dimen/defaultPadding"
+            android:paddingRight="@dimen/defaultPadding"
+            android:textColor="@color/defaultHintTextColor"
+            android:gravity="center"
+            android:textSize="@dimen/titleSizeSub"
+            android:text="取消安装" />
+
+
+
+        <com.hd.view.roundrect.ShapeCornerBgView
+            android:id="@+id/btnConfirm"
+            style="@style/btnBlue"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/comMenuHeightText"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="@dimen/n10px"
+            android:paddingLeft="@dimen/defaultPadding"
+            android:paddingRight="@dimen/defaultPadding"
+            android:text="立即安装"
+            android:textSize="@dimen/titleSize" />
+    </RelativeLayout>
+
+
+</LinearLayout>

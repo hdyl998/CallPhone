@@ -8,7 +8,7 @@ import com.hd.cache.ICacheConfig;
 import com.callphone.client.mine.login.*;
 /**
  * Note：None
- * Created by Liuguodong on 2018/12/29 11:29
+ * Created by lgd on 2018/12/29 11:29
  * E-Mail Address：986850427@qq.com
  */
 public class UserCacheConfig extends ICacheConfig {

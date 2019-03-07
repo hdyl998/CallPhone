@@ -27,7 +27,7 @@ import okhttp3.Response;
 
 /**
  * Note：None
- * Created by Liuguodong on 2018/12/19 17:50
+ * Created by lgd on 2018/12/19 17:50
  * E-Mail Address：986850427@qq.com
  */
 public class OkHttpHelper extends AbsNetHelper {

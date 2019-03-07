@@ -2,7 +2,7 @@ package com.callphone.client.main.bean;
 
 /**
  * Note：None
- * Created by Liuguodong on 2018/12/26 14:19
+ * Created by lgd on 2018/12/26 14:19
  * E-Mail Address：986850427@qq.com
  */
 public class EventItem {

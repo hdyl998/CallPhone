@@ -2,7 +2,7 @@ package com.callphone.client.appconfig;
 
 /**
  * Note：None
- * Created by Liuguodong on 2018/12/17 14:48
+ * Created by lgd on 2018/12/17 14:48
  * E-Mail Address：986850427@qq.com
  */
 public class TestAppConfig extends BaseAppConfig {

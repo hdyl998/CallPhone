@@ -10,7 +10,7 @@ import com.hd.base.maininterface.IComCallBacks;
 
 /**
  * Note：None
- * Created by Liuguodong on 2019/1/10 14:17
+ * Created by lgd on 2019/1/10 14:17
  * E-Mail Address：986850427@qq.com
  */
 public class InputDialog extends IBaseEditDialog {

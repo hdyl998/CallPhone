@@ -13,9 +13,10 @@ public class DownListenerImpl implements DownListener {
     }
 
     @Override
-    public void downProgress(float progress, long speed) {
+    public void downProgress(float progress, long speed, long sum, long total) {
 
     }
+
 
     @Override
     public void downSuccess(String downUrl) {

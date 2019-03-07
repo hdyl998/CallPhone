@@ -5,7 +5,7 @@ import com.hd.utils.log.impl.LogUitls;
 
 /**
  * Note：None
- * Created by Liuguodong on 2018/12/29 14:55
+ * Created by lgd on 2018/12/29 14:55
  * E-Mail Address：986850427@qq.com
  */
 public abstract class ICacheConfig {

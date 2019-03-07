@@ -9,7 +9,7 @@ import com.hd.utils.other.CalcTime;
 
 /**
  * Note：None
- * Created by Liuguodong on 2018/12/19 16:19
+ * Created by lgd on 2018/12/19 16:19
  * E-Mail Address：986850427@qq.com
  */
 public class UiHelperDialog extends IBaseDialog {

@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 /**
  * Note：None
- * Created by Liuguodong on 2018/12/24 13:48
+ * Created by lgd on 2018/12/24 13:48
  * E-Mail Address：986850427@qq.com
  */
 public class LinkMovementClickMethod extends LinkMovementMethod {

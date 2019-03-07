@@ -5,7 +5,7 @@ import com.callphone.client.main.bean.BaseUInfoItem;
 
 /**
  * Note：None
- * Created by Liuguodong on 2018/12/28 14:52
+ * Created by lgd on 2018/12/28 14:52
  * E-Mail Address：986850427@qq.com
  */
 public class UserItem extends BaseUInfoItem {
