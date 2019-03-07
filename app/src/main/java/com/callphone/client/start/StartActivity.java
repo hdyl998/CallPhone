@@ -57,11 +57,9 @@ public class StartActivity extends IBaseActivity {
     protected void initView() {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         textView = findViewByID(R.id.text);
-        showDialogForLoading("检查更新中...");
         NetBuilder.create(mContext).start("getVersion", new NetCallbackImpl<UpdateInfoItem>() {
             @Override
             public void onSuccess(NetEntity<UpdateInfoItem> entity) throws Exception {
-                hideDialogForLoading();
                 boolean isNeedUpdate = UpdateUtils.isNeedUpdate(Utils.getVersionName(), entity.getDataBean().version);
                 if (isNeedUpdate) {
                     textView.setText("发现新版本 " + entity.getDataBean().version);
@@ -74,7 +72,6 @@ public class StartActivity extends IBaseActivity {
 
             @Override
             public void onError(NetEntity entity) throws Exception {
-                hideDialogForLoading();
                 textView.setText("更新检查错误！");
                 go();
             }
