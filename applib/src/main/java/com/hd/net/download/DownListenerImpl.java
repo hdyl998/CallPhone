@@ -13,7 +13,7 @@ public class DownListenerImpl implements DownListener {
     }
 
     @Override
-    public void downProgress(float progress, long sum, long total) {
+    public void downProgress(float progress, long complete, long target) {
 
     }
 
