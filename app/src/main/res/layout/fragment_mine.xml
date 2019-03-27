@@ -86,6 +86,21 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/llMiMsgSetting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include layout="@layout/view_line_1_deep" />
+
+                <TextView
+                    style="@style/btnMenu"
+                    android:text="小米手机消息提醒设置说明\n(同钉钉一样设置)" />
+
+            </LinearLayout>
+
+
             <include layout="@layout/view_line_1_deep" />
 
             <TextView

@@ -12,6 +12,7 @@ import com.callphone.client.AlarmHandlerActivity;
 import com.callphone.client.R;
 import com.callphone.client.ScreenListener;
 import com.callphone.client.base.AppConstants;
+import com.callphone.client.home.GrayService;
 import com.callphone.client.home.HomeFragment;
 import com.callphone.client.main.bean.EventItem;
 import com.callphone.client.main.mine.LoginManager;
@@ -57,6 +58,19 @@ public class MainNewActivity extends IBaseActivity {
         createNavigationBar();
         initOthers();
         checkPermission();
+        startGrayService();
+    }
+
+
+    /***
+     * 启动一个灰色服务，用于保活，不被杀死
+     */
+    private void startGrayService() {
+        startService(new Intent(mContext, GrayService.class));
+    }
+
+    private void stopGrayService(){
+        stopService(new Intent(mContext, GrayService.class));
     }
 
 
@@ -116,6 +130,9 @@ public class MainNewActivity extends IBaseActivity {
             navigationBarView.setSelectIndex(index);
             viewPager.setCurrentItem(index, false);
             Fragment fragment = getFragmentByIndex(index);
+            if (fragment instanceof OnPageCheckedListener) {
+                ((OnPageCheckedListener) fragment).onPageChecked();
+            }
         }
     }
 
@@ -239,6 +256,7 @@ public class MainNewActivity extends IBaseActivity {
             mWakeLock.release();
         }
         screenListener.unregisterListener();
+        stopGrayService();
     }
 
 

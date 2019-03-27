@@ -12,7 +12,7 @@ public interface SPConstants {
     String File_data="data";
     String FILE_START_INFO = "startinfo";
 
-    String KEY_order_red_point="order_red_point";
+    String KEY_mine_remind="mine_remind";
     /***
      * 用于开发使用
      */

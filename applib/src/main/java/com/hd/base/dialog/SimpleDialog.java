@@ -133,8 +133,8 @@ public class SimpleDialog extends IBaseDialog {
      * @return
      */
     public SimpleDialog setSingleButton(CharSequence ch) {
-        getBtnRight().setVisibility(View.GONE);
-        getBtnLeft().setText(ch);
+        getBtnLeft().setVisibility(View.GONE);
+        getBtnRight().setText(ch);
         findViewByID(R.id.line1).setVisibility(View.GONE);
         return this;
     }
