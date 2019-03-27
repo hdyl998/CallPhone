@@ -82,7 +82,7 @@
 
                 <TextView
                     style="@style/btnMenu"
-                    android:text="小米MIUI系统参考设置" />
+                    android:text="小米MIUI系统参考设置(1)" />
 
             </LinearLayout>
 
@@ -96,7 +96,7 @@
 
                 <TextView
                     style="@style/btnMenu"
-                    android:text="小米手机消息提醒设置说明\n(同钉钉一样设置)" />
+                    android:text="小米手机消息提醒设置说明(2)\n(同钉钉一样设置)" />
 
             </LinearLayout>
 
