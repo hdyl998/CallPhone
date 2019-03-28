@@ -345,6 +345,5 @@ public abstract class IBaseActivity extends FragmentActivity implements ILoading
         super.onDestroy();
         hideDialogForLoading();
         HttpFactory.getNetHelper().cancelTag(mContext);
-        mContext = null;
     }
 }

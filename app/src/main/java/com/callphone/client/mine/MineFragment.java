@@ -6,13 +6,18 @@ import android.widget.TextView;
 
 import com.callphone.client.R;
 import com.callphone.client.about.AboutFragment;
+import com.callphone.client.base.SPConstants;
 import com.callphone.client.base.data.AppSaveData;
 import com.callphone.client.home.socket.MsgSocket;
+import com.callphone.client.main.OnPageCheckedListener;
 import com.callphone.client.main.bean.EventItem;
 import com.callphone.client.main.mine.LoginManager;
 import com.callphone.client.main.mine.UserCacheConfig;
 import com.callphone.client.mine.login.ChangePwdFragment;
+import com.callphone.client.utils.RomUtil;
 import com.callphone.client.utils.StringUtil;
+import com.callphone.client.webview.WebViewFragment;
+import com.callphone.client.webview.WebViewManager;
 import com.hd.base.dialog.SimpleDialog;
 import com.hd.base.fragment.IBaseTitleBarFragment;
 import com.hd.net.NetBuilder;
@@ -23,6 +28,7 @@ import com.hd.utils.GoUtils;
 import com.hd.utils.bufferknife.MyBindView;
 import com.hd.utils.bufferknife.MyBufferKnifeUtils;
 import com.hd.utils.log.impl.LogUitls;
+import com.hd.utils.save.IntValueSaveHelper;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -30,7 +36,7 @@ import org.greenrobot.eventbus.Subscribe;
  * Created by liugd on 2019/2/26.
  */
 
-public class MineFragment extends IBaseTitleBarFragment {
+public class MineFragment extends IBaseTitleBarFragment implements OnPageCheckedListener {
 
     @MyBindView(value = R.id.ivHead)
     ImageView ivHead;
@@ -39,11 +45,17 @@ public class MineFragment extends IBaseTitleBarFragment {
     TextView tvLogin;
     @MyBindView(value = R.id.llMiSetting, click = true)
     View llMiSetting;
+    @MyBindView(value = R.id.llMiMsgSetting, click = true)
+    View llMiMsgSetting;
+
 
     @MyBindView(value = R.id.tvLogout)
     TextView tvLogout;
     @MyBindView(value = R.id.tvChangePwd)
     TextView tvChangePwd;
+
+
+    private final IntValueSaveHelper helper = new IntValueSaveHelper(SPConstants.File_cache, SPConstants.KEY_mine_remind);
 
 
     @Override
@@ -58,6 +70,11 @@ public class MineFragment extends IBaseTitleBarFragment {
             case R.id.llMiSetting:
                 startFragment(MiUIHelpFragment.class);
                 return;
+            case R.id.llMiMsgSetting:
+                String url = "https://csmobile.alipay.com/detailSolution.htm?knowledgeType=1&scene=dd_gdwt&questionId=201602080133";
+                WebViewManager.launchWithAbsoluteUrl(mContext, "小米手机消息提醒设置说明", url);
+                break;
+
             case R.id.tvAppSetting:
                 GoUtils.goAppDetailsSetting(mContext);
                 return;
@@ -81,7 +98,7 @@ public class MineFragment extends IBaseTitleBarFragment {
 
     private void requestExit() {
         //连接成功的，才先断开socket
-        if(MsgSocket.getInstance().isConnectSuccess()){
+        if (MsgSocket.getInstance().isConnectSuccess()) {
             MsgSocket.getInstance().stopSocket();
         }
         showDialogForLoading();
@@ -146,7 +163,7 @@ public class MineFragment extends IBaseTitleBarFragment {
 
         if (item == null) {
             ivHead.setImageResource(R.mipmap.ic_default_person);
-            tvLogin.setText("登录后查看");
+            tvLogin.setText("点击这里登录");
             tvLogout.setVisibility(View.GONE);
             tvChangePwd.setVisibility(View.GONE);
         } else {
@@ -161,5 +178,21 @@ public class MineFragment extends IBaseTitleBarFragment {
     @Override
     public int getLayoutId() {
         return R.layout.fragment_mine;
+    }
+
+    @Override
+    public void onPageChecked() {
+        if (!isInited()) {
+            return;
+        }
+        if (helper.isDefaultValue()) {
+            helper.setValue(1);
+            SimpleDialog.create(mContext)
+                    .setCancelableDialog(false)
+                    .setTvContent("如果您是小米手机，请按照本页菜单里的参考设置（1）、（2）,进行操作")
+                    .setSingleButton("我知道了");
+        }
+
+
     }
 }

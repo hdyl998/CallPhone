@@ -38,6 +38,16 @@
             android:name=".home.LoopService"
             android:enabled="true"
             android:exported="true" />
+        <service
+            android:name=".home.GrayService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <service
+            android:name=".home.GrayService$GrayInnerService"
+            android:enabled="true"
+            android:exported="true" />
+
 
         <receiver
             android:name=".MyReceiver"
