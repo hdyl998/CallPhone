@@ -1,11 +1,8 @@
 package com.callphone.client.start;
 
-import android.app.Dialog;
-import android.app.DownloadManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Environment;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.text.format.Formatter;
@@ -15,28 +12,20 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.callphone.client.R;
-import com.callphone.client.base.App;
-import com.callphone.client.base.AppConstants;
-import com.callphone.client.base.data.AppSaveData;
 import com.callphone.client.main.MainNewActivity;
 import com.hd.base.IBaseActivity;
 import com.hd.base.launch.AppLauncherUtils;
 import com.hd.net.NetBuilder;
 import com.hd.net.NetCallbackImpl;
-import com.hd.net.OkHttpHelper;
 import com.hd.net.download.DownListener;
 import com.hd.net.download.DownUtil;
 import com.hd.net.socket.NetEntity;
-import com.hd.permission.PermissionCallback;
-import com.hd.permission.PermissionHelper;
-import com.hd.utils.GoUtils;
 import com.hd.utils.Utils;
 import com.hd.utils.ViewUtils;
 import com.hd.utils.toast.ToastUtils;
 import com.hd.utils.update.UpdateUtils;
 
 import java.io.File;
-import java.util.List;
 
 /**
  * Note：None
@@ -86,7 +75,7 @@ public class StartActivity extends IBaseActivity {
 
         new AlertDialog.Builder(mContext).setTitle(getString(R.string.app_name) + " 发现新版本 " + infoItem.version)
                 .setMessage(infoItem.remark)
-                .setNeutralButton("下次再说", new DialogInterface.OnClickListener() {
+                .setNegativeButton("下次再说", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         go();

@@ -189,7 +189,7 @@ public class MineFragment extends IBaseTitleBarFragment implements OnPageChecked
             helper.setValue(1);
             SimpleDialog.create(mContext)
                     .setCancelableDialog(false)
-                    .setTvContent("如果您是小米手机，请按照本页菜单里的参考设置（1）、（2）,进行操作")
+                    .setTvContent("如果您是小米手机，请按照本页菜单里的参考操作（1）、（2）\n进行设置")
                     .setSingleButton("我知道了");
         }
 

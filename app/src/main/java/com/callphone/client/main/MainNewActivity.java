@@ -20,6 +20,7 @@ import com.callphone.client.mine.MineFragment;
 import com.hd.base.IBaseActivity;
 import com.hd.base.IBaseFragment;
 import com.hd.base.adapterbase.MyFragmentPagerAdapter;
+import com.hd.base.dialog.SimpleDialog;
 import com.hd.permission.PermissionCallback;
 import com.hd.permission.PermissionHelper;
 import com.hd.utils.Utils;
@@ -69,7 +70,7 @@ public class MainNewActivity extends IBaseActivity {
         startService(new Intent(mContext, GrayService.class));
     }
 
-    private void stopGrayService(){
+    private void stopGrayService() {
         stopService(new Intent(mContext, GrayService.class));
     }
 
@@ -177,13 +178,24 @@ public class MainNewActivity extends IBaseActivity {
 
     @Override
     public void onBackPressed() {
-        // 连按两次退出应用
-        if (System.currentTimeMillis() - lastPressedTime > 2000) {
-            lastPressedTime = System.currentTimeMillis();
-            ToastUtils.show("再按一次退出程序");
-        } else {
-            super.onBackPressed();
-        }
+//        // 连按两次退出应用
+//        if (System.currentTimeMillis() - lastPressedTime > 2000) {
+//            lastPressedTime = System.currentTimeMillis();
+//            ToastUtils.show("再按一次退出程序");
+//        } else {
+//            super.onBackPressed();
+//        }
+        SimpleDialog.create(mContext).setTvTitle("确认退出?")
+                .setTvContent("退出将无法呼叫号码")
+                .setBtnLeft("退出")
+                .setBtnRight("留下来")
+                .setOnClickListener(new SimpleDialog.SimpleDialogClick() {
+                    @Override
+                    public void onLeftClick(SimpleDialog simpleDialog) {
+                        mContext.finish();
+                    }
+                });
+
     }
 
 
