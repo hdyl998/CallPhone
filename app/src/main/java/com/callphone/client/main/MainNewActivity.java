@@ -21,11 +21,13 @@ import com.hd.base.IBaseActivity;
 import com.hd.base.IBaseFragment;
 import com.hd.base.adapterbase.MyFragmentPagerAdapter;
 import com.hd.base.dialog.SimpleDialog;
+import com.hd.base.maininterface.IComCallBacks;
 import com.hd.permission.PermissionCallback;
 import com.hd.permission.PermissionHelper;
 import com.hd.utils.Utils;
 import com.hd.utils.bufferknife.MyBindView;
 import com.hd.utils.bufferknife.MyBufferKnifeUtils;
+import com.hd.utils.limiteddo.CheckTimeDo;
 import com.hd.utils.log.impl.LogUitls;
 import com.hd.utils.toast.ToastUtils;
 import com.hd.view.NoScrollViewPager;
@@ -185,10 +187,10 @@ public class MainNewActivity extends IBaseActivity {
 //        } else {
 //            super.onBackPressed();
 //        }
-        SimpleDialog.create(mContext).setTvTitle("确认退出?")
+        SimpleDialog.create(mContext).setTvTitle("确认退出")
                 .setTvContent("退出将无法呼叫号码")
                 .setBtnLeft("退出")
-                .setBtnRight("留下来")
+                .setBtnRight("不退出")
                 .setOnClickListener(new SimpleDialog.SimpleDialogClick() {
                     @Override
                     public void onLeftClick(SimpleDialog simpleDialog) {
@@ -286,9 +288,22 @@ public class MainNewActivity extends IBaseActivity {
         if (navigationBarView.isCurrentPage(KEY_PAGE_HOME)) {
             selectedPage(KEY_PAGE_HOME);
         }
-        if (PermissionHelper.hasPermissions(AppConstants.permissionStart)) {
-            LoginManager.isLoginAndRedict(mContext);
-        }
+        checkTimeDo.checkDo();
+    }
+
+    //防止多次调用登录
+    CheckTimeDo checkTimeDo;
+
+    {
+        checkTimeDo = new CheckTimeDo(3000);
+        checkTimeDo.setComCallBacks(new IComCallBacks() {
+            @Override
+            public void call(Object obj) {
+                if (PermissionHelper.hasPermissions(AppConstants.permissionStart)) {
+                    LoginManager.isLoginAndRedict(mContext);
+                }
+            }
+        });
     }
 
 

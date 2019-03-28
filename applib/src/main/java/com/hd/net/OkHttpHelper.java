@@ -141,7 +141,7 @@ public class OkHttpHelper extends AbsNetHelper {
             mHandler.post(() -> {
                 netConfig.onHandleCodeMessage(entity.CODE);
                 if (isCallBackStateOK()) {
-                    builder.iMessage.showMessage(entity);
+                    showMsg();
                     try {
                         builder.callback.onError(entity);
                     } catch (Exception e1) {
@@ -151,7 +151,7 @@ public class OkHttpHelper extends AbsNetHelper {
                 }
             });
             if (IAppConfigFactory.getConfig().isDebug()) {
-                LogUitls.print(builder.getApi() + "请求地址:", builder.baseUrl + AppDataCollectUtils.map2Url(builder.getPostMap(),true));
+                LogUitls.print(builder.getApi() + "请求地址:", builder.baseUrl + AppDataCollectUtils.map2Url(builder.getPostMap(), true));
                 LogUitls.print(builder.getApi() + "请求head头部信息", builder.getHeaderMap());
                 LogUitls.print(builder.getApi() + "请求失败(有否有回调):" + (builder.callback != null), e.toString());
             }
@@ -178,7 +178,7 @@ public class OkHttpHelper extends AbsNetHelper {
             }
 
             if (IAppConfigFactory.getConfig().isDebug()) {
-                LogUitls.print(builder.getApi() + "请求地址:", builder.baseUrl + AppDataCollectUtils.map2Url(builder.getPostMap(),true));
+                LogUitls.print(builder.getApi() + "请求地址:", builder.baseUrl + AppDataCollectUtils.map2Url(builder.getPostMap(), true));
                 LogUitls.print(builder.getApi() + "请求head头部信息", builder.getHeaderMap());
                 LogUitls.printString(builder.getApi() + "请求成功(有否有回调):" + (builder.callback != null), response);
                 LogUitls.print(builder.getApi() + "请求成功(有否有回调):" + (builder.callback != null), response);
@@ -196,7 +196,7 @@ public class OkHttpHelper extends AbsNetHelper {
             if (entity.CODE > -1) {//0及以上为正常
                 try {
                     builder.callback.onSuccess(entity);
-                    builder.iMessage.showMessage(entity);
+                    showMsg();
                 } catch (Exception e) {//解析异常
                     e.printStackTrace();
                     entity.setCode(NetEntity.ERROR_PARASE);
@@ -210,11 +210,15 @@ public class OkHttpHelper extends AbsNetHelper {
 
         private void onError() {
             try {
-                builder.iMessage.showMessage(entity);
+                showMsg();
                 builder.callback.onError(entity);
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+
+        private void showMsg() {
+            builder.iMessage.showMessage(entity);
         }
     }
 
