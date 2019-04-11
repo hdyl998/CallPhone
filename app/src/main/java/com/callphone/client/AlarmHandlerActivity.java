@@ -31,9 +31,10 @@ public class AlarmHandlerActivity extends Activity {
         Window win = getWindow();
         int flag = WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED //锁屏状态下显示
                 | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD //解锁
-                | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON;
+                ;
         if (!DeviceHelper.getInstance().isScreenOff()) {
             flag |= WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON; //保持屏幕长亮
+            flag |= WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON;
         }
         win.addFlags(flag); //打开屏幕
         setContentView(R.layout.activity_alarm_handler);
