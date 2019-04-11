@@ -54,7 +54,7 @@
             android:enabled="true"
             android:exported="true">
             <intent-filter android:priority="1000">
-                <action android:name="com.callphone" />
+                <action android:name="com.callphone.start" />
             </intent-filter>
         </receiver>
         <!-- 启动页  -->

@@ -12,6 +12,7 @@ import com.callphone.client.AlarmHandlerActivity;
 import com.callphone.client.R;
 import com.callphone.client.ScreenListener;
 import com.callphone.client.base.AppConstants;
+import com.callphone.client.common.DeviceHelper;
 import com.callphone.client.home.GrayService;
 import com.callphone.client.home.HomeFragment;
 import com.callphone.client.main.bean.EventItem;
@@ -69,7 +70,7 @@ public class MainNewActivity extends IBaseActivity {
         startService(new Intent(mContext, GrayService.class));
     }
 
-    private void stopGrayService(){
+    private void stopGrayService() {
         stopService(new Intent(mContext, GrayService.class));
     }
 
@@ -192,36 +193,30 @@ public class MainNewActivity extends IBaseActivity {
     Handler handler = new Handler();
 
 
-    PowerManager.WakeLock mWakeLock;
-
     @Override
     public void onResume() {
         super.onResume();
-        if (mWakeLock != null) {
-            mWakeLock.acquire();
-        }
     }
 
 
     private static final String TAG = "MainNewActivity";
 
     private void initOthers() {
-        PowerManager powerManager = (PowerManager) mContext.getSystemService(Activity.POWER_SERVICE);
-        if (powerManager != null) {
-            //PARTIAL_WAKE_LOCK :保持CPU 运转，屏幕和键盘灯有可能是关闭的。
-            // SCREEN_DIM_WAKE_LOCK ：保持CPU 运转，允许保持屏幕显示但有可能是灰的，允许关闭键盘灯
-            // SCREEN_BRIGHT_WAKE_LOCK ：保持CPU 运转，允许保持屏幕高亮显示，允许关闭键盘灯
-            //FULL_WAKE_LOCK ：保持CPU 运转，保持屏幕高亮显示，键盘灯也保持亮度
-            LogUitls.print(TAG, "请求屏幕常亮");
-            mWakeLock = powerManager.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "WakeLock");
-        }
+//        PowerManager powerManager = (PowerManager) mContext.getSystemService(Activity.POWER_SERVICE);
+//        if (powerManager != null) {
+//            //PARTIAL_WAKE_LOCK :保持CPU 运转，屏幕和键盘灯有可能是关闭的。
+//            // SCREEN_DIM_WAKE_LOCK ：保持CPU 运转，允许保持屏幕显示但有可能是灰的，允许关闭键盘灯
+//            // SCREEN_BRIGHT_WAKE_LOCK ：保持CPU 运转，允许保持屏幕高亮显示，允许关闭键盘灯
+//            //FULL_WAKE_LOCK ：保持CPU 运转，保持屏幕高亮显示，键盘灯也保持亮度
+//            LogUitls.print(TAG, "请求屏幕常亮");
+//            mWakeLock = powerManager.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "WakeLock");
+//        }
         screenListener = new ScreenListener(mContext);
         screenListener.begin(new ScreenListener.ScreenStateListener() {
 
             @Override
             public void onUserPresent() {
                 Log.e("onUserPresent", "onUserPresent");
-
             }
 
             @Override
@@ -235,9 +230,7 @@ public class MainNewActivity extends IBaseActivity {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        if (mWakeLock != null) {
-                            mWakeLock.acquire();
-                        }
+                        DeviceHelper.getInstance().screenAcquire();
                         startActivity(new Intent(mContext, AlarmHandlerActivity.class));
                         Log.e("onScreenOff", "onScreenOff");
                     }
@@ -252,9 +245,7 @@ public class MainNewActivity extends IBaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         handler.removeCallbacks(null);
-        if (mWakeLock != null) {
-            mWakeLock.release();
-        }
+        DeviceHelper.getInstance().screenRelease();
         screenListener.unregisterListener();
         stopGrayService();
     }

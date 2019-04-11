@@ -1,23 +1,22 @@
 package com.callphone.client.home;
 
 import android.annotation.SuppressLint;
-import android.app.KeyguardManager;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
-import android.os.PowerManager;
 import android.support.annotation.Nullable;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.callphone.client.MyReceiver;
 import com.callphone.client.R;
+import com.callphone.client.common.DeviceHelper;
 import com.callphone.client.home.socket.MsgSocket;
 import com.callphone.client.main.MainNewActivity;
 import com.callphone.client.main.mine.LoginManager;
@@ -27,7 +26,6 @@ import com.hd.net.socket.MapBuilder;
 import com.hd.net.socket.SocketMessageListener;
 import com.hd.permission.PermissionHelper;
 import com.hd.utils.DateUtils;
-import com.hd.utils.Network;
 import com.hd.utils.log.impl.LogUitls;
 import com.hd.utils.loopdo.HanderLoopHelper;
 import com.hd.utils.toast.ToastUtils;
@@ -47,44 +45,13 @@ public class LoopService extends Service {
     HanderLoopHelper handerLoopHelper;
 
     int nums = 0;
-    PowerManager pm;
 
     Handler handler = new Handler();
 
-    private void record() {
-        //!Network.isConnected(LoopService.this)
-        if (!pm.isScreenOn()) {
-            PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "mywakelogtag");
-            wl.acquire();
-            addLog("唤醒屏幕");
-        } else {
-            addLog("唤醒屏幕 屏亮=" + pm.isScreenOn() + " net is Connected" + Network.isConnected(LoopService.this));
-        }
-    }
 
     //唤醒屏幕并解锁
     public void wakeUpAndUnlock() {
-
-        KeyguardManager.KeyguardLock kl = km.newKeyguardLock("unLock");
-        //解锁
-        kl.disableKeyguard();
-        //获取PowerManager.WakeLock对象,后面的参数|表示同时传入两个值,最后的是LogCat里用的Tag
-        PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "bright");
-        //点亮屏幕
-        wl.acquire();
-    }
-
-    /***
-     * 唤醒屏幕并解锁
-     * 高亮
-     */
-    public void fullWakeup() {
-
-        KeyguardManager.KeyguardLock kl = km.newKeyguardLock("unLock");
-        //解锁
-        kl.disableKeyguard();
-        PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "bright1");
-        wl.acquire();
+        DeviceHelper.getInstance().screenAcquire();
     }
 
 
@@ -119,14 +86,6 @@ public class LoopService extends Service {
                 nums++;
                 if (MsgSocket.getInstance().isConnectSuccess()) {
                     MsgSocket.getInstance().sendSocketMessage("hearting", nums + "");
-                } else {
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            record();
-                            wakeUpAndUnlock();
-                        }
-                    });
                 }
                 //每15秒唤醒一次
                 if (nums % 5 == 0) {
@@ -143,20 +102,13 @@ public class LoopService extends Service {
         handerLoopHelper.startLoop();
     }
 
-    public void addLog(String str) {
-//        if (binder.logAdapter != null)
-//            binder.logAdapter.add(DateUtils.getSimpleDate().format(new Date()) + " " + str + " islocked=" + km.isKeyguardLocked());
-    }
-
-
-    KeyguardManager km;
 
     public boolean aotoMobile(String phone) {
-        fullWakeup();
+        DeviceHelper.getInstance().screenAcquireTimeOut(5000);
         //拿到锁屏管理者
-        if (km.isKeyguardLocked()) {
+        if (DeviceHelper.getInstance().isKeyguardLocked()) {
             Intent intent = new Intent();
-            intent.setAction("com.callphone");
+            intent.setAction(MyReceiver.CMD);
             intent.putExtra("phone", phone);
             this.sendBroadcast(intent);
             LogUitls.print(TAG, "发送广播" + phone);
@@ -164,7 +116,7 @@ public class LoopService extends Service {
             historyItem.phone = phone;
             historyItem.status = 1;
             historyItem.updatetime = DateUtils.getSimpleDate().format(new Date());
-            historyItem.extraMsg="(锁屏拨打)";
+            historyItem.extraMsg = "(锁屏拨打)";
             binder.addCallInfoItem(historyItem);
             return true;
         } else {
@@ -212,8 +164,6 @@ public class LoopService extends Service {
     }
 
     private void init() {
-        pm = (PowerManager) this.getSystemService(Context.POWER_SERVICE);
-        km = (KeyguardManager) this.getSystemService(Context.KEYGUARD_SERVICE);
         bindNotification();
     }
 
@@ -320,7 +270,7 @@ public class LoopService extends Service {
                         case -1:
                         case -9999:
                             LoginManager.logout();
-                            LogUitls.print("logint","socketlogout");
+                            LogUitls.print("logint", "socketlogout");
                             break;
                         default:
                             break;

@@ -9,8 +9,6 @@ import com.callphone.client.main.mine.UserCacheConfig;
  */
 public class AppSaveData {
 
-    //用户红包信息
-    private PocketInfo pocketInfo;
 
     private final static AppSaveData instance=new AppSaveData();
 
@@ -29,11 +27,4 @@ public class AppSaveData {
         return UserCacheConfig.get();
     }
 
-    public void setPocketInfo(PocketInfo pocketInfo) {
-        this.pocketInfo = pocketInfo;
-    }
-
-    public static PocketInfo getPocketInfo() {
-        return get().pocketInfo;
-    }
 }

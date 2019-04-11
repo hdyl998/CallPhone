@@ -13,6 +13,9 @@ public interface SPConstants {
     String FILE_START_INFO = "startinfo";
 
     String KEY_mine_remind="mine_remind";
+
+
+    String KEY_mine_screen_mode="screen_mode";
     /***
      * 用于开发使用
      */

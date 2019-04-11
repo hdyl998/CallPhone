@@ -58,7 +58,12 @@
             </LinearLayout>
 
             <include layout="@layout/divider_common_20" />
+            <TextView
+                android:id="@+id/tvScreenMode"
+                style="@style/btnMenu"
+                android:text="屏幕常亮模式" />
 
+            <include layout="@layout/view_line_1_deep" />
             <TextView
                 android:id="@+id/tvChangePwd"
                 style="@style/btnMenu"

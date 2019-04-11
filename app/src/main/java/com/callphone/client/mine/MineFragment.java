@@ -1,5 +1,7 @@
 package com.callphone.client.mine;
 
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -8,6 +10,7 @@ import com.callphone.client.R;
 import com.callphone.client.about.AboutFragment;
 import com.callphone.client.base.SPConstants;
 import com.callphone.client.base.data.AppSaveData;
+import com.callphone.client.common.DeviceHelper;
 import com.callphone.client.home.socket.MsgSocket;
 import com.callphone.client.main.OnPageCheckedListener;
 import com.callphone.client.main.bean.EventItem;
@@ -93,6 +96,17 @@ public class MineFragment extends IBaseTitleBarFragment implements OnPageChecked
                             }
                         });
                 break;
+            case R.id.tvScreenMode:
+                new AlertDialog.Builder(mContext)
+                        .setSingleChoiceItems(new String[]{"低亮屏模式", "熄屏模式", "高亮屏模式"}, DeviceHelper.getInstance().getSaveHelper().getValue(),
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        DeviceHelper.getInstance().updateNewRequire(which);
+                                        dialog.dismiss();
+                                    }
+                                }).show();
+                break;
         }
     }
 
@@ -121,7 +135,7 @@ public class MineFragment extends IBaseTitleBarFragment implements OnPageChecked
 
     @Override
     public int[] setClickIDs() {
-        return new int[]{R.id.tvChangePwd, R.id.llHeader, R.id.tvAppSetting, R.id.tvAbout, R.id.tvLogout};
+        return new int[]{R.id.tvScreenMode, R.id.tvChangePwd, R.id.llHeader, R.id.tvAppSetting, R.id.tvAbout, R.id.tvLogout};
     }
 
     @Override
