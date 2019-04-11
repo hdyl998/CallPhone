@@ -160,10 +160,10 @@ public class DownUtil implements Callback {
 
     float lastProgress = 0;
 
-    private void updateProgress(float progress, long sum, long total) {
+    private void updateProgress(float progress, long complete, long target) {
         if (progress > lastProgress) {
             if (downListener != null) {
-                handler.post(() -> downListener.downProgress(progress, sum, total));
+                handler.post(() -> downListener.downProgress(progress, complete, target));
             }
         }
         lastProgress = progress;
