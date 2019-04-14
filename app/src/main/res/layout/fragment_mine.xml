@@ -77,6 +77,20 @@
                 style="@style/btnMenu"
                 android:text="应用详情" />
 
+
+            <LinearLayout
+                android:id="@+id/llHWSetting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include layout="@layout/view_line_1_deep" />
+
+                <TextView
+                    style="@style/btnMenu"
+                    android:text="华为手机系统参考设置" />
+
+            </LinearLayout>
             <LinearLayout
                 android:id="@+id/llMiSetting"
                 android:layout_width="match_parent"

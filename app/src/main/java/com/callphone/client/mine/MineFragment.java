@@ -107,6 +107,10 @@ public class MineFragment extends IBaseTitleBarFragment implements OnPageChecked
                                     }
                                 }).show();
                 break;
+            case R.id.llHWSetting:
+                String url1="https://jingyan.baidu.com/article/597a06430676cb312b5243ed.html";
+                WebViewManager.launchWithAbsoluteUrl(mContext, "华为手机系统参考设置", url1);
+                break;
         }
     }
 
@@ -135,7 +139,7 @@ public class MineFragment extends IBaseTitleBarFragment implements OnPageChecked
 
     @Override
     public int[] setClickIDs() {
-        return new int[]{R.id.tvScreenMode, R.id.tvChangePwd, R.id.llHeader, R.id.tvAppSetting, R.id.tvAbout, R.id.tvLogout};
+        return new int[]{R.id.llHWSetting,R.id.tvScreenMode, R.id.tvChangePwd, R.id.llHeader, R.id.tvAppSetting, R.id.tvAbout, R.id.tvLogout};
     }
 
     @Override
@@ -203,7 +207,7 @@ public class MineFragment extends IBaseTitleBarFragment implements OnPageChecked
             helper.setValue(1);
             SimpleDialog.create(mContext)
                     .setCancelableDialog(false)
-                    .setTvContent("如果您是小米手机，请按照本页菜单里的参考操作（1）、（2）\n进行设置")
+                    .setTvContent("如果您是小米手机，请按照本页菜单里的参考操作（1）、（2）\n进行设置\n如果您是华为手机，请按华为手机参考设置")
                     .setSingleButton("我知道了");
         }
 
