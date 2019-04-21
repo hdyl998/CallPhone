@@ -191,7 +191,7 @@ public class MainNewActivity extends IBaseActivity {
         SimpleDialog.create(mContext).setTvTitle("确认退出")
                 .setTvContent("退出将无法呼叫号码")
                 .setBtnLeft("退出")
-                .setBtnRight("不退出")
+                .setBtnRight("取消")
                 .setOnClickListener(new SimpleDialog.SimpleDialogClick() {
                     @Override
                     public void onLeftClick(SimpleDialog simpleDialog) {
