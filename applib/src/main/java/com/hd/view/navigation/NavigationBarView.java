@@ -312,7 +312,7 @@ public class NavigationBarView extends LinearLayout implements View.OnClickListe
 
     //颜色定制
     private int selectedColor = HdApp.getContext().getResources().getColor(R.color.colorPrimary);
-    private int unSelectedColor = 0xff464646;
+    private int unSelectedColor = 0xff777777;
 
     public void setSelectedColor(int selectedColor) {
         this.selectedColor = selectedColor;
