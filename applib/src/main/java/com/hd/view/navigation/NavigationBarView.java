@@ -37,6 +37,7 @@ public class NavigationBarView extends LinearLayout implements View.OnClickListe
     List<NavigationBarItem> dataItems;
 //    View centerView;
 
+
     public int getSelectIndex() {
         return selectIndex;
     }
@@ -79,10 +80,10 @@ public class NavigationBarView extends LinearLayout implements View.OnClickListe
                 TextView textView = holder.getView(R.id.textView);
                 textView.setText(item.tvName);
 
-                textView.setVisibility(item.tvName==null?GONE:VISIBLE);
+                textView.setVisibility(item.tvName == null ? GONE : VISIBLE);
 
                 ImageView imageView = holder.getView(R.id.imageView);
-                if(isClickAnimation) {
+                if (isClickAnimation) {
                     //用于动画
                     viewRoot.setTag(R.id.tagDefault, imageView);
                 }
@@ -96,17 +97,33 @@ public class NavigationBarView extends LinearLayout implements View.OnClickListe
                         LoaderBuilder.get().loadImage(imageView, item.normalUrl);
                     }
                 } else {
-                    if (selectIndex == position) {
-                        textView.setTextColor(selectedColor);
-                        imageView.setImageResource(item.checkedRes);
+
+                    if (isUseColorFilter) {
+                        if (selectIndex == position) {
+                            textView.setTextColor(selectedColor);
+                            imageView.setImageResource(item.checkedRes);
+                            imageView.setColorFilter(selectedColor);
+                        } else {
+                            textView.setTextColor(unSelectedColor);
+                            imageView.setImageResource(item.checkedRes);
+                            imageView.setColorFilter(unSelectedColor);
+                        }
                     } else {
-                        textView.setTextColor(unSelectedColor);
-                        imageView.setImageResource(item.normalRes);
+                        if (selectIndex == position) {
+                            textView.setTextColor(selectedColor);
+                            imageView.setImageResource(item.checkedRes);
+                        } else {
+                            textView.setTextColor(unSelectedColor);
+                            imageView.setImageResource(item.normalRes);
+                        }
                     }
                 }
-                holder.setVisibility(R.id.iv_dot, item.isRedDot && selectIndex != position ? View.VISIBLE : View.GONE);
+//                holder.setVisibility(R.id.tvNum, item.isShowMsgNum() ? View.VISIBLE : View.GONE);
+//                holder.setText(R.id.tvNum, item.getMsgText());
+                holder.setVisibility(R.id.iv_dot, item.isRedDot() ? View.VISIBLE : View.GONE);
             }
         };
+        notifyDataSetChanged();
     }
 
     public void notifyDataSetChanged() {
@@ -132,7 +149,7 @@ public class NavigationBarView extends LinearLayout implements View.OnClickListe
                 LogUitls.print("点击", newIndex);
                 LogUitls.print("点击", item);
 
-                if(isClickAnimation) {
+                if (isClickAnimation) {
                     if (lastAnimationView != null) {
                         lastAnimationView.clearAnimation();
                     }
@@ -146,11 +163,16 @@ public class NavigationBarView extends LinearLayout implements View.OnClickListe
         }
     }
 
-    boolean isClickAnimation=true;
+    boolean isUseColorFilter = false;
+    boolean isClickAnimation = true;
+
+    public void setUseColorFilter(boolean useColorFilter) {
+        isUseColorFilter = useColorFilter;
+    }
 
     /*
-    点击动画
-    */
+        点击动画
+        */
     public void setClickAnimation(boolean clickAnimation) {
         isClickAnimation = clickAnimation;
     }
@@ -216,8 +238,8 @@ public class NavigationBarView extends LinearLayout implements View.OnClickListe
      * @param itemId
      * @return
      */
-    public boolean isCurrentPage(int itemId){
-        return selectIndex==getIndexById(itemId);
+    public boolean isCurrentPage(int itemId) {
+        return selectIndex == getIndexById(itemId);
     }
 
 
@@ -250,20 +272,53 @@ public class NavigationBarView extends LinearLayout implements View.OnClickListe
     }
 
 
-    public void setRedPoint(int pageId, boolean isRed) {
-        NavigationBarItem mineItem = getDataItemById(pageId);
-        if (mineItem != null) {
-            mineItem.setRedDot(isRed);
+    /***
+     * 设置消息为小红点
+     * @param pageId
+     * @param isRed
+     */
+    public void setMsgRedPoint(int pageId, boolean isRed) {
+        NavigationBarItem item = getDataItemById(pageId);
+        if (item != null) {
+            item.setRedDot(isRed);
+            item.setMsgNum(0);
+            adapter.notifyDataSetChanged();
         }
+    }
 
+    /***
+     * 设置消息为数字
+     * @param pageId
+     * @param msgNum
+     */
+    public void setMsgNum(int pageId, int msgNum) {
+        NavigationBarItem item = getDataItemById(pageId);
+        if (item != null) {
+            item.setMsgNum(msgNum);
+            item.setRedDot(false);
+            adapter.notifyDataSetChanged();
+        }
+    }
+
+    public void clearMsg(int pageId) {
+        NavigationBarItem item = getDataItemById(pageId);
+        if (item != null) {
+            item.setMsgNum(0);
+            item.setRedDot(false);
+            adapter.notifyDataSetChanged();
+        }
     }
 
 
     //颜色定制
-    private int selectedColor = 0xff6395e0;
-    private final int unSelectedColor = 0xffB7B7B7;
+    private int selectedColor = HdApp.getContext().getResources().getColor(R.color.colorPrimary);
+    private int unSelectedColor = 0xff464646;
 
     public void setSelectedColor(int selectedColor) {
         this.selectedColor = selectedColor;
+    }
+
+    public void setUnSelectedColor(int unSelectedColor) {
+        this.unSelectedColor = unSelectedColor;
     }
 }

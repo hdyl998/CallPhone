@@ -11,8 +11,12 @@ public class TestAppConfig extends BaseAppConfig {
     public TestAppConfig() {
         isTestFun = true;
         isDebug = true;
-        baseUrl = "http://47.106.179.199:8000/?act=";
-        msgSocketUrl = "http://47.106.179.199:8001";
+//        baseUrl = "http://47.106.179.199:8000/?act=";
+//        msgSocketUrl = "http://47.106.179.199:8001";
+
+        baseUrl = "https://jiekou.zhudai.com/wh/index.php?act=";
+        msgSocketUrl = "http://waihuapi.zhudai.com:8001";
+
     }
 
 }

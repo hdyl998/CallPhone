@@ -9,7 +9,7 @@ import com.hd.appconfig.IAppConfigFactory;
  */
 public class AppConfigFactory {
 
-    private static BaseAppConfig INSTANCE = new TestAppConfig();
+    private static BaseAppConfig INSTANCE = new OnlineAppConfig();
 
     //这里配置打包时间
     public static BaseAppConfig getConfig() {

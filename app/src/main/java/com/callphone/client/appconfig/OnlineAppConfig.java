@@ -11,7 +11,8 @@ public class OnlineAppConfig extends BaseAppConfig {
         isOnline=true;
         isTestFun=false;
         isDebug=false;
-        baseUrl = "http://47.106.179.199:8000/?act=";
-        msgSocketUrl = "http://47.106.179.199:8001";
+        //https://jiekou.zhudai.com/wh/index.php
+        baseUrl = "https://jiekou.zhudai.com/wh/index.php/?act=";
+        msgSocketUrl = "http://waihuapi.zhudai.com:8001";
     }
 }

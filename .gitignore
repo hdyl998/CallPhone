@@ -1,9 +1,13 @@
-*.iml
-.gradle
 /local.properties
-/.idea/workspace.xml
-/.idea/libraries
-.DS_Store
+/.gradle
+/.idea
 /build
-/captures
-.externalNativeBuild
+*.iml
+*.apk
+output.json
+
+#TestB                              #忽略“TestB”文件
+#*.o		                   #忽略以.o为后缀的文件
+#/testing		           #忽略根目录下的“testing”文件
+#bulid/		                   #忽略bulid目录下的所有文件
+#!test.txt			   #不忽略test.txt文件

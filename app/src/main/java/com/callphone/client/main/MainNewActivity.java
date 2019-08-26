@@ -79,6 +79,7 @@ public class MainNewActivity extends IBaseActivity {
 
 
     private void createNavigationBar() {
+        navigationBarView.setUseColorFilter(true);
         //点击无动画
         navigationBarView.setClickAnimation(false);
         List<NavigationBarItem> listsMenus = new ArrayList<>(2);

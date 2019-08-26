@@ -17,7 +17,9 @@ public class NavigationBarItem {
 
     public boolean isNetImg = true;
 
-    public boolean isRedDot;//小红点
+    private boolean isRedDot = false;//小红点
+
+    private int msgNum;
 
     public String tvName;//文字
 
@@ -32,6 +34,20 @@ public class NavigationBarItem {
         return isClick;
     }
 
+    public String getMsgText() {
+        if (msgNum > 99) {
+            return "99+";
+        }
+        return  String.valueOf(msgNum);
+    }
+
+    public boolean isShowMsgNum(){
+        return msgNum!=0;
+    }
+
+    public boolean isRedDot() {
+        return isRedDot;
+    }
 
     public void setTag(Object tag) {
         this.tag = tag;
@@ -43,11 +59,20 @@ public class NavigationBarItem {
     }
 
     public void setRedDot(boolean redDot) {
-        isRedDot = redDot;
+        this.isRedDot = redDot;
+    }
+
+    public void setMsgNum(int msgNum) {
+        this.msgNum = msgNum;
+    }
+
+    public int getMsgNum() {
+        return msgNum;
     }
 
 
-//    public final static class HomeTabsItem extends BaseAppGoItem {
+
+    //    public final static class HomeTabsItem extends BaseAppGoItem {
 //        public int isclick = 0;
 //        public boolean isClick() {
 //            return isclick == 1;
