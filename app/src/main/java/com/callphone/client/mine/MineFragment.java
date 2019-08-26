@@ -207,6 +207,7 @@ public class MineFragment extends IBaseTitleBarFragment implements OnPageChecked
             helper.setValue(1);
 
             new AlertDialog.Builder(mContext).setTitle("温馨提示")
+                    .setCancelable(false)
                     .setMessage("如果您是小米手机，请按照本页菜单里的参考操作（1）、（2）\n进行设置\n如果您是华为手机，请按华为手机参考设置")
                     .setPositiveButton("我知道了",null).show();
         }
