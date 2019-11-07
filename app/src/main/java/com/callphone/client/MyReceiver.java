@@ -6,9 +6,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 
+import com.callphone.client.base.App;
 import com.callphone.client.common.DeviceHelper;
+import com.hd.base.datacount.EventInjectHelper;
 import com.hd.permission.PermissionHelper;
 import com.hd.utils.log.impl.LogUitls;
+import com.hd.utils.other.MyRunTimeException;
 import com.hd.utils.toast.ToastUtils;
 
 /**
@@ -49,9 +52,11 @@ public class MyReceiver extends BroadcastReceiver {
             } catch (Exception e) {
                 e.printStackTrace();
                 ToastUtils.show("没有权限，拨打电话失败`1");
+                App.getContext().reportError(e,"MyReceiver没有权限，拨打电话失败`1");
             }
         } else {
             ToastUtils.show("没有权限，拨打电话失败`1");
+            App.getContext().reportError("MyReceiver没有权限，拨打电话失败`1");
         }
     }
 }

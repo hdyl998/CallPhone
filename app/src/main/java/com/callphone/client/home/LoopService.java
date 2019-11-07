@@ -253,6 +253,10 @@ public class LoopService extends Service {
                     if (isSuccess) {
                         MsgSocket.getInstance().sendSockData("notice", MapBuilder.create().add("id", id));
                     }
+                    else {
+
+
+                    }
                     recordTime();
                     break;
                 case MsgSocket.hearting:

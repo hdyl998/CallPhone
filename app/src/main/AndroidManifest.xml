@@ -74,6 +74,14 @@
             android:theme="@style/SplashTheme"
             android:name=".start.StartActivity"
             android:screenOrientation="portrait"/>
+
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="5dbfcc833fc195f1be0004ea"/>
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="Umeng"/>
+
     </application>
 
 </manifest>
